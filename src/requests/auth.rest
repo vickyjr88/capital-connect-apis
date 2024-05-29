@@ -1,0 +1,38 @@
+
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "username": "vic",
+    "password": "pass123"
+}
+
+
+###
+# Login
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "vic",
+    "password": "pass123"
+}
+
+###
+# Login wrong creds
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "vic",
+    "password": "pass1234"
+}
+
+###
+# protected
+
+
+GET http://localhost:3000/auth/protected
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsImlhdCI6MTcxNzAwNDM4MiwiZXhwIjoxNzE3MDA0NDQyfQ.5uGXmCUmYM4h7XYZ2-Ff7fxF-QqngKynTfeZu-4C8ok
