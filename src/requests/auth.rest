@@ -13,8 +13,9 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "username": "vic@yahoo.co.uk",
-    "password": "pass123"
+    "username": "victor@yahoo.co.uk",
+    "password": "pass11234",
+    "firstName": "Kamau"
 }
 
 #####
@@ -38,8 +39,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "vic",
-    "password": "pass123"
+    "username": "vic@gmail.com",
+    "password": "pass1234"
 }
 
 ###

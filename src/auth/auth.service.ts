@@ -20,12 +20,16 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
-  }
+async login(username: string, password: string) {
+    const user = await this.validateUser(username, password);
+    if (user) {
+        const payload = { username: user.username, sub: user.id };
+        return {
+            access_token: this.jwtService.sign(payload),
+        };
+    }
+    throw new BadRequestException('Invalid username or password');
+}
 
   async signup(user: Partial<User>) {
     const isEmailValid = this.usersService.validateEmail(user.username);
