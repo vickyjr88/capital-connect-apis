@@ -28,6 +28,10 @@ export class AuthService {
   }
 
   async signup(user: Partial<User>) {
+    const isEmailValid = this.usersService.validateEmail(user.username);
+    if (!isEmailValid) {
+      throw new BadRequestException('Invalid email format');
+    }
     const isUsernameTaken = await this.usersService.isUsernameTaken(user.username);
     const hash = await bcrypt.hash(user.password, 10);
     if (isUsernameTaken) {

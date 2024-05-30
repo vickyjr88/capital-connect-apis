@@ -9,3 +9,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY
 
 GET http://localhost:3000/users
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsInN1YiI6MSwiaWF0IjoxNzE3MDU2Nzk2LCJleHAiOjE3MTcxNDMxOTZ9.l5HU7TeUyFjaeCl_gDkkjQhzet3__pJaKmQ08jca_kY
+
+###
+# Update user
+
+PUT http://localhost:3000/users/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsInN1YiI6MSwiaWF0IjoxNzE3MDU2Nzk2LCJleHAiOjE3MTcxNDMxOTZ9.l5HU7TeUyFjaeCl_gDkkjQhzet3__pJaKmQ08jca_kY
+
+{
+    "username": "vic@gmail",
+    "password": "1234565",
+    "firstName": "Karanja"
+}
