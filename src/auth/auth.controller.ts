@@ -1,6 +1,6 @@
-import { Controller, Get, Request, Post, Body, UseGuards, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Request, Post, Body, BadRequestException } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from '../users/dto/create-user.dto'; // Assume you have a DTO for user creation
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -8,7 +8,15 @@ export class AuthController {
 
   @Post('login')
   async login(@Request() req) {
-    return this.authService.login(req.user);
+    const { username, password } = req.body;
+    try {
+      return await this.authService.login(username, password);
+    } catch (error) {
+        if (error instanceof BadRequestException) {
+            throw new BadRequestException(error.message);
+        }
+        throw error;
+    }
   }
 
   @Post('signup')
