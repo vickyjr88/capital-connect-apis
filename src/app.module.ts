@@ -6,6 +6,8 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CompanyModule } from './company/company.module';
+import { Company } from './company/entities/company.entity';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { AppService } from './app.service';
         username: configService.get<string>('DATABASE_USERNAME'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        entities: [User],
+        entities: [User, Company],
         synchronize: false, // Use migrations instead
         migrations: ['dist/src/migrations/*.js'],
       }),
@@ -29,6 +31,7 @@ import { AppService } from './app.service';
     }),
     AuthModule,
     UsersModule,
+    CompanyModule,
   ],
   providers: [AppService],
   controllers: [
