@@ -1,30 +1,25 @@
-import { Controller, Request, Post, UseGuards, Body, Get, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Request, Post, Body, UseGuards, BadRequestException } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { CreateUserDto } from '../users/dto/create-user.dto'; // Assume you have a DTO for user creation
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async login(@Body() body) {
-    const { username, password } = body;
-    var user = await this.authService.validateUser(username, password)
-    if(user)
-        return this.authService.login(user);
-    else 
-        return new UnauthorizedException()
+  async login(@Request() req) {
+    return this.authService.login(req.user);
   }
 
   @Post('signup')
-  async signup(@Body() body) {
-    const { username, password, firstName } = body;
-    return this.authService.signup(username, password, firstName);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('protected')
-  getProfile(@Request() req) {
-    return req.user;
+  async signup(@Body() createUserDto: CreateUserDto) {
+    try {
+      return await this.authService.signup(createUserDto);
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw new BadRequestException(error.message);
+      }
+      throw error;
+    }
   }
 }

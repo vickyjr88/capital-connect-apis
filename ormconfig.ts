@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
-import { User } from './src/users/user.entity';
+import { User } from './src/users/entities/user.entity';
 import { Company } from 'src/company/entities/company.entity';
 
 config(); // Load .env file
