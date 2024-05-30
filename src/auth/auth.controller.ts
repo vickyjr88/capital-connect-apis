@@ -18,8 +18,8 @@ export class AuthController {
 
   @Post('signup')
   async signup(@Body() body) {
-    const { username, password } = body;
-    return this.authService.signup(username, password);
+    const { username, password, firstName } = body;
+    return this.authService.signup(username, password, firstName);
   }
 
   @UseGuards(JwtAuthGuard)

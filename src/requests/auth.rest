@@ -1,4 +1,14 @@
+### Landing 
 
+GET http://localhost:3000
+
+#####
+### Landing 
+
+GET http://localhost:3000/home
+
+#####
+# Sign up
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
@@ -7,6 +17,19 @@ Content-Type: application/json
     "password": "pass123"
 }
 
+#####
+# Sign up with name
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "username": "Absalom",
+    "password": "pass123",
+    "firstName": "Mkuu"
+}
+
+
+###
 
 ###
 # Login
@@ -35,4 +58,4 @@ Content-Type: application/json
 
 
 GET http://localhost:3000/auth/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsImlhdCI6MTcxNzAwNDM4MiwiZXhwIjoxNzE3MDA0NDQyfQ.5uGXmCUmYM4h7XYZ2-Ff7fxF-QqngKynTfeZu-4C8ok
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsInN1YiI6MSwiaWF0IjoxNzE3MDU2Nzk2LCJleHAiOjE3MTcxNDMxOTZ9.l5HU7TeUyFjaeCl_gDkkjQhzet3__pJaKmQ08jca_kY

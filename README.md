@@ -75,9 +75,13 @@ Nest is [MIT licensed](LICENSE).
 
 Generate migration
 
-npm run typeorm migration:generate -- ./src/migrations
+npm run typeorm migration:generate -- ./src/migrations/AddFistNameToUsers
 
 Run migration
 
 npm run typeorm migration:run
+
+Run migration revert
+
+npm run typeorm migration:revert
 
