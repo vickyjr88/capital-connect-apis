@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcryptjs';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
+    const user = await this.usersService.findByUsername(username);
     if (user && await bcrypt.compare(pass, user.password)) {
       const { password, ...result } = user;
       return result;
@@ -26,8 +27,13 @@ export class AuthService {
     };
   }
 
-  async signup(username: string, pass: string, firstName: string): Promise<any> {
-    const hash = await bcrypt.hash(pass, 10);
-    return this.usersService.create({ username, password: hash, firstName });
+  async signup(user: Partial<User>) {
+    const isUsernameTaken = await this.usersService.isUsernameTaken(user.username);
+    const hash = await bcrypt.hash(user.password, 10);
+    if (isUsernameTaken) {
+      throw new BadRequestException('Username is already taken');
+    }
+    user.password = hash;
+    return this.usersService.create(user);
   }
 }
