@@ -13,7 +13,7 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "username": "vic",
+    "username": "vic@yahoo.co.uk",
     "password": "pass123"
 }
 
@@ -52,10 +52,3 @@ Content-Type: application/json
     "username": "vic",
     "password": "pass1234"
 }
-
-###
-# protected
-
-
-GET http://localhost:3000/auth/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsInN1YiI6MSwiaWF0IjoxNzE3MDU2Nzk2LCJleHAiOjE3MTcxNDMxOTZ9.l5HU7TeUyFjaeCl_gDkkjQhzet3__pJaKmQ08jca_kY
