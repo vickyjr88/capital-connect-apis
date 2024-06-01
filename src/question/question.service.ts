@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { Repository } from 'typeorm';
+import { Question } from './entities/question.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class QuestionService {
-  create(createQuestionDto: CreateQuestionDto) {
-    return 'This action adds a new question';
+  constructor(
+    @InjectRepository(Question)
+    private questionsRepository: Repository<Question>
+  ) {}
+
+  async create(createQuestionDto: CreateQuestionDto) {
+    return await this.questionsRepository.save(createQuestionDto);
   }
 
-  findAll() {
-    return `This action returns all question`;
+  findAll(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    return this.questionsRepository.find({
+      skip,
+      take: limit,
+    });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} question`;
+    return this.questionsRepository.findOneBy({ id });
   }
 
-  update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    return `This action updates a #${id} question`;
+  async update(id: number, updateQuestionDto: UpdateQuestionDto) {
+    await this.questionsRepository.update(id, updateQuestionDto);
+    return this.questionsRepository.findOneBy({ id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} question`;
+  async remove(id: number) {
+    await this.questionsRepository.delete(id);
+    return id;
   }
 }

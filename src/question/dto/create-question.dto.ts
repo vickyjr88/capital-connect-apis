@@ -1,1 +1,4 @@
-export class CreateQuestionDto {}
+export class CreateQuestionDto {
+    text: string;
+    subSectionId: number;
+}

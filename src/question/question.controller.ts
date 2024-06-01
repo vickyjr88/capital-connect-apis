@@ -1,14 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 
-@Controller('question')
+@Controller('questions')
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
 
   @Post()
   create(@Body() createQuestionDto: CreateQuestionDto) {
+    console.log(createQuestionDto);
     return this.questionService.create(createQuestionDto);
   }
 
@@ -22,9 +23,9 @@ export class QuestionController {
     return this.questionService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateQuestionDto: UpdateQuestionDto) {
-    return this.questionService.update(+id, updateQuestionDto);
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateQuestionDto: UpdateQuestionDto) {
+    return await this.questionService.update(+id, updateQuestionDto);
   }
 
   @Delete(':id')
