@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
     "username": "victor3@yahoo.com",
-    "password": "pass112",
+    "password": "pass1123"
 }
 
 #####
@@ -40,12 +40,12 @@ Content-Type: application/json
 }
 
 ###
-# Login wrong creds
+# Login wrong creds || user
 
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "vic",
-    "password": "pass1234"
+    "username": "victor3@yahoo.com",
+    "password": "pass1123"
 }

@@ -3,18 +3,21 @@ import { SubsectionService } from './subsection.service';
 import { CreateSubsectionDto } from './dto/create-subsection.dto';
 import { UpdateSubsectionDto } from './dto/update-subsection.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/role.enum';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('subsections')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.Admin)
 export class SubsectionController {
   constructor(private readonly subsectionService: SubsectionService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createSubsectionDto: CreateSubsectionDto) {
     return this.subsectionService.create(createSubsectionDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Query('page') page: number, @Query('limit') limit: number){
     try {
@@ -26,13 +29,11 @@ export class SubsectionController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.subsectionService.findOne(+id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put(':id')
   update(@Param('id') id: string, @Body() updateSubsectionDto: UpdateSubsectionDto) {
     try {
@@ -46,7 +47,6 @@ export class SubsectionController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(204)
   async remove(@Param('id') id: string) {
