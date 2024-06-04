@@ -2,22 +2,24 @@
 # Profile
 
 GET http://localhost:3000/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsInN1YiI6MSwiaWF0IjoxNzE3MDU2Nzk2LCJleHAiOjE3MTcxNDMxOTZ9.l5HU7TeUyFjaeCl_gDkkjQhzet3__pJaKmQ08jca_kY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiXSwiaWF0IjoxNzE3NDk0ODY5LCJleHAiOjE3MTc1ODEyNjl9.dx8xaYvP8zw2kR9_7qUDAZWu5lGyNQwjy2V9K9ct0oc
 
 ###
 # Users
 
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsInN1YiI6MSwiaWF0IjoxNzE3MDU2Nzk2LCJleHAiOjE3MTcxNDMxOTZ9.l5HU7TeUyFjaeCl_gDkkjQhzet3__pJaKmQ08jca_kY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCIgYWRtaW4iXSwiaWF0IjoxNzE3NDk1NjI5LCJleHAiOjE3MTc1ODIwMjl9.E4XM_eVTCpJ6r9LH0lqidc1mas36xhjR2GFGqgbLk6Q
 
 ###
 # Update user
 
 PUT http://localhost:3000/users/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsInN1YiI6MSwiaWF0IjoxNzE3MDU2Nzk2LCJleHAiOjE3MTcxNDMxOTZ9.l5HU7TeUyFjaeCl_gDkkjQhzet3__pJaKmQ08jca_kY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTcyNDYsImV4cCI6MTcxNzU4MzY0Nn0.DS0mR6DdQiNvQV5vHrlUDk05Lfu4wiT-VODgOGmLeP4
 
 {
     "password": "pass1234",
-    "firstName": "Karanja"
+    "firstName": "Victor",
+    "lastName": "Karanja",
+    "roles": "user,admin"
 }
