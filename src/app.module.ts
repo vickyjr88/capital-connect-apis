@@ -3,11 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { User } from './users/entities/user.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CompanyModule } from './company/company.module';
-import { Company } from './company/entities/company.entity';
+import { SubsectionModule } from './subsection/subsection.module';
+import { AnswerModule } from './answer/answer.module';
+import { SectionModule } from './section/section.module';
+import { QuestionModule } from './question/question.module';
+import ormConfig from 'ormconfig';
 
 @Module({
   imports: [
@@ -16,22 +19,16 @@ import { Company } from './company/entities/company.entity';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('DATABASE_HOST'),
-        port: configService.get<number>('DATABASE_PORT'),
-        username: configService.get<string>('DATABASE_USERNAME'),
-        password: configService.get<string>('DATABASE_PASSWORD'),
-        database: configService.get<string>('DATABASE_NAME'),
-        entities: [User, Company],
-        synchronize: false, // Use migrations instead
-        migrations: ['dist/src/migrations/*.js'],
-      }),
+      useFactory: () => (ormConfig),
       inject: [ConfigService],
     }),
     AuthModule,
     UsersModule,
     CompanyModule,
+    QuestionModule,
+    SectionModule,
+    AnswerModule,
+    SubsectionModule,
   ],
   providers: [AppService],
   controllers: [

@@ -1,0 +1,45 @@
+###
+# Create section
+POST http://localhost:3000/subsections
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsImlhdCI6MTcxNzE0Mzk2NywiZXhwIjoxNzE3MjMwMzY3fQ.CHZ9vGGtrwOYt9v1hGnK6hOjNNSxFSwh8gihUaplyQE
+
+{
+    "name": "Section 1",
+    "description": "Section 1 description"
+}
+
+###
+# Get sub section
+
+GET http://localhost:3000/subsections/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsImlhdCI6MTcxNzE0Mzk2NywiZXhwIjoxNzE3MjMwMzY3fQ.CHZ9vGGtrwOYt9v1hGnK6hOjNNSxFSwh8gihUaplyQE
+
+###
+# Get sub sections
+
+GET http://localhost:3000/subsections
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsImlhdCI6MTcxNzE0Mzk2NywiZXhwIjoxNzE3MjMwMzY3fQ.CHZ9vGGtrwOYt9v1hGnK6hOjNNSxFSwh8gihUaplyQE
+
+###
+# Get sub sections paginated
+
+GET http://localhost:3000/subsections?page=1&limit=3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsImlhdCI6MTcxNzE0Mzk2NywiZXhwIjoxNzE3MjMwMzY3fQ.CHZ9vGGtrwOYt9v1hGnK6hOjNNSxFSwh8gihUaplyQE
+
+###
+# Update section
+
+PUT http://localhost:3000/subsections/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsImlhdCI6MTcxNzE0Mzk2NywiZXhwIjoxNzE3MjMwMzY3fQ.CHZ9vGGtrwOYt9v1hGnK6hOjNNSxFSwh8gihUaplyQE
+
+{
+    "name": "Updated Sub Section 1"
+}
+
+###
+# Delete section
+
+DELETE http://localhost:3000/subsections/37
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsImlhdCI6MTcxNzE0Mzk2NywiZXhwIjoxNzE3MjMwMzY3fQ.CHZ9vGGtrwOYt9v1hGnK6hOjNNSxFSwh8gihUaplyQE

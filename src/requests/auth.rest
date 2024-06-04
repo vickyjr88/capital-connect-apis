@@ -13,9 +13,8 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "username": "victor@yahoo.co.uk",
-    "password": "pass11234",
-    "firstName": "Kamau"
+    "username": "victor3@yahoo.com",
+    "password": "pass1123"
 }
 
 #####
@@ -41,12 +40,12 @@ Content-Type: application/json
 }
 
 ###
-# Login wrong creds
+# Login wrong creds || user
 
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "vic",
-    "password": "pass1234"
+    "username": "victor3@yahoo.com",
+    "password": "pass1123"
 }

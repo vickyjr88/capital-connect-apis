@@ -1,5 +1,4 @@
-import { IsString, IsNotEmpty, MinLength, IsArray } from 'class-validator';
-import { Role } from 'src/auth/role.enum';
+import { IsString, IsNotEmpty, MinLength, IsOptional } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -11,12 +10,9 @@ export class CreateUserDto {
   @MinLength(8)
   password: string;
 
-  @IsString()
+  @IsOptional()
   firstName: string;
 
-  @IsString()
+  @IsOptional()
   lastName: string;
-
-  @IsString()
-  roles: string;
 }
