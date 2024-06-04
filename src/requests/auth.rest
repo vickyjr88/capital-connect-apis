@@ -29,9 +29,6 @@ Content-Type: application/json
     "firstName": "Mkuu"
 }
 
-
-###
-
 ###
 # Login
 

@@ -2,6 +2,9 @@ import { BadRequestException, Body, Controller, Get, Param, Put, Request, UseGua
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/role.enum';
 
 @Controller('users')
 export class UsersController {
@@ -15,14 +18,16 @@ export class UsersController {
       return user;
     }
   
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Get()
+    @Roles(Role.Admin)
     getAllUsers() {
       return this.userService.findAll();
     }
 
     @UseGuards(JwtAuthGuard)
     @Put(':id')
+    @Roles(Role.Admin, Role.Investor)
     async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
         try {
           return await this.userService.update(+id, updateUserDto);
