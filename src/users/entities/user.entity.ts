@@ -18,6 +18,6 @@ export class User {
   @Column({ nullable: true })
   lastName: string;
 
-  @Column({ default: Role.User.toString()})
+  @Column({ default: Role.User.toString() })
   roles: string;
 }
