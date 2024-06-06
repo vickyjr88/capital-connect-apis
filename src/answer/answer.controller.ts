@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Put } from '@nestjs/common';
 import { AnswerService } from './answer.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
@@ -7,7 +7,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
 
-@Controller('answer')
+@Controller('answers')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.Admin)
 export class AnswerController {
@@ -28,7 +28,7 @@ export class AnswerController {
     return this.answerService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     return this.answerService.update(+id, updateAnswerDto);
   }

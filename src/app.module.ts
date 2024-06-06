@@ -10,6 +10,7 @@ import { SubsectionModule } from './subsection/subsection.module';
 import { AnswerModule } from './answer/answer.module';
 import { SectionModule } from './section/section.module';
 import { QuestionModule } from './question/question.module';
+import { SubmissionModule } from './submission/submission.module';
 import ormConfig from 'ormconfig';
 
 @Module({
@@ -29,6 +30,7 @@ import ormConfig from 'ormconfig';
     SectionModule,
     AnswerModule,
     SubsectionModule,
+    SubmissionModule,
   ],
   providers: [AppService],
   controllers: [
