@@ -22,15 +22,19 @@ export class AuthService {
   }
 
 async login(username: string, password: string) {
-    const user = await this.validateUser(username, password);
-    if (user) {
-        const userRoles = user.roles?.split(",").map(role => role.trim());
-        const payload = { username: user.username, sub: user.id, roles: userRoles || [Role.User]};
-        return {
-            access_token: this.jwtService.sign(payload),
-        };
-    }
-    throw new BadRequestException('Invalid username or password');
+  if (!username || !password) {
+    throw new BadRequestException('Username and password are required');
+  }
+
+  const user = await this.validateUser(username, password);
+  if (user) {
+      const userRoles = user.roles?.split(",").map(role => role.trim());
+      const payload = { username: user.username, sub: user.id, roles: userRoles || [Role.User]};
+      return {
+          access_token: this.jwtService.sign(payload),
+      };
+  }
+  throw new BadRequestException('Invalid username or password');
 }
 
   async signup(user: Partial<User>) {
@@ -39,10 +43,13 @@ async login(username: string, password: string) {
       throw new BadRequestException('Invalid email format');
     }
     const isUsernameTaken = await this.usersService.isUsernameTaken(user.username);
-    const hash = await bcrypt.hash(user.password, 10);
     if (isUsernameTaken) {
       throw new BadRequestException('Username is already taken');
     }
+    if (user.roles && [Role.Advisor, Role.Investor, Role.User].indexOf(user.roles as Role) === -1) {
+      throw new BadRequestException('Invalid role');
+    }
+    const hash = await bcrypt.hash(user.password, 10);
     user.password = hash;
     return this.usersService.create(user);
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSectionDto } from './dto/create-section.dto';
 import { UpdateSectionDto } from './dto/update-section.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -25,17 +25,23 @@ export class SectionService {
     });
   }
 
-  findOne(id: number) {
-    return this.sectionRepository.findOneBy({ id });
+  async findOne(id: number) {
+    const section = await this.sectionRepository.findOneBy({ id });
+    if (!section) {
+      throw new NotFoundException(`Section with id ${id} not found`);
+    }
+    return section;
   }
 
   async update(id: number, updateSectionDto: UpdateSectionDto) {
-    await this.sectionRepository.update(id, updateSectionDto);
+    const { name } = updateSectionDto;
+    const updates = {};
+    if (name) updates['name'] = name;
+    if (Object.keys(updates).length > 0) await this.sectionRepository.update(id, updateSectionDto);
     return this.sectionRepository.findOneBy({ id });
   }
 
-  async remove(id: number) {
-    await this.sectionRepository.delete(id);
-    return id
+  remove(id: number) {
+    this.sectionRepository.delete(id);
   }
 }

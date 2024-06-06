@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { Repository } from 'typeorm';
@@ -25,17 +25,26 @@ export class AnswerService {
     });
   }
 
-  findOne(id: number) {
-    return this.answerRepository.findOneBy({ id });
+  async findOne(id: number) {
+    const answer = await this.answerRepository.findOneBy({ id });
+    if (!answer) {
+      throw new NotFoundException(`Answer with id ${id} not found`);
+    }
+    return answer
   }
 
   async update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    await this.answerRepository.update(id, updateAnswerDto);
-    return this.answerRepository.findOneBy({ id });
+    const { questionId, text, weight} = updateAnswerDto;
+    const updates = {};
+    if (text) updates['text'] = text;
+    if (weight) updates['weight'] = weight;
+    if (Object.keys(updates).length > 0) await this.answerRepository.update(id, updates);
+    const answer = await this.answerRepository.findOneBy({ id });
+    return answer;
   }
 
   async remove(id: number) {
-    await this.answerRepository.delete(id);
+    this.answerRepository.delete(id);
     return id;
   }
 }

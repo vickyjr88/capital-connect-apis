@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubsectionDto } from './dto/create-subsection.dto';
 import { UpdateSubsectionDto } from './dto/update-subsection.dto';
 import { SubSection } from './entities/subsection.entity';
@@ -25,17 +25,23 @@ export class SubsectionService {
     });
   }
 
-  findOne(id: number) {
-    return this.subsectionRepository.findOneBy({ id });
+  async findOne(id: number) {
+    const subsection = await this.subsectionRepository.findOneBy({ id });
+    if (!subsection) {
+      throw new NotFoundException(`Subsection with id ${id} not found`);
+    }
+    return subsection;
   }
 
   async update(id: number, updateSubsectionDto: UpdateSubsectionDto) {
-    await this.subsectionRepository.update(id, updateSubsectionDto);
+    const { sectionId, name } = updateSubsectionDto;
+    const updates = {};
+    if (name) updates['name'] = name;
+    if (Object.keys(updates).length > 0) await this.subsectionRepository.update(id, updates);
     return this.subsectionRepository.findOneBy({ id });
   }
 
-  async remove(id: number) {
-    await this.subsectionRepository.delete(id);
-    return id;
+ remove(id: number) {
+   this.subsectionRepository.delete(id);
   }
 }
