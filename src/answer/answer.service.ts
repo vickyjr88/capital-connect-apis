@@ -34,8 +34,11 @@ export class AnswerService {
   }
 
   async update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    const { questionId, ...updates } = updateAnswerDto;
-    await this.answerRepository.update(id, updates);
+    const { questionId, text, weight} = updateAnswerDto;
+    const updates = {};
+    if (text) updates['text'] = text;
+    if (weight) updates['weight'] = weight;
+    if (Object.keys(updates).length > 0) await this.answerRepository.update(id, updates);
     const answer = await this.answerRepository.findOneBy({ id });
     return answer;
   }

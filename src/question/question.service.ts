@@ -33,12 +33,16 @@ export class QuestionService {
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    await this.questionsRepository.update(id, updateQuestionDto);
-    return this.questionsRepository.findOneBy({ id });
+    const { subSectionId, text } = updateQuestionDto;
+    const updates = {};
+    if (text) updates['text'] = text;
+    if (Object.keys(updates).length > 0) await this.questionsRepository.update(id, updates);
+    const answer = await this.questionsRepository.findOneBy({ id });
+    return answer;
   }
 
-  async remove(id: number) {
-    await this.questionsRepository.delete(id);
+  remove(id: number) {
+    this.questionsRepository.delete(id);
     return id;
   }
 }
