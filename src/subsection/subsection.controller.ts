@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, BadRequestException, Put, HttpCode, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, BadRequestException, Put, HttpCode, Query, HttpStatus, NotFoundException } from '@nestjs/common';
 import { SubsectionService } from './subsection.service';
 import { CreateSubsectionDto } from './dto/create-subsection.dto';
 import { UpdateSubsectionDto } from './dto/update-subsection.dto';
@@ -6,55 +6,86 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
+import throwInternalServer from 'src/utils/exceptions.util';
+import { SectionService } from 'src/section/section.service';
 
 @Controller('subsections')
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.Admin)
 export class SubsectionController {
-  constructor(private readonly subsectionService: SubsectionService) {}
+  constructor(
+    private readonly subsectionService: SubsectionService,
+    private readonly sectionService: SectionService
+  ) {}
 
   @Post()
-  create(@Body() createSubsectionDto: CreateSubsectionDto) {
-    return this.subsectionService.create(createSubsectionDto);
+  @Roles(Role.Admin)
+  async create(@Body() createSubsectionDto: CreateSubsectionDto) {
+    try {
+      await this.sectionService.findOne(createSubsectionDto.sectionId);
+      return this.subsectionService.create(createSubsectionDto);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new BadRequestException('Subsection must be associated with an existing section.');
+      }
+      throwInternalServer(error)
+    }
   }
 
   @Get()
-  async findAll(@Query('page') page: number, @Query('limit') limit: number){
+  async findAll(@Query('page') page: number, @Query('count') limit: number){
     try {
       const subsections = await this.subsectionService.findAll(page, limit);
       return subsections;
     } catch (error) {
-      console.log(error);
-      throw new BadRequestException("Something went wrong.");
+      throwInternalServer(error)
     }
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.subsectionService.findOne(+id);
+    try {
+      return this.subsectionService.findOne(+id);
+    } catch (error) {
+      throwInternalServer(error)
+    }
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSubsectionDto: UpdateSubsectionDto) {
+  @Roles(Role.Admin)
+  async update(@Param('id') id: string, @Body() updateSubsectionDto: UpdateSubsectionDto) {
     try {
-      if (updateSubsectionDto.name === "" || updateSubsectionDto.name === undefined) 
-        return new BadRequestException("Name cannot be empty.")
-      return this.subsectionService.update(+id, updateSubsectionDto);
+      await this.subsectionService.findOne(+id);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new BadRequestException(`Subsection with id ${id} not found`);
+      }
+      throwInternalServer(error)
     }
-    catch (error) {
-      console.log(error)
-      return new BadRequestException("Something went wrong.")
+
+    try {
+      if (updateSubsectionDto.sectionId) {
+        await this.sectionService.findOne(updateSubsectionDto.sectionId);
+      }
+
+      const answer = await this.subsectionService.update(+id, updateSubsectionDto);
+      return answer;
+    } catch (error) {
+      console.log(error);
+      if (error instanceof NotFoundException) {
+        throw new BadRequestException('Sub section must be associated with an existing section.');
+      }
+      throwInternalServer(error)
     }
   }
 
   @Delete(':id')
-  @HttpCode(204)
-  async remove(@Param('id') id: string) {
+  @Roles(Role.Admin)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@Param('id') id: string) {
     try {
-      await this.subsectionService.remove(+id);
+      this.subsectionService.remove(+id);
     } catch (error) {
-      console.log(error)
-      return new BadRequestException("Something went wrong.")
+      throwInternalServer(error)
     }
   }
 }

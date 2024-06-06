@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, HttpCode, HttpStatus, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, HttpCode, HttpStatus, NotFoundException, BadRequestException, Query } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
@@ -32,9 +32,9 @@ export class QuestionController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('page') page: number = 1, @Query('count') limit: number = 10) {
     try {
-      return this.questionService.findAll();
+      return this.questionService.findAll(page, limit);
     } catch (error) {
       throwInternalServer(error)
     }
@@ -81,6 +81,10 @@ export class QuestionController {
   @Roles(Role.Admin)
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
-    return this.questionService.remove(+id);
+    try {
+      return this.questionService.remove(+id);
+    } catch (error) {
+      throwInternalServer(error)
+    }
   }
 }
