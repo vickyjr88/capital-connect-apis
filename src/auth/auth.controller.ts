@@ -1,6 +1,7 @@
-import { Controller, Get, Request, Post, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Request, Post, Body, BadRequestException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import throwInternalServer from 'src/utils/exceptions.util';
 
 @Controller('auth')
 export class AuthController {
@@ -9,13 +10,14 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     const { username, password } = req.body;
+
     try {
       return await this.authService.login(username, password);
     } catch (error) {
         if (error instanceof BadRequestException) {
             throw new BadRequestException(error.message);
         }
-        throw error;
+        throwInternalServer(error)
     }
   }
 
@@ -27,7 +29,7 @@ export class AuthController {
       if (error instanceof BadRequestException) {
         throw new BadRequestException(error.message);
       }
-      throw error;
+      throwInternalServer(error)
     }
   }
 }
