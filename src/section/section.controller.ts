@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Put, BadRequestException, HttpCode, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Put, BadRequestException, HttpCode, Query, HttpStatus, NotFoundException } from '@nestjs/common';
 import { SectionService } from './section.service';
 import { CreateSectionDto } from './dto/create-section.dto';
 import { UpdateSectionDto } from './dto/update-section.dto';
@@ -6,16 +6,21 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
+import throwInternalServer from 'src/utils/exceptions.util';
 
 @Controller('sections')
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.Admin)
 export class SectionController {
   constructor(private readonly sectionService: SectionService) {}
 
   @Post()
+  @Roles(Role.Admin)
   create(@Body() createSectionDto: CreateSectionDto) {
-    return this.sectionService.create(createSectionDto);
+    try {
+      return this.sectionService.create(createSectionDto);
+    } catch (error) {
+      throwInternalServer(error)
+    }
   }
 
   @Get()
@@ -25,30 +30,36 @@ export class SectionController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.sectionService.findOne(+id);
+    try {
+      return this.sectionService.findOne(+id);
+    } catch (error) {
+      throwInternalServer(error)
+    }
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSectionDto: UpdateSectionDto) {
+  @Roles(Role.Admin)
+  async update(@Param('id') id: string, @Body() updateSectionDto: UpdateSectionDto) {
     try {
-      if (updateSectionDto.name === "" || updateSectionDto.name === undefined) 
-        return new BadRequestException("Name cannot be empty.")
-      return this.sectionService.update(+id, updateSectionDto);
-    }
-    catch (error) {
-      console.log(error)
-      return new BadRequestException("Something went wrong.")
+      await this.sectionService.findOne(+id);
+      const section = await this.sectionService.update(+id, updateSectionDto);
+      return section;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new BadRequestException(`Section with id ${id} not found`);
+      }
+      throwInternalServer(error)
     }
   }
 
   @Delete(':id')
-  @HttpCode(204)
+  @Roles(Role.Admin)
+  @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {
     try {
       await this.sectionService.remove(+id);
     } catch (error) {
-      console.log(error)
-      return new BadRequestException("Something went wrong.")
+      throwInternalServer(error)
     }
   }
 }

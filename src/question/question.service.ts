@@ -37,8 +37,7 @@ export class QuestionService {
     const updates = {};
     if (text) updates['text'] = text;
     if (Object.keys(updates).length > 0) await this.questionsRepository.update(id, updates);
-    const answer = await this.questionsRepository.findOneBy({ id });
-    return answer;
+    return await this.questionsRepository.findOneBy({ id });
   }
 
   remove(id: number) {

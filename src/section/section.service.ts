@@ -34,12 +34,14 @@ export class SectionService {
   }
 
   async update(id: number, updateSectionDto: UpdateSectionDto) {
-    await this.sectionRepository.update(id, updateSectionDto);
+    const { name } = updateSectionDto;
+    const updates = {};
+    if (name) updates['name'] = name;
+    if (Object.keys(updates).length > 0) await this.sectionRepository.update(id, updateSectionDto);
     return this.sectionRepository.findOneBy({ id });
   }
 
-  async remove(id: number) {
-    await this.sectionRepository.delete(id);
-    return id
+  remove(id: number) {
+    this.sectionRepository.delete(id);
   }
 }

@@ -67,8 +67,8 @@ export class SubsectionController {
         await this.sectionService.findOne(updateSubsectionDto.sectionId);
       }
 
-      const answer = await this.subsectionService.update(+id, updateSubsectionDto);
-      return answer;
+      const subSection = await this.subsectionService.update(+id, updateSubsectionDto);
+      return subSection;
     } catch (error) {
       console.log(error);
       if (error instanceof NotFoundException) {

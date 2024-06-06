@@ -66,8 +66,8 @@ export class QuestionController {
         await this.subsectionService.findOne(updateQuestionDto.subSectionId);
       }
 
-      const answer = await this.questionService.update(+id, updateQuestionDto);
-      return answer;
+      const question = await this.questionService.update(+id, updateQuestionDto);
+      return question;
     } catch (error) {
       console.log(error);
       if (error instanceof NotFoundException) {
