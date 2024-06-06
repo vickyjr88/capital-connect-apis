@@ -25,8 +25,8 @@ export class QuestionController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.questionService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.questionService.findOne(+id);
   }
 
   @Put(':id')

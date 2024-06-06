@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Repository } from 'typeorm';
@@ -24,8 +24,12 @@ export class QuestionService {
     });
   }
 
-  findOne(id: number) {
-    return this.questionsRepository.findOneBy({ id });
+  async findOne(id: number) {
+    const question = await this.questionsRepository.findOneBy({ id });
+    if (!question) {
+      throw new NotFoundException(`Question with id ${id} not found`);
+    }
+    return question;
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {
