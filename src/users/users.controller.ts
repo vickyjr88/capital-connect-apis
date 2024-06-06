@@ -34,12 +34,11 @@ export class UsersController {
           if (+id !== req.user.id) return new UnauthorizedException("You are not authorized to update this user.");
           return await this.userService.update(+id, updateUserDto);
         } catch (error) {
-        if (error instanceof BadRequestException) {
-          throw new BadRequestException(error.message);
+          if (error instanceof BadRequestException) {
+            return new BadRequestException(error.message);
+          }
+          return error;
         }
-          throw error;
-        }
-        
     }
 
     @UseGuards(JwtAuthGuard)

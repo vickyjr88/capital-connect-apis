@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Capital connect APIs application.
 
 ## Installation
 
@@ -58,6 +58,20 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Developing using Docker
+The app is dockerized for ease of development
+
+```bash
+# copy sample.env and rename it to .env
+
+# Build the images using
+$ docker-compose up --build
+  
+# Make Docker is running. After the database is created and the app is running in Docker you can now stop the app and run it in dev mode
+
+$ npm run start:dev
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
@@ -77,11 +91,18 @@ Generate migration
 
 npm run typeorm migration:generate -- ./src/migrations/AddFistNameToUsers
 
-Run migration
+### Run migration
 
-npm run typeorm migration:run
+```bash
+# Run migrations 
+$ npm run typeorm migration:run
 
-Run migration revert
 
-npm run typeorm migration:revert
+# Revert migration 
+$ npm run typeorm migration:revert
+
+# Generate migration (note name of migration)
+$ npm run typeorm migration:generate -- ./src/migrations/AddLastNameAndRolesToUsers
+
+```
 

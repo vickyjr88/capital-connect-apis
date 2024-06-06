@@ -1,0 +1,38 @@
+### Create a single submission
+POST http://localhost:3000/submissions
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
+
+{
+  "userId": 1,
+  "questionId": 7,
+  "answerId": 2
+}
+
+### Create multiple submissions
+POST http://localhost:3000/submissions/bulk
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
+
+{
+  "submissions": [
+    {
+      "userId": 1,
+      "questionId": 8,
+      "answerId": 4
+    },
+    {
+      "userId": 1,
+      "questionId": 9,
+      "answerId": 3
+    }
+  ]
+}
+
+### Fetch submissions by user
+GET http://localhost:3000/submissions/user/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
+
+### Calculate score for user
+GET http://localhost:3000/submissions/user/1/score
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
