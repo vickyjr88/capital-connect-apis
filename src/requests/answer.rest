@@ -2,12 +2,12 @@
 # Create answer
 POST http://localhost:3000/answers
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc2NTk2NzQsImV4cCI6MTcxNzc0NjA3NH0.p47b04Rqv3OisSmfFjveei8PNWheYG_RsT9VTFNTb4U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc3NTg4NTksImV4cCI6MTcxNzg0NTI1OX0.D4G3O6_MAvN_HpUbFtaROSAHvd_B8QKp9EteYlajTDQ
 
 {
-    "text": "answer 3",
+    "text": "answer 2c",
     "weight": 5,
-    "questionId": 1
+    "questionId": 27
 }
 
 ###

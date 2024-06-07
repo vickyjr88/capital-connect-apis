@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { Repository } from 'typeorm';
 import { Answer } from './entities/answer.entity';
@@ -13,8 +12,8 @@ export class AnswerService {
     private answerRepository: Repository<Answer>
   ) {}
 
-  create(createAnswerDto: CreateAnswerDto) {
-    return this.answerRepository.save(createAnswerDto);
+  create(answer: Answer) {
+    return this.answerRepository.save(answer);
   }
 
   findAll(page: number = 1, limit: number = 10) {

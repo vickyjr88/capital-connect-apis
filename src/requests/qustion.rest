@@ -2,18 +2,18 @@
 # Create question
 POST http://localhost:3000/questions
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc3NTg4NTksImV4cCI6MTcxNzg0NTI1OX0.D4G3O6_MAvN_HpUbFtaROSAHvd_B8QKp9EteYlajTDQ
 
 {
-    "text": "What is the capital of Canada?",
-    "subSectionId": 1
+    "text": "What is the capital of Boma3?",
+    "subSectionId": 2
 }
 
 ###
 # Get question
 
-GET http://localhost:3000/questions/14
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
+GET http://localhost:3000/questions/24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
 
 ###
 # Get questions
@@ -24,8 +24,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY
 ###
 # Get questions paginated
 
-GET http://localhost:3000/questions?page=2&limit=5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
+GET http://localhost:3000/questions?page=2&limit=50
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+###
+# Get questions paginated
+
+GET http://localhost:3000/questions/sub-section/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
 
 ###
 # Update question

@@ -17,5 +17,5 @@ export class CreateUserDto {
   lastName: string;
 
   @IsOptional()
-  roles: string;
+  roles: string; // user, investor, advisor
 }
