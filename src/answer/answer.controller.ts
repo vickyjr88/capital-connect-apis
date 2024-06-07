@@ -6,7 +6,7 @@ import { Roles } from 'src/auth/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
-import throwInternalServer from 'src/utils/exceptions.util';
+import throwInternalServer from 'src/shared/utils/exceptions.util';
 import { QuestionService } from 'src/question/question.service';
 
 @Controller('answers')
