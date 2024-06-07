@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateSubsectionDto } from './dto/create-subsection.dto';
 import { UpdateSubsectionDto } from './dto/update-subsection.dto';
 import { SubSection } from './entities/subsection.entity';
 import { Repository } from 'typeorm';
@@ -13,8 +12,8 @@ export class SubsectionService {
     private subsectionRepository: Repository<SubSection>,
   ) {}
 
-  async create(createSubsectionDto: CreateSubsectionDto) {
-    return await this.subsectionRepository.save(createSubsectionDto);
+  async create(subSection: SubSection) {
+    return await this.subsectionRepository.save(subSection);
   }
 
   findAll(page: number = 1, limit: number = 10) {
@@ -43,5 +42,12 @@ export class SubsectionService {
 
  remove(id: number) {
    this.subsectionRepository.delete(id);
+  }
+
+  async findSubsections(id: number): Promise<SubSection[]> {
+    console.log('id', id);
+    return this.subsectionRepository.find({
+      where: { section: { id } }
+    });
   }
 }

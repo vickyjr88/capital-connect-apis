@@ -12,8 +12,8 @@ export class QuestionService {
     private questionsRepository: Repository<Question>
   ) {}
 
-  async create(createQuestionDto: CreateQuestionDto) {
-    return await this.questionsRepository.save(createQuestionDto);
+  async create(question: Question) {
+    return await this.questionsRepository.save(question);
   }
 
   findAll(page: number = 1, limit: number = 10) {
@@ -43,5 +43,12 @@ export class QuestionService {
   remove(id: number) {
     this.questionsRepository.delete(id);
     return id;
+  }
+
+  async findQuestionsBySubsectionId(subSectionId: number) : Promise<Question[]> {
+    return this.questionsRepository.find({
+      where: { subSection: { id: subSectionId } },
+      relations: ['answers'],
+    });
   }
 }

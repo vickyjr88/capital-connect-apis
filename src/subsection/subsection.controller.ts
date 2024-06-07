@@ -8,13 +8,16 @@ import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
 import { SectionService } from 'src/section/section.service';
+import { QuestionService } from 'src/question/question.service';
+import { SubSection } from './entities/subsection.entity';
 
 @Controller('subsections')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class SubsectionController {
   constructor(
     private readonly subsectionService: SubsectionService,
-    private readonly sectionService: SectionService
+    private readonly sectionService: SectionService,
+    private readonly questionService: QuestionService,
   ) {}
 
   @Post()
@@ -22,7 +25,10 @@ export class SubsectionController {
   async create(@Body() createSubsectionDto: CreateSubsectionDto) {
     try {
       await this.sectionService.findOne(createSubsectionDto.sectionId);
-      return this.subsectionService.create(createSubsectionDto);
+      const subsection = new SubSection();
+      subsection.name = createSubsectionDto.name;
+      subsection.section = { id: createSubsectionDto.sectionId } as any;
+      return await this.subsectionService.create(subsection);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new BadRequestException('Subsection must be associated with an existing section.');
@@ -86,6 +92,18 @@ export class SubsectionController {
       this.subsectionService.remove(+id);
     } catch (error) {
       throwInternalServer(error)
+    }
+  }
+
+  @Get(':id/questions')
+  async getQuestionsWithAnswers(@Param('id') id: string) {
+    try {
+      const subsection = await this.subsectionService.findOne(+id);
+      console.log(subsection);
+      const questions = await this.questionService.findQuestionsBySubsectionId(subsection.id);
+      return questions;
+    } catch (error) {
+      throwInternalServer(error);
     }
   }
 }
