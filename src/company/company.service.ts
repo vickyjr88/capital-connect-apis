@@ -1,4 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,7 +18,7 @@ export class CompanyService {
     private companyRepository: Repository<Company>,
   ) {}
 
-  create(createCompanyDto: CreateCompanyDto) {
+  async create(createCompanyDto: CreateCompanyDto) {
     return this.companyRepository.save(createCompanyDto);
   }
 
@@ -20,12 +26,22 @@ export class CompanyService {
     return this.companyRepository.find();
   }
 
-  findOne(id: number) {
-    return this.companyRepository.findOneBy({ id })
+  async findOne(id: number) {
+    const company = await this.companyRepository.findOneBy({ id });
+    if (company) {
+      return company;
+    } else {
+      throw new NotFoundException('company not available');
+    }
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(id: number, updateCompanyDto: UpdateCompanyDto) {
+    const company = await this.findOne(id);
+    if (!company) {
+      throw new BadRequestException('company not available');
+    }
+    await this.companyRepository.update(id, updateCompanyDto);
+    return this.companyRepository.findOneBy({ id });
   }
 
   remove(id: number) {

@@ -2,7 +2,7 @@
 # Profile
 
 GET http://localhost:3000/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY3RvcjNAeWFob28uY29tIiwic3ViIjoyMSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc0OTkxNjgsImV4cCI6MTcxNzU4NTU2OH0.qdhBhn2z6IXAyzQot8YrhWy5xHNhzhRgno-QFt8VFEo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTIyOTksImV4cCI6MTcxNzgzODY5OX0.fU-jdLg3dBYmaQx_hIvbX-PipuQrFocDuaR_LLCG2do
 
 ###
 # Users
@@ -15,22 +15,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY
 
 PUT http://localhost:3000/users/16
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTcyNDYsImV4cCI6MTcxNzU4MzY0Nn0.DS0mR6DdQiNvQV5vHrlUDk05Lfu4wiT-VODgOGmLeP4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTIyOTksImV4cCI6MTcxNzgzODY5OX0.fU-jdLg3dBYmaQx_hIvbX-PipuQrFocDuaR_LLCG2do
 
 {
-    "password": "pass1234",
-    "firstName": "Victor",
-    "lastName": "Karanja",
+    "firstName": "Chris",
+    "lastName": "Thiaine",
     "roles": "user,admin"
 }
 
 ###
 # Update user by admin
 
-PUT http://localhost:3000/users/21/admin
+PUT http://localhost:3000/users/1/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTcyNDYsImV4cCI6MTcxNzU4MzY0Nn0.DS0mR6DdQiNvQV5vHrlUDk05Lfu4wiT-VODgOGmLeP4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTIyOTksImV4cCI6MTcxNzgzODY5OX0.fU-jdLg3dBYmaQx_hIvbX-PipuQrFocDuaR_LLCG2do
 
 {
-    "roles": "investor,user"
+    "roles": "investor,user,admin"
 }

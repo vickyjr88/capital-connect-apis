@@ -3,18 +3,50 @@
 
 POST http://localhost:3000/company
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6Miwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTgwMDk0MTIsImV4cCI6MTcxODA5NTgxMn0.fyuUu99O_vWee8r4REHUB3CbLHpYlyFKCnT_UYTU7B8
 
 {
-    "name": "New Awesome Company"
+    "name": "Bazuu Enterprie 2",
+    "country": "Tanzania",
+    "businessSector": "Ecommerce",
+    "productsAndServices": "FMCG",
+    "registrationStructure": "B2C",
+    "yearsOfOperation": "45",
+    "growthStage": "2",
+    "numberOfEmployees": "495",
+    "fullTimeBusiness": true,
 }
 
 ####
 # Fetch companies
 
 GET http://localhost:3000/company
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTMyMjIsImV4cCI6MTcxNzgzOTYyMn0.leXGbPKZuX_8ah-o3fj-MddHivh5kmHRcWbHZ9u4o9Q
 
 ####
 # Fetch company by id
 
-GET http://localhost:3000/company/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpYyIsInN1YiI6MSwiaWF0IjoxNzE3MDU2Nzk2LCJleHAiOjE3MTcxNDMxOTZ9.l5HU7TeUyFjaeCl_gDkkjQhzet3__pJaKmQ08jca_kY
+GET http://localhost:3000/company/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTMyMjIsImV4cCI6MTcxNzgzOTYyMn0.leXGbPKZuX_8ah-o3fj-MddHivh5kmHRcWbHZ9u4o9Q
+
+
+####
+#Update company by id
+
+
+PATCH http://localhost:3000/company/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTMyMjIsImV4cCI6MTcxNzgzOTYyMn0.leXGbPKZuX_8ah-o3fj-MddHivh5kmHRcWbHZ9u4o9Q
+
+{
+    "name": "Bazuu Enterprise 255",
+    "country": "Tanzania",
+    "businessSector": "Ecommerce",
+    "productsAndServices": "FMCG",
+    "registrationStructure": "B2C",
+    "yearsOfOperation": "45",
+    "growthStage": "2",
+    "numberOfEmployees": "495",
+    "fullTimeBusiness": true,
+    "businessLogo": "Tz logo"
+}
