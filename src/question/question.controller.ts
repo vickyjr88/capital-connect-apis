@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, HttpCode, HttpStatus, NotFoundException, BadRequestException, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, HttpCode, HttpStatus, NotFoundException, BadRequestException, Query, ParseIntPipe } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
@@ -6,8 +6,9 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
-import throwInternalServer from 'src/utils/exceptions.util';
+import throwInternalServer from 'src/shared/utils/exceptions.util';
 import { SubsectionService } from 'src/subsection/subsection.service';
+import { Question } from './entities/question.entity';
 
 @Controller('questions')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -22,7 +23,11 @@ export class QuestionController {
   async create(@Body() createQuestionDto: CreateQuestionDto) {
     try {
       await this.subsectionService.findOne(createQuestionDto.subSectionId);
-      return this.questionService.create(createQuestionDto);
+      const { text, subSectionId } = createQuestionDto;
+      const question = new Question();
+      question.text = text
+      question.subSection = { id: subSectionId } as any;
+      return this.questionService.create(question);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new BadRequestException('Question must be associated with an existing subsection.');
@@ -86,5 +91,10 @@ export class QuestionController {
     } catch (error) {
       throwInternalServer(error)
     }
+  }
+
+  @Get('sub-section/:subSectionId')
+  async getQuestionsBySubSection(@Param('subSectionId', ParseIntPipe) subSectionId: number): Promise<Question[]> {
+    return this.questionService.findQuestionsBySubsectionId(subSectionId);
   }
 }

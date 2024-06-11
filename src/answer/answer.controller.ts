@@ -6,8 +6,9 @@ import { Roles } from 'src/auth/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
-import throwInternalServer from 'src/utils/exceptions.util';
+import throwInternalServer from 'src/shared/utils/exceptions.util';
 import { QuestionService } from 'src/question/question.service';
+import { Answer } from './entities/answer.entity';
 
 @Controller('answers')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -20,9 +21,14 @@ export class AnswerController {
   @Post()
   @Roles(Role.Admin)
   async create(@Body() createAnswerDto: CreateAnswerDto) {
+    const { text, weight, questionId } = createAnswerDto;
     try {
       await this.questionService.findOne(createAnswerDto.questionId);
-      return this.answerService.create(createAnswerDto);
+      const answer = new Answer();
+      answer.text = text;
+      answer.weight = weight;
+      answer.question = { id: questionId } as any;
+      return this.answerService.create(answer);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new BadRequestException('An answer must be associated with an existing question.');

@@ -6,12 +6,16 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
-import throwInternalServer from 'src/utils/exceptions.util';
+import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { SubsectionService } from 'src/subsection/subsection.service';
 
 @Controller('sections')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class SectionController {
-  constructor(private readonly sectionService: SectionService) {}
+  constructor(
+    private readonly sectionService: SectionService,
+    private readonly subsectionService: SubsectionService
+  ) {}
 
   @Post()
   @Roles(Role.Admin)
@@ -58,6 +62,15 @@ export class SectionController {
   async remove(@Param('id') id: string) {
     try {
       await this.sectionService.remove(+id);
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Get(':id/subsections')
+  async findSubsections(@Param('id') id: string) {
+    try {
+      return await this.subsectionService.findSubsections(+id);
     } catch (error) {
       throwInternalServer(error)
     }

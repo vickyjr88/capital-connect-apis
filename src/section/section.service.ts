@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class SectionService {
-
   constructor( 
     @InjectRepository(Section)
     private sectionRepository: Repository<Section>,
