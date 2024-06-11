@@ -40,7 +40,7 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_NAME: ${DATABASE_NAME}
     depends_on:
-      - db
+      - app
     networks:
       - app-network
 
