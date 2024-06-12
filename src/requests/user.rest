@@ -56,3 +56,8 @@ Content-Type: application/json
     "newPassword": "pass1234",
     "confirmNewPassword": "pass1234"
 }
+
+###
+# Verify email
+
+GET http://localhost:3000/users/verify-email?token=2add75ad5928458cf5209904e98b78a98d2ad6a613efd81a8f2d60dad8aebfa1
