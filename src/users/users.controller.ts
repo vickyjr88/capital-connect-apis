@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Put, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Put, Query, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -18,8 +18,8 @@ export class UsersController {
     @Get('profile')
     async getProfile(@Request() req) {
       const user = await this.userService.findOne(req.user.id);
-      delete user.password;
-      return user;
+      const { resetPasswordToken, resetPasswordExpires, isEmailVerified, emailVerificationToken, emailVerificationExpires, password, ...rest } = user;
+      return rest;
     }
   
     @UseGuards(JwtAuthGuard, RolesGuard)
@@ -75,6 +75,18 @@ export class UsersController {
     }
     try {
       await this.userService.resetPassword(resetPasswordDto.token, resetPasswordDto.newPassword);
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Get('verify-email')
+  async verifyEmail(@Query('token') token: string): Promise<void> {
+    if (!token) {
+      throw new BadRequestException('Token is required');
+    }
+    try {
+      await this.userService.verifyEmail(token);
     } catch (error) {
       throwInternalServer(error)
     }

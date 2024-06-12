@@ -26,4 +26,13 @@ export class User {
 
   @Column({ type: 'timestamp', nullable: true })
   resetPasswordExpires: Date;
+
+  @Column({ default: false })
+  isEmailVerified: boolean;
+
+  @Column({ nullable: true })
+  emailVerificationToken: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  emailVerificationExpires: Date;
 }
