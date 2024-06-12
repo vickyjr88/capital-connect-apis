@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Put, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Put, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -6,6 +6,9 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { UpdateUserAdminDto } from './dto/update-user-admin.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { RequestResetPasswordDto } from './dto/request-reset-password.dto';
+import throwInternalServer from 'src/shared/utils/exceptions.util';
 
 @Controller('users')
 export class UsersController {
@@ -35,9 +38,9 @@ export class UsersController {
           return await this.userService.update(+id, updateUserDto);
         } catch (error) {
           if (error instanceof BadRequestException) {
-            return new BadRequestException(error.message);
+            throw new BadRequestException(error.message);
           }
-          return error;
+          throwInternalServer(error)
         }
     }
 
@@ -51,8 +54,29 @@ export class UsersController {
         if (error instanceof BadRequestException) {
           throw new BadRequestException(error.message);
         }
-          throw error;
+        throwInternalServer(error)
         }
         
     }
+
+  @Post('request-password-reset')
+  async requestPasswordReset(@Body() requestResetPasswordDto: RequestResetPasswordDto): Promise<void> {
+    try {
+      await this.userService.requestPasswordReset(requestResetPasswordDto.email);
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto): Promise<void> {
+    if (resetPasswordDto.newPassword !== resetPasswordDto.confirmNewPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+    try {
+      await this.userService.resetPassword(resetPasswordDto.token, resetPasswordDto.newPassword);
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
 }

@@ -1,8 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcryptjs';
+import { randomBytes } from 'crypto';
+import { addHours } from 'date-fns';
+import * as nodemailer from 'nodemailer';
+import * as sgMail from '@sendgrid/mail';
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 @Injectable()
 export class UsersService {
@@ -54,5 +60,78 @@ export class UsersService {
   validateEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  }
+
+  async requestPasswordReset(email: string): Promise<void> {
+    try {
+      const user = await this.usersRepository.findOne({ where: { username: email } });
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+  
+      user.resetPasswordToken = randomBytes(32).toString('hex');
+      user.resetPasswordExpires = addHours(new Date(), 1); // Token valid for 1 hour
+  
+      await this.usersRepository.save(user);
+  
+      // await this.sendResetEmail(user);
+      await this.sendResetEmailSendGrid(user);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const user = await this.usersRepository.findOne({ where: { resetPasswordToken: token } });
+    if (!user || user.resetPasswordExpires < new Date()) {
+      throw new BadRequestException('Invalid or expired token');
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+
+    await this.usersRepository.save(user);
+  }
+
+  private async sendResetEmail(user: User) {
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS,
+      },
+    });
+
+    console.log("Auth", {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
+    })
+
+    const mailOptions = {
+      to: user.username,
+      from: process.env.GMAIL_USER,
+      subject: 'Password Reset',
+      text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n` +
+        `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+        `http://${process.env.FRONTEND_URL}/reset-password/${user.resetPasswordToken}\n\n` +
+        `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+    };
+
+    await transporter.sendMail(mailOptions);
+  }
+
+  private async sendResetEmailSendGrid(user: User) {
+    const msg = {
+      to: user.username,
+      from: process.env.FROM_EMAIL,
+      subject: 'Password Reset',
+      text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n` +
+        `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+        `http://${process.env.FRONTEND_URL}/reset-password/${user.resetPasswordToken}\n\n` +
+        `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+    };
+  
+    await sgMail.send(msg);
   }
 }
