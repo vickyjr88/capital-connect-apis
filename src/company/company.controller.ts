@@ -9,6 +9,7 @@ import {
   UseGuards,
   BadRequestException,
   NotFoundException,
+  Request,
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -26,8 +27,8 @@ export class CompanyController {
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Admin)
   @Post()
-  create(@Body() createCompanyDto: CreateCompanyDto) {
-    return this.companyService.create(createCompanyDto);
+  create(@Request() req, @Body() createCompanyDto: CreateCompanyDto) {
+    return this.companyService.create(req.user.id, createCompanyDto);
   }
 
   @UseGuards(JwtAuthGuard)

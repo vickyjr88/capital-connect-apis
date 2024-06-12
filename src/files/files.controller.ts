@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Get, NotFoundException, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Controller, Get, NotFoundException, Param, Post, Res, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
@@ -30,26 +30,28 @@ export class FilesController {
       cb(null, true)
     }
    }))
-  uploadLogo(@UploadedFile() logo: Express.Multer.File) {
-    console.log(logo)
+  uploadLogo(@Request() req, @UploadedFile() logo : Express.Multer.File) {
+    const uploadedLogo = this.filesService.createComponyLogo(req.user.id, logo.path);
+    console.log('logo uploaded: ', uploadedLogo);
+    return 'Company logo successfully uploaded!'
   }
 
 
 
-  @Get('logo/:filename')
-  async getLogo(@Param('filename') filename, @Res() res: Response) {
-    const fileFound = await this.filesService.findBusinessLogo(filename);
-    try {
-      if (fileFound) {
-        return res.sendFile(fileFound, {root: './uploads/company-logos'})
-      }
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException(error.message);
-      }
-      throwInternalServer(error);
-    }
-  }
+  // @Get('logo/:filename')
+  // async getLogo(@Param('filename') filename, @Res() res: Response) {
+  //   const fileFound = await this.filesService.findBusinessLogo(filename);
+  //   try {
+  //     if (fileFound) {
+  //       return res.sendFile(fileFound, {root: './uploads/company-logos'})
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof NotFoundException) {
+  //       throw new NotFoundException(error.message);
+  //     }
+  //     throwInternalServer(error);
+  //   }
+  // }
 
 
 }

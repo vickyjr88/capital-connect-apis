@@ -10,16 +10,29 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { Repository } from 'typeorm';
+import { UsersService } from 'src/users/users.service';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
+
+    private userService: UsersService,
   ) {}
 
-  async create(createCompanyDto: CreateCompanyDto) {
-    return this.companyRepository.save(createCompanyDto);
+  async create(userId, createCompanyDto: CreateCompanyDto) {
+    const userFound = await this.userService.findOne(userId)
+    if(!userFound) {
+        throw new NotFoundException('User not found');
+    } else {
+        const newCompany = this.companyRepository.create(createCompanyDto);
+        newCompany.user.id = userId;
+        return this.companyRepository.save(newCompany);
+    }
+
+    // return this.companyRepository.save(createCompanyDto);
   }
 
   findAll() {
@@ -28,6 +41,15 @@ export class CompanyService {
 
   async findOne(id: number) {
     const company = await this.companyRepository.findOneBy({ id });
+    if (company) {
+      return company;
+    } else {
+      throw new NotFoundException('company not available');
+    }
+  }
+
+  async findOneByUser(user: User) {
+    const company = await this.companyRepository.findOne({ where: { user } });
     if (company) {
       return company;
     } else {
