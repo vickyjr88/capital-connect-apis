@@ -1,9 +1,10 @@
-import { BadRequestException, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Controller, Get, NotFoundException, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
+import throwInternalServer from 'src/shared/utils/exceptions.util';
 
 
 @Controller('files')
@@ -43,7 +44,10 @@ export class FilesController {
         return res.sendFile(fileFound, {root: './uploads/company-logos'})
       }
     } catch (error) {
-      return error.message;
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throwInternalServer(error);
     }
   }
 

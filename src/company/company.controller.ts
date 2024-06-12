@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -15,6 +16,7 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
+import throwInternalServer from 'src/shared/utils/exceptions.util';
 
 
 @Controller('company')
@@ -42,7 +44,10 @@ export class CompanyController {
         return company;
       }
     } catch (error) {
-      return error.message;
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throwInternalServer(error);
     }
   }
 
@@ -57,7 +62,7 @@ export class CompanyController {
       if (error instanceof BadRequestException) {
         throw new BadRequestException(error.message);
       }
-      throw error;
+      throwInternalServer(error);
     }
   }
 
