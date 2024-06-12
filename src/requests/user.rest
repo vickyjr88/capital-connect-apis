@@ -2,7 +2,7 @@
 # Profile
 
 GET http://localhost:3000/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTgxNzY1OTMsImV4cCI6MTcxODI2Mjk5M30.JSYGVYbmHzJqUOcH7_tSynCSaRq965oeYZvJhLIMyzE
 
 ###
 # Users
@@ -29,8 +29,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhd
 
 PUT http://localhost:3000/users/21/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTcyNDYsImV4cCI6MTcxNzU4MzY0Nn0.DS0mR6DdQiNvQV5vHrlUDk05Lfu4wiT-VODgOGmLeP4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTgxNzcyNTEsImV4cCI6MTcxODI2MzY1MX0.aJYgMBgZ54HXlyz2kBPmkH_QyUVIhCTyhdB9fPSkU-g
 
 {
     "roles": "investor,user"
+}
+
+###
+# Request password reset
+
+POST http://localhost:3000/users/request-password-reset
+Content-Type: application/json
+
+{
+    "email": "vic@gmail.com"
+}
+
+###
+# Reset password
+
+POST http://localhost:3000/users/reset-password
+Content-Type: application/json
+
+{
+    "token": "c94145223762a86e6c4951328ae596426741142a7b1f832fe089b93ef895541e",
+    "newPassword": "pass1234",
+    "confirmNewPassword": "pass1234"
 }
