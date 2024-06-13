@@ -1,31 +1,69 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { Repository } from 'typeorm';
+import { UsersService } from 'src/users/users.service';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
+
+    private userService: UsersService,
   ) {}
 
-  create(createCompanyDto: CreateCompanyDto) {
-    return this.companyRepository.save(createCompanyDto);
+  async create(userId, createCompanyDto: CreateCompanyDto) {
+    const userFound = await this.userService.findOne(userId)
+    if(!userFound) {
+        throw new NotFoundException('User not found');
+    } else {
+        const newCompany = this.companyRepository.create(createCompanyDto);
+        newCompany.user.id = userId;
+        return this.companyRepository.save(newCompany);
+    }
+
+    // return this.companyRepository.save(createCompanyDto);
   }
 
   findAll() {
     return this.companyRepository.find();
   }
 
-  findOne(id: number) {
-    return this.companyRepository.findOneBy({ id })
+  async findOne(id: number) {
+    const company = await this.companyRepository.findOneBy({ id });
+    if (company) {
+      return company;
+    } else {
+      throw new NotFoundException('company not available');
+    }
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async findOneByUser(user: User) {
+    const company = await this.companyRepository.findOne({ where: { user } });
+    if (company) {
+      return company;
+    } else {
+      throw new NotFoundException('company not available');
+    }
+  }
+
+  async update(id: number, updateCompanyDto: UpdateCompanyDto) {
+    const company = await this.findOne(id);
+    if (!company) {
+      throw new BadRequestException('company not available');
+    }
+    await this.companyRepository.update(id, updateCompanyDto);
+    return this.companyRepository.findOneBy({ id });
   }
 
   remove(id: number) {

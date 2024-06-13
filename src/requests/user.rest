@@ -27,12 +27,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhd
 ###
 # Update user by admin
 
-PUT http://localhost:3000/users/21/admin
+PUT http://localhost:3000/users/1/admin
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTgxNzcyNTEsImV4cCI6MTcxODI2MzY1MX0.aJYgMBgZ54HXlyz2kBPmkH_QyUVIhCTyhdB9fPSkU-g
-
 {
-    "roles": "investor,user"
+    "roles": "investor,user,admin"
 }
 
 ###
@@ -60,4 +59,4 @@ Content-Type: application/json
 ###
 # Verify email
 
-GET http://localhost:3000/users/verify-email?token=2add75ad5928458cf5209904e98b78a98d2ad6a613efd81a8f2d60dad8aebfa1
+GET http://localhost:3000/users/verify-email?token=2add75ad5928458cf5209

@@ -13,8 +13,8 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "username": "paul@yahoo.com",
-    "password": "pass1123"
+    "username": "chris@gmail.com",
+    "password": "password"
 }
 
 #####
@@ -35,8 +35,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "vic@gmail.com",
-    "password": "pass1234"
+    "username": "chris@gmail.com",
+    "password": "capital2024"
 }
 
 ###
