@@ -1,7 +1,5 @@
 import {
   BadRequestException,
-  HttpException,
-  HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -28,11 +26,9 @@ export class CompanyService {
         throw new NotFoundException('User not found');
     } else {
         const newCompany = this.companyRepository.create(createCompanyDto);
-        newCompany.user.id = userId;
+        newCompany.user = userFound;
         return this.companyRepository.save(newCompany);
     }
-
-    // return this.companyRepository.save(createCompanyDto);
   }
 
   findAll() {
@@ -63,6 +59,16 @@ export class CompanyService {
       throw new BadRequestException('company not available');
     }
     await this.companyRepository.update(id, updateCompanyDto);
+    return this.companyRepository.findOneBy({ id });
+  }
+
+  async updateLogoUrl(id: number, logoId: number) {
+    const company = await this.findOne(id);
+    if (!company) {
+      throw new BadRequestException('company not available');
+    }
+    company.companyLogo = { id: logoId } as any;
+    await this.companyRepository.save(company);
     return this.companyRepository.findOneBy({ id });
   }
 

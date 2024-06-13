@@ -2,7 +2,7 @@
 # Profile
 
 GET http://localhost:3000/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTgxNzY1OTMsImV4cCI6MTcxODI2Mjk5M30.JSYGVYbmHzJqUOcH7_tSynCSaRq965oeYZvJhLIMyzE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im13ZW5kYUBnbWFpbC5jb20iLCJzdWIiOjIsInJvbGVzIjpbInVzZXIiXSwiaWF0IjoxNzE4MjcxNDAzLCJleHAiOjE3MTgzNTc4MDN9.Rv54gF2gbwU6h0lOwWd7OLWVXxyEYRPhmL9cZoR-_MI
 
 ###
 # Users
@@ -15,12 +15,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY
 
 PUT http://localhost:3000/users/28
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTgyNjc4MTMsImV4cCI6MTcxODM1NDIxM30.4oaMeAprIgV7gD4rgfKxFFelLQXmwHD3Wg1AulEHC04
 
 {
     
-    "firstName": "Paul",
-    "lastName": "Chesa",
+    "firstName": "Chris",
+    "lastName": "Thiaine",
     "roles": "user"
 }
 

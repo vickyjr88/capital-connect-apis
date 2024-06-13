@@ -4,6 +4,6 @@ export class CreateFileDto {
 
     @IsString()
     @IsNotEmpty()
-    logo: string;
+    path: string;
 
 }
