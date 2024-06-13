@@ -20,4 +20,19 @@ export class User {
 
   @Column({ default: Role.User.toString() })
   roles: string;
+
+  @Column({ nullable: true })
+  resetPasswordToken: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  resetPasswordExpires: Date;
+
+  @Column({ default: false })
+  isEmailVerified: boolean;
+
+  @Column({ nullable: true })
+  emailVerificationToken: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  emailVerificationExpires: Date;
 }
