@@ -9,6 +9,7 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
 import { SubsectionService } from 'src/subsection/subsection.service';
 import { Question } from './entities/question.entity';
+import { QuestionType } from './question.type';
 
 @Controller('questions')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -23,9 +24,10 @@ export class QuestionController {
   async create(@Body() createQuestionDto: CreateQuestionDto) {
     try {
       await this.subsectionService.findOne(createQuestionDto.subSectionId);
-      const { text, subSectionId } = createQuestionDto;
+      const { text, type, subSectionId } = createQuestionDto;
       const question = new Question();
       question.text = text
+      question.type = type as QuestionType;
       question.subSection = { id: subSectionId } as any;
       return this.questionService.create(question);
     } catch (error) {
