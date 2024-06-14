@@ -6,13 +6,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY
 
 {
     "text": "What is the capital of Boma3?",
-    "subSectionId": 2
+    "subSectionId": 2,
+    "type": "SINGLE_CHOICE" 
 }
 
+# MULTIPLE_CHOICE, SINGLE_CHOICE, TRUE_FALSE, SHORT_ANSWER
 ###
 # Get question
 
-GET http://localhost:3000/questions/24
+GET http://localhost:3000/questions/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
 
 ###
@@ -40,7 +42,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
 
 {
-    "text": "Updated question 1"
+    "text": "Updated question 1",
+    "type": "MULTIPLE_CHOICE"
 }
 
 ###

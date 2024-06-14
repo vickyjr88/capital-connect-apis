@@ -1,6 +1,7 @@
 import { Answer } from 'src/answer/entities/answer.entity';
 import { SubSection } from 'src/subsection/entities/subsection.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { QuestionType } from '../question.type';
 
 @Entity("questions")
 export class Question {
@@ -9,6 +10,12 @@ export class Question {
 
   @Column()
   text: string;
+
+  @Column({
+    type: 'enum',
+    enum: QuestionType,
+  })
+  type: QuestionType;
 
   @ManyToOne(() => SubSection, (subSection) => subSection.questions)
   subSection: SubSection;
