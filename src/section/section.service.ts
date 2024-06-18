@@ -33,9 +33,10 @@ export class SectionService {
   }
 
   async update(id: number, updateSectionDto: UpdateSectionDto) {
-    const { name } = updateSectionDto;
+    const { name, description } = updateSectionDto;
     const updates = {};
     if (name) updates['name'] = name;
+    if (description) updates['description'] = description;
     if (Object.keys(updates).length > 0) await this.sectionRepository.update(id, updateSectionDto);
     return this.sectionRepository.findOneBy({ id });
   }

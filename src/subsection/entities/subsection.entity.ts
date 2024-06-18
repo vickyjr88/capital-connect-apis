@@ -11,6 +11,9 @@ export class SubSection {
   @Column()
   name: string;
 
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
   @ManyToOne(() => Section, (section) => section.subSections)
   section: Section;
 

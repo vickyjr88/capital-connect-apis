@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Repository } from 'typeorm';
 import { Question } from './entities/question.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { QuestionType } from './question.type';
 
 @Injectable()
 export class QuestionService {
@@ -33,9 +33,10 @@ export class QuestionService {
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    const { subSectionId, text } = updateQuestionDto;
+    const { subSectionId, text, type } = updateQuestionDto;
     const updates = {};
     if (text) updates['text'] = text;
+    if (type) updates['type'] = type as QuestionType;
     if (Object.keys(updates).length > 0) await this.questionsRepository.update(id, updates);
     return await this.questionsRepository.findOneBy({ id });
   }

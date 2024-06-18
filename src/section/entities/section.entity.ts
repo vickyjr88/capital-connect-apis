@@ -10,6 +10,9 @@ export class Section {
   @Column()
   name: string;
 
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
   @OneToMany(() => SubSection, (subSection) => subSection.section)
   subSections: SubSection[];
 }
