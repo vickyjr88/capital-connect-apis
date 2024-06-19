@@ -42,4 +42,17 @@ export class FilesController {
     }
   }
 
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    try {
+      return this.filesService.uploadFile(file.originalname, file.buffer);
+    }
+    catch (error) {
+      throwInternalServer(error);
+    }
+  }
+
+
 }
