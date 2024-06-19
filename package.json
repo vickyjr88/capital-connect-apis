@@ -8,11 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-<<<<<<< HEAD
-    "start": "npm install tsconfig-paths --save-dev && npm run typeorm:prod migration:run && node dist/src/main",
-=======
     "start": "npm run typeorm:prod migration:run && node dist/src/main",
->>>>>>> ced68fcadaf9086b34b417cbb142c76a776f03dd
     "start:dev": "nest start --watch",
     "dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
