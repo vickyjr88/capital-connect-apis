@@ -1,9 +1,8 @@
-import { BadRequestException, Controller, Get, NotFoundException, Param, Post, Res, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Controller, Post, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
 
 
@@ -37,21 +36,16 @@ export class FilesController {
   }
 
 
-
-  // @Get('logo/:filename')
-  // async getLogo(@Param('filename') filename, @Res() res: Response) {
-  //   const fileFound = await this.filesService.findBusinessLogo(filename);
-  //   try {
-  //     if (fileFound) {
-  //       return res.sendFile(fileFound, {root: './uploads/company-logos'})
-  //     }
-  //   } catch (error) {
-  //     if (error instanceof NotFoundException) {
-  //       throw new NotFoundException(error.message);
-  //     }
-  //     throwInternalServer(error);
-  //   }
-  // }
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    try {
+      return this.filesService.uploadFile(file.originalname, file.buffer);
+    }
+    catch (error) {
+      throwInternalServer(error);
+    }
+  }
 
 
 }
