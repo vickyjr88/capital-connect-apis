@@ -3,18 +3,18 @@
 
 POST http://localhost:3000/company
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsiaW52ZXN0b3IiLCJ1c2VyIiwiYWRtaW4iXSwiaWF0IjoxNzE4MjA5ODA3LCJleHAiOjE3MTgyOTYyMDd9._t9-_aGz1yzUJw7VVJrL2teBhlde9S3yyOOTtARw7rQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6Miwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTgyODA1OTQsImV4cCI6MTcxODM2Njk5NH0.EERqhhz9gQUWJXPeY1OLwERS4iNbCB-kH_hSxUpEtP8
 
 {
-    "name": "Enterprie 2",
-    "country": "Senegal",
-    "businessSector": "Ecommerce",
-    "productsAndServices": "Finance",
-    "registrationStructure": "B2C",
-    "yearsOfOperation": "576",
-    "growthStage": "funding",
-    "numberOfEmployees": "495",
-    "fullTimeBusiness": true,
+    "name": "Capital Connect",
+    "country": "Kenya",
+    "businessSector": "Venture Capital",
+    "productsAndServices": "Fintech",
+    "registrationStructure": "B2B",
+    "yearsOfOperation": "14",
+    "growthStage": "funded",
+    "numberOfEmployees": "23",
+    "fullTimeBusiness": true
 }
 
 ####

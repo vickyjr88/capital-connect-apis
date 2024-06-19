@@ -1,9 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'files' })
+@Entity("files")
 export class File {
 
-    @PrimaryGeneratedColumn({ type: 'bigint' })
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column()

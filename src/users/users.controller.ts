@@ -17,6 +17,7 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     @Get('profile')
     async getProfile(@Request() req) {
+      console.log('ECHOOO: ', req.user);
       const user = await this.userService.findOne(req.user.id);
       const { resetPasswordToken, resetPasswordExpires, isEmailVerified, emailVerificationToken, emailVerificationExpires, password, ...rest } = user;
       return rest;
