@@ -1,15 +1,13 @@
-import { HttpCode, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as fs from 'fs';
-import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
-import * as util from 'util';
 import { File } from './entities/file.entity';
 // import * as AWS from 'aws-sdk';
 import { CompanyService } from 'src/company/company.service';
 import { UsersService } from 'src/users/users.service';
 import { ConfigService } from '@nestjs/config';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { CreateFileDto } from './dto/create-file.dto';
 
 @Injectable()
 export class FilesService {
@@ -27,11 +25,6 @@ export class FilesService {
       region: this.configService.getOrThrow('AWS_S3_REGION'),
     });
 
-    // private readonly s3 = new AWS.S3({
-    //   accessKeyId: this.configService.getOrThrow("AWS_ACCESS_KEY_ID"),
-    //   secretAccessKey: this.configService.getOrThrow("AWS_SECREST_ACCESS_KEY")
-    // })
-
     async uploadFile(fileName: string, file: Buffer) {
       await this.s3Client.send(
         new PutObjectCommand({
@@ -42,27 +35,18 @@ export class FilesService {
       )
     }
 
-    async createComponyLogo(userId: number, filePath: string): Promise<File> {
+    async createComponyLogo(userId: number, createFileDto: CreateFileDto) {
         const user = await this.userService.findOne(userId);
-        const companyFound = await this.findCompanyByUserId(userId);
+        const companyFound = await this.companyService.findOneByUser(user);
         if(!companyFound) {
             throw new NotFoundException('Company not found');
         } else {
-            const newLogo = this.fileRepository.create({ path: filePath });
+            const newLogo = this.fileRepository.create(createFileDto);
             const savedLogo = await this.fileRepository.save(newLogo);
-            companyFound.companyLogo = savedLogo;
+            this.companyService.updateLogoUrl(companyFound.id, savedLogo.id);
+
             return newLogo;
         }
     }
-
-    async findCompanyByUserId(userId: number) {
-        const user = await this.userService.findOne(userId)
-        if(!user) {
-            throw new NotFoundException('User not found');
-        } else {
-          return await this.companyService.findOneByUser(user);
-        }
-    
-      }
 
 }

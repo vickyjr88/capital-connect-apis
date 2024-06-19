@@ -34,7 +34,8 @@ export class Company {
   @Column()
   fullTimeBusiness: boolean;
 
-  @OneToOne(() => User, (user) => user.id)
+  // @OneToOne(() => User, (user) => user.id)
+  @OneToOne(() => User)
   @JoinColumn()
   user: User;
 
