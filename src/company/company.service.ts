@@ -16,7 +16,6 @@ export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
-
     private userService: UsersService,
   ) {}
 

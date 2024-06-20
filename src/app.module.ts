@@ -12,6 +12,7 @@ import { SectionModule } from './section/section.module';
 import { QuestionModule } from './question/question.module';
 import { SubmissionModule } from './submission/submission.module';
 import { FilesModule } from './files/files.module';
+import { S3Module } from './s3/s3.module';
 import ormConfig from 'ormconfig';
 
 @Module({
@@ -33,6 +34,7 @@ import ormConfig from 'ormconfig';
     SubsectionModule,
     SubmissionModule,
     FilesModule,
+    S3Module,
   ],
   providers: [AppService],
   controllers: [

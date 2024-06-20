@@ -13,7 +13,7 @@ export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post('upload-logo')
+  @Post('logo')
   @UseInterceptors(FileInterceptor('logo', { 
     storage: diskStorage({
       destination: './uploads/company-logos',
@@ -43,16 +43,17 @@ export class FilesController {
   }
 
 
-  @Post('upload')
+
+  //s3
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  @Post('upload-logo')
+  async uploadCompanyLogo(@Request() req, @UploadedFile() file: Express.Multer.File) {
     try {
-      return this.filesService.uploadFile(file.originalname, file.buffer);
-    }
-    catch (error) {
-      throwInternalServer(error);
+      return await this.filesService.addCompanyLogo(file, req.user.id);
+    } catch (err) {
+      throwInternalServer(err);
     }
   }
-
 
 }
