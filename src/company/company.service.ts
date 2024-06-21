@@ -44,6 +44,15 @@ export class CompanyService {
     }
   }
 
+  async findOneByOwnerId(id: number) {
+    const company = await this.companyRepository.findOneBy({ user: { id } });
+    if (company) {
+      return company;
+    } else {
+      throw new NotFoundException('company not available');
+    }
+  }
+
   async findOneByUser(user: User) {
     const company = await this.companyRepository.findOne({ where: { user } });
     if (company) {

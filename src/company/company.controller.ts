@@ -52,6 +52,21 @@ export class CompanyController {
     }
   }
 
+  @Get('owner/:id')
+  findOneByOwnerId(@Param('id') id: string) {
+    try {
+      const company = this.companyService.findOneByOwnerId(+id);
+      if (company) {
+        return company;
+      }
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throwInternalServer(error);
+    }
+  }
+
   @Patch(':id')
   async update(
     @Param('id') id: string,
