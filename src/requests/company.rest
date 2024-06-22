@@ -62,12 +62,6 @@ Content-Type: application/json
 Authorization: Bearer ..Js0xZSAcZG2kEDS1oTDf0qjMf_lgNr3jWJUY51h84pQ
 
 
-
-####
-# Fetch company by owner
-GET http://localhost:3000/company/owner/1
-
-
 ####
 #Update company by id
 
