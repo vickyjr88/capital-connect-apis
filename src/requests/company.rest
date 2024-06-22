@@ -30,6 +30,12 @@ GET http://localhost:3000/company/5
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTMyMjIsImV4cCI6MTcxNzgzOTYyMn0.leXGbPKZuX_8ah-o3fj-MddHivh5kmHRcWbHZ9u4o9Q
 
 
+
+####
+# Fetch company by owner
+GET http://localhost:3000/company/owner/1
+
+
 ####
 #Update company by id
 
