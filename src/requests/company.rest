@@ -3,7 +3,25 @@
 
 POST http://localhost:3000/company
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6Miwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTgyODA1OTQsImV4cCI6MTcxODM2Njk5NH0.EERqhhz9gQUWJXPeY1OLwERS4iNbCB-kH_hSxUpEtP8
+Authorization: Bearer ..CTJ8vwQMpgqm9ySfjIJuWbyXrym7tK_MVqJun10en0s
+
+{
+    "name": "Capital Connect",
+    "country": "Kenya",
+    "businessSector": "Venture Capital",
+    "productsAndServices": "Fintech",
+    "registrationStructure": "B2B",
+    "yearsOfOperation": "14",
+    "growthStage": "funded",
+    "numberOfEmployees": "23",
+    "fullTimeBusiness": true
+}
+###
+# Create Company prod
+
+POST https://capitalconnect-0060e0fb0eb4.herokuapp.com/company
+Content-Type: application/json
+Authorization: Bearer .CTJ8vwQMpgqm9ySfjIJuWbyXrym7tK_MVqJun10en0s
 
 {
     "name": "Capital Connect",
@@ -21,13 +39,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoc
 # Fetch companies
 
 GET http://localhost:3000/company
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsiaW52ZXN0b3IiLCJ1c2VyIiwiYWRtaW4iXSwiaWF0IjoxNzE4MjEwNTEwLCJleHAiOjE3MTgyOTY5MTB9.22RhCpoib9UeAiuJnCfJxmdbFOFvp1yJRTDpJ5FEbks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxODk3OTk4NiwiZXhwIjoxNzE5MDY2Mzg2fQ.Js0xZSAcZG2kEDS1oTDf0qjMf_lgNr3jWJUY51h84pQ
 
 ####
 # Fetch company by id
 
 GET http://localhost:3000/company/5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTMyMjIsImV4cCI6MTcxNzgzOTYyMn0.leXGbPKZuX_8ah-o3fj-MddHivh5kmHRcWbHZ9u4o9Q
+Authorization: Bearer .eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NTMyMjIsImV4cCI6MTcxNzgzOTYyMn0.leXGbPKZuX_8ah-o3fj-MddHivh5kmHRcWbHZ9u4o9Q
+
+
+####
+# Fetch company by user id
+
+GET http://localhost:3000/company/owner/1
+Authorization: Bearer ..CTJ8vwQMpgqm9ySfjIJuWbyXrym7tK_MVqJun10en0s
+
+####
+# Fetch company by user id
+
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/company/owner/4
+Content-Type: application/json
+Authorization: Bearer ..Js0xZSAcZG2kEDS1oTDf0qjMf_lgNr3jWJUY51h84pQ
 
 
 
@@ -56,3 +88,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoc
     "fullTimeBusiness": true,
     "businessLogo": "Tz logo"
 }
+
+####
+# Update company by id
+
+
+PATCH http://localhost:3000/company/6
+Content-Type: application/json
+Authorization: Bearer .eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxODk3OTk4NiwiZXhwIjoxNzE5MDY2Mzg2fQ.Js0xZSAcZG2kEDS1oTDf0qjMf_lgNr3jWJUY51h84pQ
+
+{
+    "name": "Bazuu Enterprise 255",
+    "country": "Tanzania",
+    "businessSector": "Ecommerce",
+    "productsAndServices": "FMCG",
+    "registrationStructure": "B2C",
+    "yearsOfOperation": "45",
+    "growthStage": "2",
+    "numberOfEmployees": "495",
+    "fullTimeBusiness": true,
+    "businessLogo": "Tz logo"
+}
+
+####
+# Delete company byid
+DELETE http://localhost:3000/company/1
+Content-Type: application/json
+Authorization: Bearer ..CTJ8vwQMpgqm9ySfjIJuWbyXrym7tK_MVqJun10en0s
