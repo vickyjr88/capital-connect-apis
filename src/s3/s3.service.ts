@@ -15,7 +15,7 @@ export class S3Service {
     private s3: S3Client;
 
     constructor(private configService: ConfigService) {
-        this.region = this.configService.get<string>('AWS_S3_REGION') || 'us-east-1';
+        this.region = this.configService.get<string>('AWS_S3_REGION') || 'eu-north-1';
         this.s3 = new S3Client({
             region: this.region,
             credentials: {
