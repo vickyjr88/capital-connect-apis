@@ -27,6 +27,7 @@ export class SubsectionController {
       await this.sectionService.findOne(createSubsectionDto.sectionId);
       const subsection = new SubSection();
       subsection.name = createSubsectionDto.name;
+      subsection.description = createSubsectionDto.description;
       subsection.section = { id: createSubsectionDto.sectionId } as any;
       return await this.subsectionService.create(subsection);
     } catch (error) {

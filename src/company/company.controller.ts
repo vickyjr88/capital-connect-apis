@@ -10,6 +10,8 @@ import {
   BadRequestException,
   NotFoundException,
   Request,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -19,12 +21,11 @@ import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
 
-
+@UseGuards(JwtAuthGuard)
 @Controller('company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Admin)
   @Post()
   create(@Request() req, @Body() createCompanyDto: CreateCompanyDto) {
@@ -52,6 +53,21 @@ export class CompanyController {
     }
   }
 
+  @Get('owner/:id')
+  findOneByOwnerId(@Param('id') id: string) {
+    try {
+      const company = this.companyService.findOneByOwnerId(+id);
+      if (company) {
+        return company;
+      }
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throwInternalServer(error);
+    }
+  }
+
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -68,7 +84,14 @@ export class CompanyController {
   }
 
   @Delete(':id')
+  @Roles(Role.Admin)
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
-    return this.companyService.remove(+id);
+    try {
+      this.companyService.remove(+id);
+      return 
+    } catch (error) {
+      throwInternalServer(error)
+    }
   }
 }
