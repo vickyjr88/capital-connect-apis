@@ -1,6 +1,7 @@
-import { IsInt, IsArray, ValidateNested } from 'class-validator';
+import { IsInt, IsArray, ValidateNested, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 import { IsAnswerExists, IsQuestionExists } from '../../shared/validators/custom.validator';
+import { Optional } from '@nestjs/common';
 
 
 export class CreateSubmissionDto {
@@ -14,6 +15,10 @@ export class CreateSubmissionDto {
   @IsInt()
   @IsAnswerExists()
   answerId: number;
+
+  @Optional()
+  @IsString()
+  text: string;
 }
 
 export class CreateMultipleSubmissionsDto {

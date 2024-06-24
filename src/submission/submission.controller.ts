@@ -25,6 +25,7 @@ export class SubmissionController {
       submission.user = { id: createSubmissionDto.userId } as any; // Simplified for example purposes
       submission.question = { id: createSubmissionDto.questionId } as any;
       submission.answer = { id: createSubmissionDto.answerId } as any;
+      submission.text = createSubmissionDto.text;
       return this.submissionService.create(submission);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
@@ -46,6 +47,7 @@ export class SubmissionController {
       submission.user = { id: dto.userId } as any; 
       submission.question = { id: dto.questionId } as any;
       submission.answer = { id: dto.answerId } as any;
+      submission.text = dto.text;
       return submission;
     });
     return this.submissionService.createMultiple(submissions);

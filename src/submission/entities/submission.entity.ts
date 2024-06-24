@@ -1,7 +1,7 @@
 import { Answer } from 'src/answer/entities/answer.entity';
 import { Question } from 'src/question/entities/question.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 
 
 @Entity()
@@ -17,4 +17,7 @@ export class Submission {
 
   @ManyToOne(() => Answer)
   answer: Answer;
+
+  @Column()
+  text: string;
 }
