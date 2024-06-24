@@ -18,6 +18,6 @@ export class Submission {
   @ManyToOne(() => Answer)
   answer: Answer;
 
-  @Column()
+  @Column({nullable: true})
   text: string;
 }
