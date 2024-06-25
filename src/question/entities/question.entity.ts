@@ -17,7 +17,9 @@ export class Question {
   })
   type: QuestionType;
 
-  @ManyToOne(() => SubSection, (subSection) => subSection.questions)
+  @ManyToOne(() => SubSection, (subSection) => subSection.questions, {
+    onDelete: "CASCADE",
+  })
   subSection: SubSection;
 
   @OneToMany(() => Answer, (answer) => answer.question, {

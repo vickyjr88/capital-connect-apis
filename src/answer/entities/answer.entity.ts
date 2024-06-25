@@ -13,6 +13,8 @@ export class Answer {
   @Column()
   weight: number;
 
-  @ManyToOne(() => Question, (question) => question.answers)
+  @ManyToOne(() => Question, (question) => question.answers, {
+    onDelete: "CASCADE",
+  })
   question: Question;
 }
