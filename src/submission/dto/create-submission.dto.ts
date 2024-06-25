@@ -17,7 +17,6 @@ export class CreateSubmissionDto {
   answerId: number;
 
   @Optional()
-  @IsString()
   text: string;
 }
 
