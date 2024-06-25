@@ -13,6 +13,8 @@ export class Section {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @OneToMany(() => SubSection, (subSection) => subSection.section)
+  @OneToMany(() => SubSection, (subSection) => subSection.section, {
+    onDelete: "CASCADE",
+  })
   subSections: SubSection[];
 }

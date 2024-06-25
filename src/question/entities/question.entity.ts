@@ -20,6 +20,8 @@ export class Question {
   @ManyToOne(() => SubSection, (subSection) => subSection.questions)
   subSection: SubSection;
 
-  @OneToMany(() => Answer, (answer) => answer.question)
+  @OneToMany(() => Answer, (answer) => answer.question, {
+    onDelete: "CASCADE",
+  })
   answers: Answer[];
 }

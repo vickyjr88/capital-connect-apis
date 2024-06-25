@@ -2,12 +2,12 @@
 # Create answer
 POST http://localhost:3000/answers
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc3NTg4NTksImV4cCI6MTcxNzg0NTI1OX0.D4G3O6_MAvN_HpUbFtaROSAHvd_B8QKp9EteYlajTDQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciIsImFkbWluIl0sImlhdCI6MTcxOTMxNTE0NSwiZXhwIjoxNzE5NDAxNTQ1fQ.b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
 
 {
-    "text": "answer 2c",
-    "weight": 5,
-    "questionId": 27
+    "text": "Kigali",
+    "weight": 7,
+    "questionId": 5
 }
 
 ###

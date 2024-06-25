@@ -2,10 +2,10 @@
 # Create question
 POST http://localhost:3000/questions
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc3NTg4NTksImV4cCI6MTcxNzg0NTI1OX0.D4G3O6_MAvN_HpUbFtaROSAHvd_B8QKp9EteYlajTDQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciIsImFkbWluIl0sImlhdCI6MTcxOTMxNTE0NSwiZXhwIjoxNzE5NDAxNTQ1fQ.b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
 
 {
-    "text": "What is the capital of Boma3?",
+    "text": "What is the capital of Kenya?",
     "subSectionId": 2,
     "type": "SINGLE_CHOICE" 
 }

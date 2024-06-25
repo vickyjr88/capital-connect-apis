@@ -14,9 +14,13 @@ export class SubSection {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @ManyToOne(() => Section, (section) => section.subSections)
+  @ManyToOne(() => Section, (section) => section.subSections, {
+    onDelete: "CASCADE",
+  })
   section: Section;
 
-  @OneToMany(() => Question, (question) => question.subSection)
+  @OneToMany(() => Question, (question) => question.subSection, {
+    onDelete: "CASCADE",
+  })
   questions: Question[];
 }
