@@ -17,8 +17,8 @@ export class CompanyEnumTypeFeature1719479600352 implements MigrationInterface {
         await queryRunner.query(`DROP TYPE "public"."companies_numberofemployeesenum_enum"`);
         await queryRunner.query(`ALTER TABLE "companies" DROP COLUMN "yearsOfOperationEnum"`);
         await queryRunner.query(`DROP TYPE "public"."companies_yearsofoperationenum_enum"`);
-        await queryRunner.query(`ALTER TABLE "companies" ADD "numberOfEmployees" integer NOT NULL`);
-        await queryRunner.query(`ALTER TABLE "companies" ADD "yearsOfOperation" integer NOT NULL`);
+        await queryRunner.query(`ALTER TABLE "companies" ADD "numberOfEmployees" integer`);
+        await queryRunner.query(`ALTER TABLE "companies" ADD "yearsOfOperation" integer`);
     }
 
 }

@@ -28,7 +28,7 @@ export class Company {
     enum: YearsOfOperation,
     default: YearsOfOperation._0
   })
-  yearsOfOperation: YearsOfOperation;
+  yearsOfOperationEnum: YearsOfOperation;
 
   @Column()
   growthStage: string;
@@ -38,7 +38,7 @@ export class Company {
     enum: NumberOfEmployees,
     default: NumberOfEmployees._1_TO_10
   })
-  numberOfEmployees: NumberOfEmployees;
+  numberOfEmployeesEnum: NumberOfEmployees;
 
   @Column()
   fullTimeBusiness: boolean;
