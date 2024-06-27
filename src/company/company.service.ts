@@ -46,7 +46,11 @@ export class CompanyService {
   async findOneByOwnerId(id: number) {
     const company = await this.companyRepository.findOneBy({ user: { id } });
     if (company) {
-      return company;
+      const companyDetails = this.companyRepository.find({
+        where: { id: company.id},
+        relations: ['companyLogo']
+      })
+      return companyDetails;
     } else {
       throw new NotFoundException('company not available');
     }
