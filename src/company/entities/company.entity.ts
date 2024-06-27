@@ -1,6 +1,7 @@
 import { File } from 'src/files/entities/file.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { NumberOfEmployees, YearsOfOperation } from '../company.type';
 
 @Entity('companies')
 export class Company {
@@ -22,14 +23,22 @@ export class Company {
   @Column()
   registrationStructure: string;
 
-  @Column()
-  yearsOfOperation: number;
+  @Column({
+    type: 'enum',
+    enum: YearsOfOperation,
+    default: YearsOfOperation._0
+  })
+  yearsOfOperationEnum: YearsOfOperation;
 
   @Column()
   growthStage: string;
 
-  @Column()
-  numberOfEmployees: number;
+  @Column({
+    type: 'enum',
+    enum: NumberOfEmployees,
+    default: NumberOfEmployees._1_TO_10
+  })
+  numberOfEmployeesEnum: NumberOfEmployees;
 
   @Column()
   fullTimeBusiness: boolean;

@@ -1,4 +1,5 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { NumberOfEmployees, YearsOfOperation } from "../company.type";
 
 export class CreateCompanyDto {
 
@@ -23,14 +24,16 @@ export class CreateCompanyDto {
   registrationStructure: string;
 
   @IsNotEmpty()
-  yearsOfOperation: number;
+  @IsEnum(YearsOfOperation)
+  yearsOfOperationEnum: number;
 
   @IsString()
   @IsNotEmpty()
   growthStage: string;
 
   @IsNotEmpty()
-  numberOfEmployees: number;
+  @IsEnum(NumberOfEmployees)
+  numberOfEmployeesEnum: number;
 
   @IsBoolean()
   @IsNotEmpty()
