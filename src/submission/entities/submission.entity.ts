@@ -12,10 +12,14 @@ export class Submission {
   @ManyToOne(() => User)
   user: User;
 
-  @ManyToOne(() => Question)
+  @ManyToOne(() => Question, {
+    onDelete: "CASCADE",
+  })
   question: Question;
 
-  @ManyToOne(() => Answer)
+  @ManyToOne(() => Answer, {
+    onDelete: "CASCADE",
+  })
   answer: Answer;
 
   @Column({nullable: true})
