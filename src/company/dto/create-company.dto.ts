@@ -25,7 +25,7 @@ export class CreateCompanyDto {
 
   @IsNotEmpty()
   @IsEnum(YearsOfOperation)
-  yearsOfOperationEnum: YearsOfOperation;
+  yearsOfOperation: YearsOfOperation;
 
   @IsString()
   @IsNotEmpty()
@@ -33,7 +33,7 @@ export class CreateCompanyDto {
 
   @IsNotEmpty()
   @IsEnum(NumberOfEmployees)
-  numberOfEmployeesEnum: NumberOfEmployees;
+  numberOfEmployees: NumberOfEmployees;
 
   @IsBoolean()
   @IsNotEmpty()
