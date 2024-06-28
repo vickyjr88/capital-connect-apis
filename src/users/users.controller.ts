@@ -65,6 +65,9 @@ export class UsersController {
     try {
       await this.userService.requestPasswordReset(requestResetPasswordDto.email);
     } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw new BadRequestException(error.message);
+      }
       throwInternalServer(error)
     }
   }

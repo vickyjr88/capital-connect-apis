@@ -7,6 +7,7 @@ import { randomBytes } from 'crypto';
 import { addHours } from 'date-fns';
 import * as nodemailer from 'nodemailer';
 import * as sgMail from '@sendgrid/mail';
+const brevo = require('@getbrevo/brevo');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -73,9 +74,20 @@ export class UsersService {
       user.resetPasswordExpires = addHours(new Date(), 1); // Token valid for 1 hour
   
       await this.userRepository.save(user);
+
+      const msg = {
+        to: user.username,
+        from: process.env.FROM_EMAIL,
+        subject: 'Password Reset',
+        text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n` +
+          `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+          `http://${process.env.FRONTEND_URL}/reset-password/${user.resetPasswordToken}\n\n` +
+          `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+      };
   
       // await this.sendResetEmail(user);
-      await this.sendResetEmailSendGrid(user);
+      await this.sendResetEmailViaBrevo(msg, user);
+      // await this.sendResetEmailSendGrid(user);
     } catch (error) {
       throw error;
     }
@@ -133,6 +145,32 @@ export class UsersService {
     };
   
     await sgMail.send(msg);
+  }
+
+  async sendResetEmailViaBrevo(msg: any, user: User){
+    let apiInstance = new brevo.TransactionalEmailsApi();
+
+    let apiKey = apiInstance.authentications['apiKey'];
+    apiKey.apiKey = process.env.BREVO_API_KEY;
+
+    let sendSmtpEmail = new brevo.SendSmtpEmail();
+
+    sendSmtpEmail.subject = msg.subject;
+    sendSmtpEmail.htmlContent = `<html><body><h1>Follow instructions below to verify you email address</h1><p>${msg.text}</p></body></html>`;
+    sendSmtpEmail.sender = { "name": "Capital Connect", "email": process.env.FROM_EMAIL };
+    sendSmtpEmail.to = [
+      { "email": msg.to, "name": `${user.firstName} ${user.lastName}` }
+    ];
+    sendSmtpEmail.replyTo = { "name": "Capital Connect", "email": process.env.FROM_EMAIL };
+    // sendSmtpEmail.headers = { "Some-Custom-Name": "unique-id-1234" };
+    // sendSmtpEmail.params = { "parameter": "My param value", "subject": "common subject" };
+
+
+    apiInstance.sendTransacEmail(sendSmtpEmail).then(function (data) {
+      console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+    }, function (error) {
+      console.error(error);
+    });
   }
 
   async verifyEmail(token: string): Promise<void> {
