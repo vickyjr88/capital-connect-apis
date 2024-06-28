@@ -7,6 +7,7 @@ import { Role } from './role.enum';
 import * as sgMail from '@sendgrid/mail';
 import { randomBytes } from 'crypto';
 import { addHours } from 'date-fns';
+const brevo = require('@getbrevo/brevo');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -73,6 +74,37 @@ async login(username: string, password: string) {
             `If you did not request this, please ignore this email.\n`,
     };
 
+    // await this.sendEmailVerificatioinMailViaSendGrid(msg);
+    await this.sendEmailVerificatioinMailViaBrevo(msg, user);
+  }
+
+  async sendEmailVerificatioinMailViaSendGrid(msg: any){
     await sgMail.send(msg);
+  }
+
+  async sendEmailVerificatioinMailViaBrevo(msg: any, user: User){
+    let apiInstance = new brevo.TransactionalEmailsApi();
+
+    let apiKey = apiInstance.authentications['apiKey'];
+    apiKey.apiKey = process.env.BREVO_API_KEY;
+
+    let sendSmtpEmail = new brevo.SendSmtpEmail();
+
+    sendSmtpEmail.subject = msg.subject;
+    sendSmtpEmail.htmlContent = `<html><body><h1>Follow instructions below to verify you email address</h1><p>${msg.text}</p></body></html>`;
+    sendSmtpEmail.sender = { "name": "Capital Connect", "email": process.env.FROM_EMAIL };
+    sendSmtpEmail.to = [
+      { "email": msg.to, "name": `${user.firstName} ${user.lastName}` }
+    ];
+    sendSmtpEmail.replyTo = { "name": "Capital Connect", "email": process.env.FROM_EMAIL };
+    // sendSmtpEmail.headers = { "Some-Custom-Name": "unique-id-1234" };
+    // sendSmtpEmail.params = { "parameter": "My param value", "subject": "common subject" };
+
+
+    apiInstance.sendTransacEmail(sendSmtpEmail).then(function (data) {
+      console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+    }, function (error) {
+      console.error(error);
+    });
   }
 }
