@@ -26,7 +26,7 @@ export class AuthController {
     try {
       const user = await this.authService.signup(createUserDto);
       // ToDo - send verification email, uncomment the line below when SendGrid is setup
-      // await this.authService.sendVerificationEmail(user);
+      await this.authService.sendVerificationEmail(user);
       return user;
     } catch (error) {
       if (error instanceof BadRequestException) {
