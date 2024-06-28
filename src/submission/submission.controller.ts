@@ -15,7 +15,7 @@ export class SubmissionController {
   constructor(private readonly submissionService: SubmissionService) {}
 
   @Post()
-  @Roles(Role.User)
+  @Roles(Role.User, Role.Investor)
   async create(@Request() req, @Body() createSubmissionDto: CreateSubmissionDto): Promise<Submission> {
     try {
       if (createSubmissionDto.userId !== req.user.id) {
@@ -36,7 +36,7 @@ export class SubmissionController {
   }
 
   @Post('bulk')
-  @Roles(Role.User)
+  @Roles(Role.User, Role.Investor)
   async createMultiple(@Request() req, @Body() createMultipleSubmissionsDto: CreateMultipleSubmissionsDto): Promise<Submission[]> {
     try {
     const submissions = createMultipleSubmissionsDto.submissions.map(dto => {
