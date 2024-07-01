@@ -93,11 +93,17 @@ export class SubmissionService {
 
   async calculateScorePerSection(userId: number, sectionId: number): Promise<any> {
     const subSections = await this.findSubsections(sectionId);
+    const subSectionIds = subSections.map(subSection => subSection.id);
+    console.log(subSectionIds);
     const sectionQuestionIds = subSections.map(subSection => subSection.questions.map(question => question.id)).flat();
 
     const questions = await this.findAllByQuestionIds(sectionQuestionIds, userId);
+    console.log("Questions", questions);
+    console.log("Questions length", questions.length);
     const score = questions.reduce((total, submission) => total + submission.answer.weight, 0);
     const rawQuestions = await this.findQuestionsByIds(sectionQuestionIds);
+    console.log("Raw questions", rawQuestions);
+    console.log("Raw questions length", rawQuestions.length);
     const targetScore = rawQuestions.reduce((total, question) => total + question.answers.reduce((t, ans) => t + ans.weight, 0), 0);
     const percentageScore = (score / targetScore) * 100;
     return { 
