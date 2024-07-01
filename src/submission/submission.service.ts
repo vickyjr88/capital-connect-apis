@@ -49,6 +49,13 @@ export class SubmissionService {
     return this.submissionRepository.find({ where: { user: { id: userId } }, relations: ['question', 'answer', 'question.subSection']});
   }
 
+  async findQuestionsBySubsectionId(subSectionId: number) : Promise<Question[]> {
+    return this.questionsRepository.find({
+      where: { subSection: { id: subSectionId } },
+      relations: ['answers'],
+    });
+  }
+
   async calculateScore(userId: number): Promise<any> {
     const submissions = await this.getSubmissionsGroupedBySubsections(userId);
     let subSectionsScores = [];
@@ -56,7 +63,10 @@ export class SubmissionService {
       if (subSection.questions.length > 0) {
         const questions = await this.findAllByQuestionIds(subSection.questions);
         const score = questions.reduce((total, submission) => total + submission.answer.weight, 0);
-        subSectionsScores.push({ subSectionId: subSection.sub_section_id, subSectionName: subSection.sub_section_name, score });
+        const rawQuestions = await this.findQuestionsBySubsectionId(subSection.sub_section_id);
+        const targetScore = rawQuestions.reduce((total, question) => total + question.answers.reduce((t, ans) => t + ans.weight, 0), 0);
+        const percentageScore = (score / targetScore) * 100;
+        subSectionsScores.push({ subSectionId: subSection.sub_section_id, subSectionName: subSection.sub_section_name, score, targetScore, percentageScore: Math.round(percentageScore) });
       }
     }
     return subSectionsScores;

@@ -41,12 +41,11 @@ export class SubsectionService {
     return this.subsectionRepository.findOneBy({ id });
   }
 
- remove(id: number) {
+  remove(id: number) {
    this.subsectionRepository.delete(id);
   }
 
   async findSubsections(id: number): Promise<SubSection[]> {
-    console.log('id', id);
     return this.subsectionRepository.find({
       where: { section: { id } }
     });
