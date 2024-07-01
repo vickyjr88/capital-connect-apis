@@ -21,12 +21,13 @@ export class AnswerController {
   @Post()
   @Roles(Role.Admin)
   async create(@Body() createAnswerDto: CreateAnswerDto) {
-    const { text, weight, questionId } = createAnswerDto;
+    const { text, weight, questionId, recommendation } = createAnswerDto;
     try {
       await this.questionService.findOne(createAnswerDto.questionId);
       const answer = new Answer();
       answer.text = text;
       answer.weight = weight;
+      answer.recommendation = recommendation;
       answer.question = { id: questionId } as any;
       return this.answerService.create(answer);
     } catch (error) {

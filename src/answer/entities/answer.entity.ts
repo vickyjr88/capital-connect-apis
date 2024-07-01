@@ -10,6 +10,9 @@ export class Answer {
   @Column()
   text: string;
 
+  @Column({ nullable: true })
+  recommendation: string;
+
   @Column()
   weight: number;
 

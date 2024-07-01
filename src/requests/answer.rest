@@ -2,45 +2,46 @@
 # Create answer
 POST http://localhost:3000/answers
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciIsImFkbWluIl0sImlhdCI6MTcxOTMxNTE0NSwiZXhwIjoxNzE5NDAxNTQ1fQ.b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
+Authorization: Bearer ..Jk9eEUCVmCuDbBJxp4Cj2diI1yeCWQHnydJ67_jru4k
 
 {
-    "text": "Kigali",
-    "weight": 7,
-    "questionId": 5
+    "text": "Nairobi",
+    "weight": 4,
+    "questionId": 3,
+    "recommendation": "Nairobi is the capital city of Kenya"
 }
 
 ###
 # Get answer
 
 GET http://localhost:3000/answers/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc2NTk2NzQsImV4cCI6MTcxNzc0NjA3NH0.p47b04Rqv3OisSmfFjveei8PNWheYG_RsT9VTFNTb4U
+Authorization: Bearer ..p47b04Rqv3OisSmfFjveei8PNWheYG_RsT9VTFNTb4U
 
 ###
 # Get answers
 
 GET http://localhost:3000/answers
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc2NTk2NzQsImV4cCI6MTcxNzc0NjA3NH0.p47b04Rqv3OisSmfFjveei8PNWheYG_RsT9VTFNTb4U
+Authorization: Bearer ..cbXz5KINj2vqIbMQf9e46mk5Y1l7mOnAJ2FWsPVPc-M
 
 ###
 # Get answers paginated
 
 GET http://localhost:3000/answers?page=1&limit=2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc2NTk2NzQsImV4cCI6MTcxNzc0NjA3NH0.p47b04Rqv3OisSmfFjveei8PNWheYG_RsT9VTFNTb4U
+Authorization: Bearer ..p47b04Rqv3OisSmfFjveei8PNWheYG_RsT9VTFNTb4U
 
 ###
 # Update answer
 
-PUT http://localhost:3000/answers/3
+PUT http://localhost:3000/answers/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbImFkbWluIiwidXNlciJdLCJpYXQiOjE3MTc2NTk2NzQsImV4cCI6MTcxNzc0NjA3NH0.p47b04Rqv3OisSmfFjveei8PNWheYG_RsT9VTFNTb4U
+Authorization: Bearer ..Jk9eEUCVmCuDbBJxp4Cj2diI1yeCWQHnydJ67_jru4k
 
 {
-    "text": "Updated answer 1"
+    "recommendation": "Nairobi is the capital city of Kenya"
 }
 
 ###
 # Delete answer
 
 DELETE http://localhost:3000/answers/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciIsImFkbWluIl0sImlhdCI6MTcxOTMxNTE0NSwiZXhwIjoxNzE5NDAxNTQ1fQ.b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
+Authorization: Bearer ..b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
