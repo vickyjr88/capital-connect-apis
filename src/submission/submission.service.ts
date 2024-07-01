@@ -41,8 +41,8 @@ export class SubmissionService {
     return this.submissionRepository.find({ relations: ['user', 'question', 'answer'] });
   }
 
-  async findAllByQuestionIds(questionIds: number[]): Promise<Submission[]> {
-    return this.submissionRepository.find({ where: { question: { id: In(questionIds) }}, relations: ['question', 'answer'] });
+  async findAllByQuestionIds(questionIds: number[], userId: number): Promise<Submission[]> {
+    return this.submissionRepository.find({ where: [{ question: { id: In(questionIds) }}, { user: { id: userId }}], relations: ['question', 'answer'] });
   }
 
   async findByUser(userId: number): Promise<Submission[]> {
@@ -68,7 +68,7 @@ export class SubmissionService {
     let subSectionsScores = [];
     for (const subSection of submissions) {
       if (subSection.questions.length > 0) {
-        const questions = await this.findAllByQuestionIds(subSection.questions);
+        const questions = await this.findAllByQuestionIds(subSection.questions, userId);
         const score = questions.reduce((total, submission) => total + submission.answer.weight, 0);
         const rawQuestions = await this.findQuestionsBySubsectionId(subSection.sub_section_id);
         const targetScore = rawQuestions.reduce((total, question) => total + question.answers.reduce((t, ans) => t + ans.weight, 0), 0);
@@ -95,7 +95,7 @@ export class SubmissionService {
     const subSections = await this.findSubsections(sectionId);
     const sectionQuestionIds = subSections.map(subSection => subSection.questions.map(question => question.id)).flat();
 
-    const questions = await this.findAllByQuestionIds(sectionQuestionIds);
+    const questions = await this.findAllByQuestionIds(sectionQuestionIds, userId);
     const score = questions.reduce((total, submission) => total + submission.answer.weight, 0);
     const rawQuestions = await this.findQuestionsByIds(sectionQuestionIds);
     const targetScore = rawQuestions.reduce((total, question) => total + question.answers.reduce((t, ans) => t + ans.weight, 0), 0);
