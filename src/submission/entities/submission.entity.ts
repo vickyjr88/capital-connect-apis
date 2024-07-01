@@ -12,7 +12,7 @@ export class Submission {
   @ManyToOne(() => User)
   user: User;
 
-  @ManyToOne(() => Question, {
+  @ManyToOne(() => Question, question => question.submissions, {
     onDelete: "CASCADE",
   })
   question: Question;

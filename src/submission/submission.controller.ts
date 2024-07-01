@@ -9,7 +9,6 @@ import { Role } from 'src/auth/role.enum';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
 
 @Controller('submissions')
-@Controller('answers')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class SubmissionController {
   constructor(private readonly submissionService: SubmissionService) {}

@@ -2,6 +2,7 @@ import { Answer } from 'src/answer/entities/answer.entity';
 import { SubSection } from 'src/subsection/entities/subsection.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { QuestionType } from '../question.type';
+import { Submission } from 'src/submission/entities/submission.entity';
 
 @Entity("questions")
 export class Question {
@@ -26,4 +27,7 @@ export class Question {
     onDelete: "CASCADE",
   })
   answers: Answer[];
+
+  @OneToMany(() => Submission, submission => submission.question)
+  submissions: Submission[];
 }
