@@ -76,4 +76,14 @@ export class SubmissionController {
       throwInternalServer(error)
     }
   }
+
+  @Get('user/:userId/score/:sectionId')
+  async calculateScorePerSection(@Param('userId') userId: string, @Param('sectionId') sectionId: string): Promise<{ score: number }> {
+    try {
+      const score = await this.submissionService.calculateScorePerSection(+userId, +sectionId);
+      return score;
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
 }
