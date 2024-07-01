@@ -13,17 +13,27 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "username": "t@gmail.com",
-    "password": "password"
+    "username": "jrdandiabelta@gmail.com",
+    "password": "pass123"
 }
 
 #####
-# Sign up
+# Sign up prod
 POST https://capitalconnect-0060e0fb0eb4.herokuapp.com/auth/signup
 Content-Type: application/json
 
 {
-    "username": "vic@gmail.com",
+    "username": "mushakwe@gmail.com",
+    "password": "pass123"
+}
+
+#####
+# Login prod
+POST  http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "jrdandiabelta@gmail.com",
     "password": "pass123"
 }
 
@@ -45,8 +55,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "chris@gmail.com",
-    "password": "password"
+   "username": "vic@gmail.com",
+    "password": "pass123"
 }
 
 ###
@@ -57,5 +67,35 @@ Content-Type: application/json
 
 {
     "username": "victor3@yahoo.com",
-    "password": "pass1123"
+    "password": "pass112"
+}
+
+#####
+# Sign up prod
+POST https://capitalconnect-0060e0fb0eb4.herokuapp.com/auth/login
+Content-Type: application/json
+
+{
+   "username": "vic@gmail.com",
+    "password": "pass12"
+}
+
+###
+# Resend verification email
+
+POST http://localhost:3000/auth/resend-verification-email
+Content-Type: application/json
+
+{
+    "email": "vic@gmail.com"
+}
+
+###
+# Resend verification email
+
+POST http://api.capitalconnect.africa/auth/resend-verification-email
+Content-Type: application/json
+
+{
+    "email": "tech@capitalconnect.africa"
 }
