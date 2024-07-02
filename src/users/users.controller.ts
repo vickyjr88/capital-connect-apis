@@ -17,10 +17,38 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     @Get('profile')
     async getProfile(@Request() req) {
-      console.log('ECHOOO: ', req.user);
+      try {
       const user = await this.userService.findOne(req.user.id);
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
       const { resetPasswordToken, resetPasswordExpires, isEmailVerified, emailVerificationToken, emailVerificationExpires, password, ...rest } = user;
       return rest;
+      }  catch (error) {
+        if (error instanceof NotFoundException) {
+          throw new NotFoundException(error.message);
+        }
+        throwInternalServer(error)
+      }
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Get(':id')
+    @Roles(Role.Admin)
+    async getUserById(@Param('id') id: string) {
+      try {
+        const user = await this.userService.findOne(+id);
+        if (!user) {
+          throw new NotFoundException('User not found');
+        }
+        const { resetPasswordToken, resetPasswordExpires, isEmailVerified, emailVerificationToken, emailVerificationExpires, password, ...rest } = user;
+        return rest;
+        }  catch (error) {
+          if (error instanceof NotFoundException) {
+            throw new NotFoundException(error.message);
+          }
+          throwInternalServer(error)
+        }
     }
   
     @UseGuards(JwtAuthGuard, RolesGuard)
@@ -91,6 +119,21 @@ export class UsersController {
     }
     try {
       await this.userService.verifyEmail(token);
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/accept-terms')
+  async acceptTerms(@Request() req, @Param('id') id: number) {
+    if (+id !== req.user.id) {
+      throw new UnauthorizedException('You are not authorized to accept terms and conditions for this user');
+    }
+
+    try {
+      await this.userService.acceptTerms(id);
+      return { message: 'Terms and conditions accepted' };
     } catch (error) {
       throwInternalServer(error)
     }
