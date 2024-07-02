@@ -15,6 +15,7 @@ import { Question } from 'src/question/entities/question.entity';
 
 @Injectable()
 export class CompanyService {
+
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
@@ -107,10 +108,15 @@ export class CompanyService {
       }
     });
     const ans = (await investorSubmission).filter(sub => 
-      sub.question.text === "What stage of business growth does your investments focus on?").map(sub2 => sub2.answer.text);
+      sub.question.text === "Sectors of Investment" || "Countries of Investment Focus" 
+    || "Please select the various investment structures that you consider while financing businesses" || 
+    "What stage of business growth does your investments focus on?").map(sub2 => sub2.answer.text);
     const matchedBusinesses = this.companyRepository.find({
       where: {
-        growthStage: In(ans)
+        growthStage: In(ans),
+        country: In(ans),
+        businessSector: In(ans),
+        registrationStructure: In(ans)
       }
     })
     const matched = [];
@@ -124,5 +130,4 @@ export class CompanyService {
     })
     return matched;
   }
-
 }

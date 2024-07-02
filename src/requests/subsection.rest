@@ -2,12 +2,14 @@
 # Create section
 POST http://localhost:3000/subsections
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciIsImFkbWluIl0sImlhdCI6MTcxOTMxNTE0NSwiZXhwIjoxNzE5NDAxNTQ1fQ.b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1AZ21haWwuY29tIiwic3ViIjozLCJyb2xlcyI6WyJ1c2VyIiwiYWRtaW4iLCJpbnZlc3RvciJdLCJpYXQiOjE3MTk5MzU0OTcsImV4cCI6MTcyMDAyMTg5N30.RGMg8APsBAa7IjGZewYWQAiHNTIVwzwRVnL3woLNtJA
+
+
 
 {
-    "name": "Section 200",
-    "sectionId": 2,
-    "description": "Section 200 description"
+    "name": "Section 700",
+    "sectionId": 7,
+    "description": "Section 700 description"
 }
 
 ###
