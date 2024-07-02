@@ -7,11 +7,15 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { SectionService } from 'src/section/section.service';
 
 @Controller('submissions')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class SubmissionController {
-  constructor(private readonly submissionService: SubmissionService) {}
+  constructor(
+    private readonly submissionService: SubmissionService,
+    private readonly sectionService: SectionService
+  ) {}
 
   @Post()
   @Roles(Role.User, Role.Investor)
@@ -82,6 +86,22 @@ export class SubmissionController {
     try {
       const score = await this.submissionService.calculateScorePerSection(+userId, +sectionId);
       return score;
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Get('user/:userId/scores')
+  async calculateScores(@Param('userId') userId: string): Promise<any[]> {
+    try {
+      const sections = await this.sectionService.findAll();
+      const scores = [];
+      for (const section of sections) {
+        const score = await this.submissionService.calculateScorePerSection(+userId, section.id);
+
+        scores.push({...section, ...score});
+      }
+      return scores;
     } catch (error) {
       throwInternalServer(error)
     }

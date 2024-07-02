@@ -30,13 +30,18 @@ Authorization: Bearer ..yxUZhR3V4ZIkKHo4nQVXOA-Z2PmAUuASJNXMPqmEplQ
 }
 
 ### Fetch submissions by user
-GET http://localhost:3000/submissions/user/1
+GET http://localhost:3000/submissions/user/6
 Authorization: Bearer ..3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
 
 ### Calculate score for user
 GET http://localhost:3000/submissions/user/6/score
-Authorization: Bearer ..yxUZhR3V4ZIkKHo4nQVXOA-Z2PmAUuASJNXMPqmEplQ
+Authorization: Bearer ..3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
 
 ### Calculate score for user per section 6 = userId 1 = sectionId
 GET http://localhost:3000/submissions/user/6/score/1
-Authorization: Bearer ..yxUZhR3V4ZIkKHo4nQVXOA-Z2PmAUuASJNXMPqmEplQ
+Authorization: Bearer ..3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+
+
+### Calculate score for user for all sections
+GET http://localhost:3000/submissions/user/6/scores
+Authorization: Bearer ..3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
