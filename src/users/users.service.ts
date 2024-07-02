@@ -15,28 +15,29 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private usersRepository: Repository<User>,
   ) {}
 
   async findOne(id: number): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { id } });
+    return this.usersRepository.findOne({ where: { id } });
   }
 
   async findByUsername(username: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { username } });
+    return this.usersRepository.findOne({ where: { username } });
   }
 
   async isUsernameTaken(username: string): Promise<boolean> {
-    const user = await this.userRepository.findOne({ where: { username } });
+    const user = await this.usersRepository.findOne({ where: { username } });
     return !!user;
   }
 
   async create(user: Partial<User>): Promise<User> {
-    return this.userRepository.save(user);
+    const usr = await this.usersRepository.create(user);
+    return this.usersRepository.save(usr);
   }
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.usersRepository.find();
   }
 
   async update(id: number, updateUserDto: Partial<User>): Promise<User> {
@@ -54,8 +55,9 @@ export class UsersService {
       const hash = await bcrypt.hash(updateUserDto.password, 10);
       updateUserDto.password = hash;
     }
-    await this.userRepository.update(id, updateUserDto);
-    return this.userRepository.findOneBy({ id });
+    delete updateUserDto.roles;
+    await this.usersRepository.update(id, updateUserDto);
+    return this.usersRepository.findOneBy({ id });
   }
 
   validateEmail(email: string): boolean {
@@ -65,7 +67,7 @@ export class UsersService {
 
   async requestPasswordReset(email: string): Promise<void> {
     try {
-      const user = await this.userRepository.findOne({ where: { username: email } });
+      const user = await this.usersRepository.findOne({ where: { username: email } });
       if (!user) {
         throw new NotFoundException('User not found');
       }
@@ -73,7 +75,7 @@ export class UsersService {
       user.resetPasswordToken = randomBytes(32).toString('hex');
       user.resetPasswordExpires = addHours(new Date(), 1); // Token valid for 1 hour
   
-      await this.userRepository.save(user);
+      await this.usersRepository.save(user);
 
       const msg = {
         to: user.username,
@@ -94,7 +96,7 @@ export class UsersService {
   }
 
   async resetPassword(token: string, newPassword: string): Promise<void> {
-    const user = await this.userRepository.findOne({ where: { resetPasswordToken: token } });
+    const user = await this.usersRepository.findOne({ where: { resetPasswordToken: token } });
     if (!user || user.resetPasswordExpires < new Date()) {
       throw new BadRequestException('Invalid or expired token');
     }
@@ -103,7 +105,7 @@ export class UsersService {
     user.resetPasswordToken = null;
     user.resetPasswordExpires = null;
 
-    await this.userRepository.save(user);
+    await this.usersRepository.save(user);
   }
 
   private async sendResetEmail(user: User) {
@@ -174,7 +176,7 @@ export class UsersService {
   }
 
   async verifyEmail(token: string): Promise<void> {
-    const user = await this.userRepository.findOne({ where: { emailVerificationToken: token } });
+    const user = await this.usersRepository.findOne({ where: { emailVerificationToken: token } });
     if (!user || user.emailVerificationExpires < new Date()) {
       throw new BadRequestException('Invalid or expired token');
     }
@@ -184,9 +186,18 @@ export class UsersService {
     user.emailVerificationExpires = null;
 
     try {
-      await this.userRepository.save(user);
+      await this.usersRepository.save(user);
     } catch (error) {
       throw error;
+    }
+  }
+
+  async acceptTerms(userId: number): Promise<void> {
+    const user = await this.usersRepository.findOneBy({ id: userId });
+    if (user) {
+      user.hasAcceptedTerms = true;
+      user.termsAcceptedAt = new Date();
+      await this.usersRepository.save(user);
     }
   }
 }
