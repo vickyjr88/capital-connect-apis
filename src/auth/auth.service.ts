@@ -34,6 +34,9 @@ async login(username: string, password: string) {
 
   const user = await this.validateUser(username, password);
   if (user) {
+      if (!user.isEmailVerified) {
+        throw new BadRequestException('Email is not verified');
+      }
       const userRoles = user.roles?.split(",").map(role => role.trim());
       const payload = { username: user.username, sub: user.id, roles: userRoles || [Role.User]};
       return {

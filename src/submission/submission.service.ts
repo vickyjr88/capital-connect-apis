@@ -41,8 +41,9 @@ export class SubmissionService {
     return this.submissionRepository.find({ relations: ['user', 'question', 'answer'] });
   }
 
-  async findAllByQuestionIds(questionIds: number[]): Promise<Submission[]> {
-    return this.submissionRepository.find({ where: { question: { id: In(questionIds) }}, relations: ['question', 'answer'] });
+  async findAllByQuestionIds(questionIds: number[], userId: number): Promise<Submission[]> {
+    const submissions = this.submissionRepository.find({ where: { user: { id: userId }}, relations: ['question', 'answer'] });
+    return submissions.then(submissions => submissions.filter(submission => questionIds.includes(submission.question.id)));
   }
 
   async findByUser(userId: number): Promise<Submission[]> {
@@ -56,19 +57,53 @@ export class SubmissionService {
     });
   }
 
+  async findQuestionsByIds(questionIds: number[]) : Promise<Question[]> {
+    return this.questionsRepository.find({
+      where: { id: In(questionIds) },
+      relations: ['answers'],
+    });
+  }
+
   async calculateScore(userId: number): Promise<any> {
     const submissions = await this.getSubmissionsGroupedBySubsections(userId);
     let subSectionsScores = [];
     for (const subSection of submissions) {
       if (subSection.questions.length > 0) {
-        const questions = await this.findAllByQuestionIds(subSection.questions);
+        const questions = await this.findAllByQuestionIds(subSection.questions, userId);
         const score = questions.reduce((total, submission) => total + submission.answer.weight, 0);
         const rawQuestions = await this.findQuestionsBySubsectionId(subSection.sub_section_id);
         const targetScore = rawQuestions.reduce((total, question) => total + question.answers.reduce((t, ans) => t + ans.weight, 0), 0);
         const percentageScore = (score / targetScore) * 100;
-        subSectionsScores.push({ subSectionId: subSection.sub_section_id, subSectionName: subSection.sub_section_name, score, targetScore, percentageScore: Math.round(percentageScore) });
+        subSectionsScores.push({ 
+          subSectionId: subSection.sub_section_id, 
+          subSectionName: subSection.sub_section_name, 
+          score, 
+          targetScore, 
+          percentageScore: Math.round(percentageScore) 
+        });
       }
     }
     return subSectionsScores;
+  }
+
+  async findSubsections(id: number): Promise<SubSection[]> {
+    return this.subSectionsRepository.find({
+      where: { section: { id } }, relations: ['questions'],
+    });
+  }
+
+  async calculateScorePerSection(userId: number, sectionId: number): Promise<any> {
+    const subSections = await this.findSubsections(sectionId);
+    const sectionQuestionIds = subSections.map(subSection => subSection.questions.map(question => question.id)).flat();
+    const questions = await this.findAllByQuestionIds(sectionQuestionIds, userId);
+    const score = questions.reduce((total, submission) => total + submission.answer.weight, 0);
+    const rawQuestions = await this.findQuestionsByIds(sectionQuestionIds);
+    const targetScore = rawQuestions.reduce((total, question) => total + question.answers.reduce((t, ans) => t + ans.weight, 0), 0);
+    const percentageScore = (score / targetScore) * 100;
+    return { 
+      score, 
+      targetScore, 
+      percentageScore: Math.round(percentageScore) 
+    }
   }
 }
