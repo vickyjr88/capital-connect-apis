@@ -94,13 +94,12 @@ export class CompanyController {
       throwInternalServer(error)
     }
   }
-
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Investor)
-  @Get('matches')
-  async getMatches(@Request() req) {
+  @Get('/invesetor-matches/:id')
+  getMatches(@Param('id') id: string) {
     try {
-      const match = this.companyService.getMatchedBusinesses(req.user);
+      const match = this.companyService.getMatchedBusinesses(+id);
       if (match) {
         return match;
       }

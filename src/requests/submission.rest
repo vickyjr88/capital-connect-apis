@@ -1,12 +1,12 @@
 ### Create a single submission
 POST http://localhost:3000/submissions
 Content-Type: application/json
-Authorization: Bearer ..3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtAZ21haWwuY29tIiwic3ViIjo0LCJyb2xlcyI6WyJpbnZlc3RvciJdLCJpYXQiOjE3MTk5MTIwMzcsImV4cCI6MTcxOTk5ODQzN30.gAgIicY4MYXc9n1yy4pxYWkFyl24c4SrdQuIRI-55mc
 
 {
-  "userId": 28,
-  "questionId": 7,
-  "answerId": 2
+  "userId": 4,
+  "questionId": 6,
+  "answerId": 9
 }
 
 ### Create multiple submissions

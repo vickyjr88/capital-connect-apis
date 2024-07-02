@@ -5,13 +5,13 @@ import {
 } from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository, } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
-import { SubmissionService } from 'src/submission/submission.service';
 import { Submission } from 'src/submission/entities/submission.entity';
+import { Question } from 'src/question/entities/question.entity';
 
 @Injectable()
 export class CompanyService {
@@ -19,9 +19,10 @@ export class CompanyService {
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
     private userService: UsersService,
-    private submissionService: SubmissionService,
     @InjectRepository(Submission)
     private submissionRepository: Repository<Submission>,
+    @InjectRepository(Question)
+    private questionRepository: Repository<Question>,
   ) {}
 
   async create(userId, createCompanyDto: CreateCompanyDto) {
@@ -94,14 +95,32 @@ export class CompanyService {
     return id;
   }
 
-  async getMatchedBusinesses(user: User) {
+  async getMatchedBusinesses(id: number) {
+    const userFound = await this.userService.findOne(id);
     const investorSubmission = this.submissionRepository.find({
+      relations: {
+        question: true,
+        answer: true,
+      },
       where: {
-        user: user
+        user: userFound,
       }
     });
-    return investorSubmission;
-
+    const ans = (await investorSubmission).filter(sub => 
+      sub.question.text === "What stage of business growth does your investments focus on?").map(sub2 => sub2.answer.text);
+    const matchedBusinesses = this.companyRepository.find({
+      where: {
+        growthStage: In(ans)
+      }
+    })
+    const matched = [];
+    (await matchedBusinesses).forEach((biz) => {
+      var matchedMap = {};
+      matchedMap['businessId'] = biz.id,
+      matchedMap['growthStage'] = biz.growthStage,
+      matched.push(matchedMap);
+    })
+    return matched;
   }
 
 }

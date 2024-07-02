@@ -2,13 +2,13 @@
 # Create answer
 POST http://localhost:3000/answers
 Content-Type: application/json
-Authorization: Bearer ..Jk9eEUCVmCuDbBJxp4Cj2diI1yeCWQHnydJ67_jru4k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtAZ21haWwuY29tIiwic3ViIjo0LCJyb2xlcyI6WyJpbnZlc3RvciJdLCJpYXQiOjE3MTk5MTIwMzcsImV4cCI6MTcxOTk5ODQzN30.gAgIicY4MYXc9n1yy4pxYWkFyl24c4SrdQuIRI-55mc
 
 {
-    "text": "Nairobi",
-    "weight": 4,
-    "questionId": 3,
-    "recommendation": "Nairobi is the capital city of Kenya"
+    "text": "Seed/Start Up/Idea",
+    "weight": 7,
+    "questionId": 6,
+    "recommendation": "Nairobi is the capital city of Kenya444"
 }
 
 ###
