@@ -103,7 +103,7 @@ export class SubmissionService {
     return { 
       score, 
       targetScore, 
-      percentageScore: Math.round(percentageScore) 
+      percentageScore: percentageScore ? Math.round(percentageScore) : 0
     }
   }
 }

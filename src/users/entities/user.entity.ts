@@ -1,5 +1,6 @@
 import { Role } from 'src/auth/role.enum';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
 
 @Entity("users")
 export class User {
@@ -35,4 +36,15 @@ export class User {
 
   @Column({ type: 'timestamp', nullable: true })
   emailVerificationExpires: Date;
+
+  @Column({ default: false })
+  hasAcceptedTerms: boolean;
+
+  @Column({ type: 'timestamp', nullable: true })
+  termsAcceptedAt: Date;
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }

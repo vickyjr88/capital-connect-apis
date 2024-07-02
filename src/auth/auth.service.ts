@@ -58,8 +58,6 @@ async login(username: string, password: string) {
     if (user.roles && [Role.Advisor, Role.Investor, Role.User].indexOf(user.roles as Role) === -1) {
       throw new BadRequestException('Invalid role');
     }
-    const hash = await bcrypt.hash(user.password, 10);
-    user.password = hash;
     user.emailVerificationToken = randomBytes(32).toString('hex');
     user.emailVerificationExpires = addHours(new Date(), 24);
     return this.usersService.create(user);
