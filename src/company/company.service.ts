@@ -116,8 +116,10 @@ export class CompanyService {
     const matched = [];
     (await matchedBusinesses).forEach((biz) => {
       var matchedMap = {};
-      matchedMap['businessId'] = biz.id,
-      matchedMap['growthStage'] = biz.growthStage,
+      matchedMap['country'] = biz.country;
+      matchedMap['businessSector'] = biz.businessSector;
+      matchedMap['growthStage'] = biz.growthStage;
+      matchedMap['registrationStructure'] = biz.registrationStructure;
       matched.push(matchedMap);
     })
     return matched;
