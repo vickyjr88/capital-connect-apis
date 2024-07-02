@@ -10,6 +10,8 @@ import { Company } from './entities/company.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
+import { SubmissionService } from 'src/submission/submission.service';
+import { Submission } from 'src/submission/entities/submission.entity';
 
 @Injectable()
 export class CompanyService {
@@ -17,6 +19,9 @@ export class CompanyService {
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
     private userService: UsersService,
+    private submissionService: SubmissionService,
+    @InjectRepository(Submission)
+    private submissionRepository: Repository<Submission>,
   ) {}
 
   async create(userId, createCompanyDto: CreateCompanyDto) {
@@ -88,4 +93,15 @@ export class CompanyService {
     this.companyRepository.delete(id);
     return id;
   }
+
+  async getMatchedBusinesses(user: User) {
+    const investorSubmission = this.submissionRepository.find({
+      where: {
+        user: user
+      }
+    });
+    return investorSubmission;
+
+  }
+
 }

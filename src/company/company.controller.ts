@@ -94,4 +94,24 @@ export class CompanyController {
       throwInternalServer(error)
     }
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Investor)
+  @Get('matches')
+  async getMatches(@Request() req) {
+    try {
+      const match = this.companyService.getMatchedBusinesses(req.user);
+      if (match) {
+        return match;
+      }
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throwInternalServer(error);
+    }
+  }
+
+
+
 }
