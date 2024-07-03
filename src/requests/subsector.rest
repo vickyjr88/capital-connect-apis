@@ -1,0 +1,47 @@
+###
+# Create section
+POST http://localhost:3000/subsectors
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "name": "Sector 200",
+    "sectorId": 1,
+    "description": "Sector 200 description"
+}
+
+###
+# Get sub section
+
+GET http://localhost:3000/subsectors/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get sub sectors
+
+GET http://localhost:3000/subsectors
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get sub sectors paginated
+
+GET http://localhost:3000/subsectors?page=1&count=30
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Update section
+
+PUT http://localhost:3000/subsectors/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "name": "Updated Sub Sector 1",
+    "description": "Updated Sub Sector 1 description"
+}
+
+###
+# Delete section
+
+DELETE http://localhost:3000/subsectors/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

@@ -1,0 +1,52 @@
+###
+# Create sector
+POST http://localhost:3000/sectors
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "name": "Sector 2",
+    "description": "Sector 2 description"
+}
+
+###
+# Get sector
+
+GET http://localhost:3000/sectors/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get sectors
+
+GET http://localhost:3000/sectors
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get sectors paginated
+
+GET http://localhost:3000/sectors?page=1&limit=5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Update sector
+
+PUT http://localhost:3000/sectors/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "name": "Sector 1 updated",
+    "description": "Sector 1 description updated"
+}
+
+###
+# Delete sectiond
+
+DELETE http://localhost:3000/sectors/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get sector sunsections
+
+GET http://localhost:3000/sectors/1/subsectors
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
