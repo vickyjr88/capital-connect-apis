@@ -31,25 +31,6 @@ export class UsersController {
         throwInternalServer(error)
       }
     }
-
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Get(':id')
-    @Roles(Role.Admin)
-    async getUserById(@Param('id') id: string) {
-      try {
-        const user = await this.userService.findOne(+id);
-        if (!user) {
-          throw new NotFoundException('User not found');
-        }
-        const { resetPasswordToken, resetPasswordExpires, isEmailVerified, emailVerificationToken, emailVerificationExpires, password, ...rest } = user;
-        return rest;
-        }  catch (error) {
-          if (error instanceof NotFoundException) {
-            throw new NotFoundException(error.message);
-          }
-          throwInternalServer(error)
-        }
-    }
   
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Get()
@@ -114,14 +95,36 @@ export class UsersController {
 
   @Get('verify-email')
   async verifyEmail(@Query('token') token: string): Promise<void> {
-    if (!token) {
-      throw new BadRequestException('Token is required');
-    }
     try {
+      if (!token) {
+        throw new BadRequestException('Token is required');
+      }
       await this.userService.verifyEmail(token);
     } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw new BadRequestException(error.message);
+      }
       throwInternalServer(error)
     }
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get(':id')
+  @Roles(Role.Admin)
+  async getUserById(@Param('id') id: string) {
+    try {
+      const user = await this.userService.findOne(+id);
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      const { resetPasswordToken, resetPasswordExpires, isEmailVerified, emailVerificationToken, emailVerificationExpires, password, ...rest } = user;
+      return rest;
+      }  catch (error) {
+        if (error instanceof NotFoundException) {
+          throw new NotFoundException(error.message);
+        }
+        throwInternalServer(error)
+      }
   }
 
   @UseGuards(JwtAuthGuard)
