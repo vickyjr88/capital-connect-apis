@@ -158,7 +158,7 @@ export class UsersService {
     let sendSmtpEmail = new brevo.SendSmtpEmail();
 
     sendSmtpEmail.subject = msg.subject;
-    sendSmtpEmail.htmlContent = `<html><body><h1>Follow instructions below to verify you email address</h1><p>${msg.text}</p></body></html>`;
+    sendSmtpEmail.htmlContent = `<html><body><h1>Follow instructions below to reset your password</h1><p>${msg.text}</p></body></html>`;
     sendSmtpEmail.sender = { "name": "Capital Connect", "email": process.env.FROM_EMAIL };
     sendSmtpEmail.to = [
       { "email": msg.to, "name": `${user.firstName} ${user.lastName}` }
