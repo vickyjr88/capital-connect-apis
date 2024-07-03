@@ -18,6 +18,9 @@ export class Question {
   })
   type: QuestionType;
 
+  @Column({ default: 0 })
+  order: number;
+
   @ManyToOne(() => SubSection, (subSection) => subSection.questions, {
     onDelete: "CASCADE",
   })
