@@ -2,12 +2,13 @@
 # Create question
 POST http://localhost:3000/questions
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciIsImFkbWluIl0sImlhdCI6MTcxOTMxNTE0NSwiZXhwIjoxNzE5NDAxNTQ1fQ.b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
-    "text": "What is the capital of Kenya?",
-    "subSectionId": 2,
-    "type": "SINGLE_CHOICE" 
+    "text": "What is the capital of Kenya 2?",
+    "subSectionId": 3,
+    "type": "SINGLE_CHOICE",
+    "order": 10
 }
 
 # MULTIPLE_CHOICE, SINGLE_CHOICE, TRUE_FALSE, SHORT_ANSWER
@@ -15,39 +16,40 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoc
 # Get question
 
 GET http://localhost:3000/questions/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtAZ21haWwuY29tIiwic3ViIjo0LCJyb2xlcyI6WyJpbnZlc3RvciJdLCJpYXQiOjE3MTk5MTIwMzcsImV4cCI6MTcxOTk5ODQzN30.gAgIicY4MYXc9n1yy4pxYWkFyl24c4SrdQuIRI-55mc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Get questions
 
 GET http://localhost:3000/questions
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtAZ21haWwuY29tIiwic3ViIjo0LCJyb2xlcyI6WyJpbnZlc3RvciJdLCJpYXQiOjE3MTk5MTIwMzcsImV4cCI6MTcxOTk5ODQzN30.gAgIicY4MYXc9n1yy4pxYWkFyl24c4SrdQuIRI-55mc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Get questions paginated
 
-GET http://localhost:3000/questions?page=2&limit=50
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+GET http://localhost:3000/questions?page=1&limit=50
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ###
 # Get questions paginated
 
 GET http://localhost:3000/questions/sub-section/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciIsImFkbWluIl0sImlhdCI6MTcxOTMxNTE0NSwiZXhwIjoxNzE5NDAxNTQ1fQ.b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Update question
 
-PUT http://localhost:3000/questions/1
+PUT http://localhost:3000/questions/7
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpY0BnbWFpbC5jb20iLCJzdWIiOjEsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJpYXQiOjE3MTc0OTk3NjAsImV4cCI6MTcxNzU4NjE2MH0.EWpP3HxHAlsm0wn7FgFYJGCHhiH1cT1o5SST29Q5a78
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
     "text": "Updated question 1",
-    "type": "MULTIPLE_CHOICE"
+    "type": "MULTIPLE_CHOICE",
+    "order": 9
 }
 
 ###
 # Delete question
 
-DELETE http://localhost:3000/questions/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNocmlzQGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZXMiOlsidXNlciIsImFkbWluIl0sImlhdCI6MTcxOTMxNTE0NSwiZXhwIjoxNzE5NDAxNTQ1fQ.b7ALjsOASf4xdOd_xH2r8KPqoK0hpZqAQQP6ouDMTtg
+DELETE http://localhost:3000/questions/8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

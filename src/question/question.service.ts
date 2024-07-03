@@ -33,10 +33,11 @@ export class QuestionService {
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    const { subSectionId, text, type } = updateQuestionDto;
+    const { subSectionId, text, type, order } = updateQuestionDto;
     const updates = {};
     if (text) updates['text'] = text;
     if (type) updates['type'] = type as QuestionType;
+    if (order) updates['order'] = order;
     if (Object.keys(updates).length > 0) await this.questionsRepository.update(id, updates);
     return await this.questionsRepository.findOneBy({ id });
   }
@@ -49,6 +50,7 @@ export class QuestionService {
   async findQuestionsBySubsectionId(subSectionId: number) : Promise<Question[]> {
     return this.questionsRepository.find({
       where: { subSection: { id: subSectionId } },
+      order: { order: 'ASC' },
       relations: ['answers'],
     });
   }

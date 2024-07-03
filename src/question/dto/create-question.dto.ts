@@ -9,5 +9,8 @@ export class CreateQuestionDto {
     type: QuestionType;
 
     @IsNumber()
+    order: number;
+
+    @IsNumber()
     subSectionId: number;
 }
