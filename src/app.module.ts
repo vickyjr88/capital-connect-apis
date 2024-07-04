@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
@@ -16,6 +16,8 @@ import { S3Module } from './s3/s3.module';
 import ormConfig from 'ormconfig';
 import { SectorModule } from './sector/sector.module';
 import { SubSectorModule } from './subsector/subsector.module';
+import { LoggingMiddleware } from './logging.middleware';
+import { CustomLogger } from './shared/utils/custom-logger.util';
 
 @Module({
   imports: [
@@ -40,9 +42,20 @@ import { SubSectorModule } from './subsector/subsector.module';
     SectorModule,
     SubSectorModule,
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    CustomLogger,
+    {
+      provide: 'CustomLogger',
+      useClass: CustomLogger,
+    },
+  ],
   controllers: [
     AppController
   ]
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes('*');
+  }
+}
