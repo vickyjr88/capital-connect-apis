@@ -8,7 +8,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
     "text": "What is the capital of Kenya 2?",
     "subSectionId": 3,
     "type": "SINGLE_CHOICE",
-    "order": 10
+    "order": 10,
+    "tooltip": "This is a tooltip"
 }
 
 # MULTIPLE_CHOICE, SINGLE_CHOICE, TRUE_FALSE, SHORT_ANSWER
@@ -38,14 +39,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ###
 # Update question
 
-PUT http://localhost:3000/questions/7
+PUT http://localhost:3000/questions/13
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
     "text": "Updated question 1",
     "type": "MULTIPLE_CHOICE",
-    "order": 9
+    "order": 9,
+    "tooltip": "This is a tooltip Upgrade: 1"
 }
 
 ###
