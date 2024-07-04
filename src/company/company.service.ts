@@ -51,13 +51,12 @@ export class CompanyService {
   }
 
   async findOneByOwnerId(id: number) {
-    const company = await this.companyRepository.findOneBy({ user: { id } });
-    if (company) {
-      const companyDetails = this.companyRepository.find({
-        where: { id: company.id},
-        relations: ['companyLogo']
-      })
-      return companyDetails;
+    const companies = await this.companyRepository.find({
+      where: { user: {id}},
+      relations: ['companyLogo']
+    });
+    if (companies.length > 0) {
+      return companies[0];
     } else {
       throw new NotFoundException('company not available');
     }
@@ -107,10 +106,7 @@ export class CompanyService {
         user: userFound,
       }
     });
-    const ans = (await investorSubmission).filter(sub => 
-      sub.question.text === "Sectors of Investment" || "Countries of Investment Focus" 
-    || "Please select the various investment structures that you consider while financing businesses" || 
-    "What stage of business growth does your investments focus on?").map(sub2 => sub2.answer.text);
+    const ans = (await investorSubmission).map(sub2 => sub2.answer.text);
     const matchedBusinesses = this.companyRepository.find({
       where: {
         growthStage: In(ans),
@@ -130,4 +126,24 @@ export class CompanyService {
     })
     return matched;
   }
+
+
+  async getMatchedInvestors(id: number) {
+    const companyFound = await this.findOneByOwnerId(id);
+    const submissions = await this.submissionRepository.createQueryBuilder("submission")
+    .leftJoinAndSelect("submission.question", "question")
+    .leftJoinAndSelect("submission.answer", "answer")
+    .leftJoinAndSelect("submission.user", "user")
+    .where("user.roles = :role", { role: "investor" })
+    .orWhere("answer.text = :country", { country: companyFound.country })
+    .orWhere("answer.text = :businessSector", { businessSector: companyFound.businessSector })
+    .orWhere("answer.text = :growthStage", { growthStage: companyFound.growthStage })
+    .orWhere("answer.text = :registrationStructure", { registrationStructure: companyFound.registrationStructure })
+    .getMany();
+      
+    return submissions;
+  }
+
+
+
 }
