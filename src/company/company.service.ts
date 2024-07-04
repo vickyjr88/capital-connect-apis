@@ -22,8 +22,6 @@ export class CompanyService {
     private userService: UsersService,
     @InjectRepository(Submission)
     private submissionRepository: Repository<Submission>,
-    @InjectRepository(Question)
-    private questionRepository: Repository<Question>,
   ) {}
 
   async create(userId, createCompanyDto: CreateCompanyDto) {
