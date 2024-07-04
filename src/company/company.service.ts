@@ -129,7 +129,7 @@ export class CompanyService {
     return matched;
   }
 
-  async getSubmissionsWithAnswersGroupedByUser(answerTexts: string[]) {
+  async getSubmissionsWithAnswersGroupedByUser(answerTexts: string[]): Promise<any[]> {
     try {
       const queryBuilder = this.submissionsRepository.createQueryBuilder('submission')
         .innerJoinAndSelect('submission.user', 'user')
@@ -197,8 +197,9 @@ export class CompanyService {
     // .getMany();
 
     const submissions = await this.getSubmissionsWithAnswersGroupedByUser(responsesToMatch);
+
       
-    return submissions;
+    return submissions.filter((submission) => submission.submissions.length === responsesToMatch.length);
   }
 
 
