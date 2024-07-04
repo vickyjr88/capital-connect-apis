@@ -12,6 +12,7 @@ import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
 import { Submission } from 'src/submission/entities/submission.entity';
 import { Question } from 'src/question/entities/question.entity';
+import { Answer } from 'src/answer/entities/answer.entity';
 
 @Injectable()
 export class CompanyService {
@@ -19,9 +20,12 @@ export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
-    private userService: UsersService,
     @InjectRepository(Submission)
-    private submissionRepository: Repository<Submission>,
+    private submissionsRepository: Repository<Submission>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    @InjectRepository(Question)
+    private userService: UsersService,
   ) {}
 
   async create(userId, createCompanyDto: CreateCompanyDto) {
@@ -95,7 +99,7 @@ export class CompanyService {
 
   async getMatchedBusinesses(id: number) {
     const userFound = await this.userService.findOne(id);
-    const investorSubmission = this.submissionRepository.find({
+    const investorSubmission = this.submissionsRepository.find({
       relations: {
         question: true,
         answer: true,
@@ -125,19 +129,76 @@ export class CompanyService {
     return matched;
   }
 
+  async getSubmissionsWithAnswersGroupedByUser(answerTexts: string[]) {
+    try {
+      const queryBuilder = this.submissionsRepository.createQueryBuilder('submission')
+        .innerJoinAndSelect('submission.user', 'user')
+        .innerJoinAndSelect('submission.question', 'question')
+        .innerJoinAndSelect('submission.answer', 'answer')
+        .where('user.roles = :role', { role: 'investor' })
+        .andWhere('answer.text IN (:...answerTexts)', { answerTexts })
+        .select([
+          'submission.id as submission_id',
+          'user.id as user_id',
+          'user.username as user_username',
+          'question.id as question_id',
+          'question.text as question_text',
+          'answer.id as answer_id',
+          'answer.text as answer_text',
+          'answer.weight as answer_weight'
+        ])
+        .groupBy('user.id, user.username, submission.id, question.id, question.text, answer.id, answer.text, answer.weight');
+
+        console.log(queryBuilder.getQuery());
+
+      const results = await queryBuilder.getRawMany();
+
+      const groupedResults = results.reduce((acc, curr) => {
+        const userId = curr.user_id;
+        if (!acc[userId]) {
+          acc[userId] = {
+            userId,
+            username: curr.user_username,
+            submissions: [],
+          };
+        }
+        acc[userId].submissions.push({
+          submissionId: curr.submission_id,
+          question: {
+            id: curr.question_id,
+            text: curr.question_text,
+          },
+          answer: {
+            id: curr.answer_id,
+            text: curr.answer_text,
+            weight: curr.answer_weight,
+          },
+        });
+        return acc;
+      }, {});
+
+      return Object.values(groupedResults);
+    } catch (error) {
+      console.error('Error retrieving submissions:', error);
+      throw error;
+    }
+  }
 
   async getMatchedInvestors(id: number) {
     const companyFound = await this.findOneByOwnerId(id);
-    const submissions = await this.submissionRepository.createQueryBuilder("submission")
-    .leftJoinAndSelect("submission.question", "question")
-    .leftJoinAndSelect("submission.answer", "answer")
-    .leftJoinAndSelect("submission.user", "user")
-    .where("user.roles = :role", { role: "investor" })
-    .orWhere("answer.text = :country", { country: companyFound.country })
-    .orWhere("answer.text = :businessSector", { businessSector: companyFound.businessSector })
-    .orWhere("answer.text = :growthStage", { growthStage: companyFound.growthStage })
-    .orWhere("answer.text = :registrationStructure", { registrationStructure: companyFound.registrationStructure })
-    .getMany();
+    const responsesToMatch = [companyFound.country, companyFound.businessSector, companyFound.growthStage, companyFound.registrationStructure];
+    // const submissions = await this.submissionsRepository.createQueryBuilder("submission")
+    // .leftJoinAndSelect("submission.question", "question")
+    // .leftJoinAndSelect("submission.answer", "answer")
+    // .leftJoinAndSelect("submission.user", "user")
+    // .where("user.roles = :role", { role: "investor" })
+    // .orWhere("answer.text = :country", { country: companyFound.country })
+    // .orWhere("answer.text = :businessSector", { businessSector: companyFound.businessSector })
+    // .orWhere("answer.text = :growthStage", { growthStage: companyFound.growthStage })
+    // .orWhere("answer.text = :registrationStructure", { registrationStructure: companyFound.registrationStructure })
+    // .getMany();
+
+    const submissions = await this.getSubmissionsWithAnswersGroupedByUser(responsesToMatch);
       
     return submissions;
   }
