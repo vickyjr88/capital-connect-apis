@@ -24,10 +24,12 @@ export class QuestionController {
   async create(@Body() createQuestionDto: CreateQuestionDto) {
     try {
       await this.subsectionService.findOne(createQuestionDto.subSectionId);
-      const { text, type, subSectionId } = createQuestionDto;
+      const { text, type, subSectionId, order, tooltip } = createQuestionDto;
       const question = new Question();
       question.text = text
       question.type = type as QuestionType;
+      question.order = order;
+      question.tooltip = tooltip;
       question.subSection = { id: subSectionId } as any;
       return this.questionService.create(question);
     } catch (error) {

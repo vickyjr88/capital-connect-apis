@@ -14,6 +14,8 @@ import { SubmissionModule } from './submission/submission.module';
 import { FilesModule } from './files/files.module';
 import { S3Module } from './s3/s3.module';
 import ormConfig from 'ormconfig';
+import { SectorModule } from './sector/sector.module';
+import { SubSectorModule } from './subsector/subsector.module';
 
 @Module({
   imports: [
@@ -35,6 +37,8 @@ import ormConfig from 'ormconfig';
     SubmissionModule,
     FilesModule,
     S3Module,
+    SectorModule,
+    SubSectorModule,
   ],
   providers: [AppService],
   controllers: [

@@ -149,8 +149,6 @@ export class CompanyService {
         ])
         .groupBy('user.id, user.username, submission.id, question.id, question.text, answer.id, answer.text, answer.weight');
 
-        console.log(queryBuilder.getQuery());
-
       const results = await queryBuilder.getRawMany();
 
       const groupedResults = results.reduce((acc, curr) => {
