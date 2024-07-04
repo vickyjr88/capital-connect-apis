@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsString } from "class-validator";
+import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
 import { QuestionType } from "../question.type";
 
 export class CreateQuestionDto {
@@ -9,7 +9,12 @@ export class CreateQuestionDto {
     type: QuestionType;
 
     @IsNumber()
+    @IsOptional()
     order: number;
+
+    @IsString()
+    @IsOptional()
+    tooltip: string;
 
     @IsNumber()
     subSectionId: number;

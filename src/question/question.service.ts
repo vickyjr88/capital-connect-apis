@@ -33,11 +33,12 @@ export class QuestionService {
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    const { subSectionId, text, type, order } = updateQuestionDto;
+    const { subSectionId, text, type, order, tooltip } = updateQuestionDto;
     const updates = {};
     if (text) updates['text'] = text;
     if (type) updates['type'] = type as QuestionType;
     if (order) updates['order'] = order;
+    if (tooltip) updates['tooltip'] = tooltip;
     if (Object.keys(updates).length > 0) await this.questionsRepository.update(id, updates);
     return await this.questionsRepository.findOneBy({ id });
   }
