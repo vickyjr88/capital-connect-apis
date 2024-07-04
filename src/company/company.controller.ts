@@ -94,12 +94,31 @@ export class CompanyController {
       throwInternalServer(error)
     }
   }
+
+
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Investor)
   @Get('/invesetor-matches/:id')
-  getMatches(@Param('id') id: string) {
+  getInvestorMatches(@Param('id') id: string) {
     try {
       const match = this.companyService.getMatchedBusinesses(+id);
+      if (match) {
+        return match;
+      }
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throwInternalServer(error);
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.User)
+  @Get('/business-matches/:id')
+  getBusinessMatches(@Param('id') id: string) {
+    try {
+      const match = this.companyService.getMatchedInvestors(+id);
       if (match) {
         return match;
       }

@@ -19,11 +19,12 @@ export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
-    private userService: UsersService,
     @InjectRepository(Submission)
-    private submissionRepository: Repository<Submission>,
+    private submissionsRepository: Repository<Submission>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
     @InjectRepository(Question)
-    private questionRepository: Repository<Question>,
+    private userService: UsersService,
   ) {}
 
   async create(userId, createCompanyDto: CreateCompanyDto) {
@@ -51,13 +52,12 @@ export class CompanyService {
   }
 
   async findOneByOwnerId(id: number) {
-    const company = await this.companyRepository.findOneBy({ user: { id } });
-    if (company) {
-      const companyDetails = this.companyRepository.find({
-        where: { id: company.id},
-        relations: ['companyLogo']
-      })
-      return companyDetails;
+    const companies = await this.companyRepository.find({
+      where: { user: {id}},
+      relations: ['companyLogo']
+    });
+    if (companies.length > 0) {
+      return companies[0];
     } else {
       throw new NotFoundException('company not available');
     }
@@ -98,7 +98,7 @@ export class CompanyService {
 
   async getMatchedBusinesses(id: number) {
     const userFound = await this.userService.findOne(id);
-    const investorSubmission = this.submissionRepository.find({
+    const investorSubmission = this.submissionsRepository.find({
       relations: {
         question: true,
         answer: true,
@@ -107,10 +107,7 @@ export class CompanyService {
         user: userFound,
       }
     });
-    const ans = (await investorSubmission).filter(sub => 
-      sub.question.text === "Sectors of Investment" || "Countries of Investment Focus" 
-    || "Please select the various investment structures that you consider while financing businesses" || 
-    "What stage of business growth does your investments focus on?").map(sub2 => sub2.answer.text);
+    const ans = (await investorSubmission).map(sub2 => sub2.answer.text);
     const matchedBusinesses = this.companyRepository.find({
       where: {
         growthStage: In(ans),
@@ -130,4 +127,70 @@ export class CompanyService {
     })
     return matched;
   }
+
+  async getSubmissionsWithAnswersGroupedByUser(answerTexts: string[]): Promise<any[]> {
+    try {
+      const queryBuilder = this.submissionsRepository.createQueryBuilder('submission')
+        .innerJoinAndSelect('submission.user', 'user')
+        .innerJoinAndSelect('submission.question', 'question')
+        .innerJoinAndSelect('submission.answer', 'answer')
+        .where('user.roles = :role', { role: 'investor' })
+        .andWhere('answer.text IN (:...answerTexts)', { answerTexts })
+        .select([
+          'submission.id as submission_id',
+          'user.id as user_id',
+          'user.firstName as user_firstname',
+          'user.lastName as user_lastname',
+          'question.id as question_id',
+          'question.text as question_text',
+          'answer.id as answer_id',
+          'answer.text as answer_text',
+          'answer.weight as answer_weight'
+        ])
+        .groupBy('user.id, user.firstName, user.lastName, submission.id, question.id, question.text, answer.id, answer.text, answer.weight');
+
+      const results = await queryBuilder.getRawMany();
+
+      const groupedResults = results.reduce((acc, curr) => {
+        const userId = curr.user_id;
+        if (!acc[userId]) {
+          acc[userId] = {
+            userId,
+            username: curr.user_firstname + " " + curr.user_lastname,
+            submissions: [],
+          };
+        }
+        acc[userId].submissions.push({
+          submissionId: curr.submission_id,
+          question: {
+            id: curr.question_id,
+            text: curr.question_text,
+          },
+          answer: {
+            id: curr.answer_id,
+            text: curr.answer_text,
+            weight: curr.answer_weight,
+          },
+        });
+        return acc;
+      }, {});
+
+      return Object.values(groupedResults);
+    } catch (error) {
+      console.error('Error retrieving submissions:', error);
+      throw error;
+    }
+  }
+
+  async getMatchedInvestors(id: number) {
+    const companyFound = await this.findOneByOwnerId(id);
+    if(!companyFound) {
+      throw new NotFoundException();
+    }
+    const responsesToMatch = [companyFound.country, companyFound.businessSector, companyFound.growthStage, companyFound.registrationStructure];
+    const submissions = await this.getSubmissionsWithAnswersGroupedByUser(responsesToMatch);
+      
+    return submissions.filter((submission) => submission.submissions.length === responsesToMatch.length).map(inv => inv.username);
+  }
+
 }
