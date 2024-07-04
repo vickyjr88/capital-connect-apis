@@ -12,7 +12,6 @@ import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
 import { Submission } from 'src/submission/entities/submission.entity';
 import { Question } from 'src/question/entities/question.entity';
-import { Answer } from 'src/answer/entities/answer.entity';
 
 @Injectable()
 export class CompanyService {
@@ -140,14 +139,15 @@ export class CompanyService {
         .select([
           'submission.id as submission_id',
           'user.id as user_id',
-          'user.username as user_username',
+          'user.firstName as user_firstname',
+          'user.lastName as user_lastname',
           'question.id as question_id',
           'question.text as question_text',
           'answer.id as answer_id',
           'answer.text as answer_text',
           'answer.weight as answer_weight'
         ])
-        .groupBy('user.id, user.username, submission.id, question.id, question.text, answer.id, answer.text, answer.weight');
+        .groupBy('user.id, user.firstName, user.lastName, submission.id, question.id, question.text, answer.id, answer.text, answer.weight');
 
       const results = await queryBuilder.getRawMany();
 
@@ -156,7 +156,7 @@ export class CompanyService {
         if (!acc[userId]) {
           acc[userId] = {
             userId,
-            username: curr.user_username,
+            username: curr.user_firstname + " " + curr.user_lastname,
             submissions: [],
           };
         }
@@ -184,24 +184,13 @@ export class CompanyService {
 
   async getMatchedInvestors(id: number) {
     const companyFound = await this.findOneByOwnerId(id);
+    if(!companyFound) {
+      throw new NotFoundException();
+    }
     const responsesToMatch = [companyFound.country, companyFound.businessSector, companyFound.growthStage, companyFound.registrationStructure];
-    // const submissions = await this.submissionsRepository.createQueryBuilder("submission")
-    // .leftJoinAndSelect("submission.question", "question")
-    // .leftJoinAndSelect("submission.answer", "answer")
-    // .leftJoinAndSelect("submission.user", "user")
-    // .where("user.roles = :role", { role: "investor" })
-    // .orWhere("answer.text = :country", { country: companyFound.country })
-    // .orWhere("answer.text = :businessSector", { businessSector: companyFound.businessSector })
-    // .orWhere("answer.text = :growthStage", { growthStage: companyFound.growthStage })
-    // .orWhere("answer.text = :registrationStructure", { registrationStructure: companyFound.registrationStructure })
-    // .getMany();
-
     const submissions = await this.getSubmissionsWithAnswersGroupedByUser(responsesToMatch);
-
       
-    return submissions.filter((submission) => submission.submissions.length === responsesToMatch.length);
+    return submissions.filter((submission) => submission.submissions.length === responsesToMatch.length).map(inv => inv.username);
   }
-
-
 
 }

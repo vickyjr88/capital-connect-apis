@@ -1,12 +1,12 @@
 ### Create a single submission
 POST http://localhost:3000/submissions
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1AZ21haWwuY29tIiwic3ViIjozLCJyb2xlcyI6WyJ1c2VyIiwiYWRtaW4iLCJpbnZlc3RvciJdLCJpYXQiOjE3MTk5MzU0OTcsImV4cCI6MTcyMDAyMTg5N30.RGMg8APsBAa7IjGZewYWQAiHNTIVwzwRVnL3woLNtJA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtAZ21haWwuY29tIiwic3ViIjo0LCJyb2xlcyI6WyJpbnZlc3RvciJdLCJpYXQiOjE3MjAwOTIyNzYsImV4cCI6MTcyMDE3ODY3Nn0.ZD1avyRYsI1t4XPXD56QNQTAcS8Vxtule_lf-D90lBA
 
 {
   "userId": 4,
-  "questionId": 10,
-  "answerId": 14
+  "questionId": 11,
+  "answerId": 17
 }
 
 ### Create multiple submissions
@@ -17,7 +17,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtAZ
 {
   "submissions": [
     {
-      "userId": 4,
+      "userId": 5,
       "questionId": 10,
       "answerId": 14
     },
