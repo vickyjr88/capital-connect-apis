@@ -35,7 +35,9 @@ export class LoggingMiddleware implements NestMiddleware {
           );
     }
 
-      this.logger.log(`Request Body: ${JSON.stringify(req.body)}`);
+        if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
+        this.logger.log(`Request Body: ${JSON.stringify(req.body)}`);
+        }
       this.logger.log(`Response Body: ${JSON.stringify(res.locals.responseBody)}`);
     });
 
