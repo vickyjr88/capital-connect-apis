@@ -27,8 +27,8 @@ export class CompanyService {
     private userService: UsersService,
   ) {}
 
-  async create(userId, createCompanyDto: CreateCompanyDto) {
-    const userFound = await this.userService.findOne(userId)
+  async create(id: number, createCompanyDto: CreateCompanyDto) {
+    const userFound = await this.userRepository.findOne({ where: { id } })
     if(!userFound) {
         throw new NotFoundException('User not found');
     } else {
