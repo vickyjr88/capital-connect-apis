@@ -97,7 +97,7 @@ export class CompanyService {
   }
 
   async getMatchedBusinesses(id: number) {
-    const userFound = await this.userService.findOne(id);
+    const userFound = await this.userRepository.findOne({ where: { id } })
     const investorSubmission = this.submissionsRepository.find({
       relations: {
         question: true,
