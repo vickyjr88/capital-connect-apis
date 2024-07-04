@@ -77,7 +77,6 @@ export class SubsectionController {
       const subSection = await this.subsectionService.update(+id, updateSubsectionDto);
       return subSection;
     } catch (error) {
-      console.log(error);
       if (error instanceof NotFoundException) {
         throw new BadRequestException('Sub section must be associated with an existing section.');
       }
@@ -100,7 +99,6 @@ export class SubsectionController {
   async getQuestionsWithAnswers(@Param('id') id: string) {
     try {
       const subsection = await this.subsectionService.findOne(+id);
-      console.log(subsection);
       const questions = await this.questionService.findQuestionsBySubsectionId(subsection.id);
       return questions;
     } catch (error) {
