@@ -9,15 +9,18 @@ import { IsAnswerExistsConstraint, IsQuestionExistsConstraint } from '../shared/
 import { SubSection } from 'src/subsection/entities/subsection.entity';
 import { Section } from 'src/section/entities/section.entity';
 import { SectionService } from 'src/section/section.service';
+import { PdfController } from './pdf.controller';
+import { PdfService } from './pdf.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Submission, Question, Answer, SubSection, Section])],
   providers: [
     SubmissionService,
     SectionService,
+    PdfService,
     IsQuestionExistsConstraint,
     IsAnswerExistsConstraint
   ],
-  controllers: [SubmissionController],
+  controllers: [SubmissionController, PdfController],
 })
 export class SubmissionModule {}

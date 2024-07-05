@@ -1,0 +1,2 @@
+GET http://localhost:3000/pdf/report?userId=6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

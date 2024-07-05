@@ -18,6 +18,8 @@ import { SectorModule } from './sector/sector.module';
 import { SubSectorModule } from './subsector/subsector.module';
 import { LoggingMiddleware } from './logging.middleware';
 import { CustomLogger } from './shared/utils/custom-logger.util';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -28,6 +30,9 @@ import { CustomLogger } from './shared/utils/custom-logger.util';
       imports: [ConfigModule],
       useFactory: () => (ormConfig),
       inject: [ConfigService],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'), // Adjust the path to your templates directory
     }),
     AuthModule,
     UsersModule,

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .question {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .answer {
+            font-size: 12px;
+            margin-left: 20px;
+        }
+        .recommendation {
+            font-size: 12px;
+            margin-left: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Report</h1>
+    <% responses.forEach(response => { %>
+        <div class="question">Question: <%= response.question.text %></div>
+        <div class="answer">Answer: <%= response.answer.text %></div>
+        <div class="recommendation">Recommendation: <%= response.answer.recommendation || "" %></div>
+        <hr>
+    <% }) %>
+</body>
+</html>
