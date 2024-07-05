@@ -3,7 +3,6 @@ import * as ejs from 'ejs';
 import * as htmlPdf from 'html-pdf';
 import { Response } from 'express';
 import * as path from 'path';
-import { Answer } from 'src/answer/entities/answer.entity';
 import { Submission } from './entities/submission.entity';
 
 @Injectable()
