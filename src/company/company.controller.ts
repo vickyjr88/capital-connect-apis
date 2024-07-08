@@ -99,12 +99,11 @@ export class CompanyController {
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Investor)
   @Get('/invesetor-matches/:id')
-  getInvestorMatches(@Param('id') id: string) {
+  async getInvestorMatches(@Param('id') id: string) {
     try {
-      const match = this.companyService.getMatchedBusinesses(+id);
-      if (match) {
-        return match;
-      }
+      const match = await this.companyService.getMatchedBusinesses(+id);
+      console.log("match", match);
+      return match;
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new NotFoundException(error.message);

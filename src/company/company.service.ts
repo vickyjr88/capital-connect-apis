@@ -98,7 +98,12 @@ export class CompanyService {
 
   async getMatchedBusinesses(id: number) {
     const userFound = await this.userRepository.findOne({ where: { id } })
-    const investorSubmission = this.submissionsRepository.find({
+
+    if (!userFound) {
+      throw new NotFoundException('User not found');
+    }
+
+    const investorSubmissions = await this.submissionsRepository.find({
       relations: {
         question: true,
         answer: true,
@@ -107,23 +112,65 @@ export class CompanyService {
         user: userFound,
       }
     });
-    const ans = (await investorSubmission).map(sub2 => sub2.answer.text);
-    const matchedBusinesses = this.companyRepository.find({
-      where: {
-        growthStage: In(ans),
-        country: In(ans),
-        businessSector: In(ans),
-        registrationStructure: In(ans)
+
+    // Group answers by questions
+    const groupedAnswers = investorSubmissions.reduce((acc, submission) => {
+      const questionText = submission.question.text;
+      if (!acc[questionText]) {
+        acc[questionText] = [];
       }
-    })
+      acc[questionText].push(submission.answer.text);
+      return acc;
+    }, {});
+
+    console.log("groupedAnswers", groupedAnswers);
+
+    // const ans = investorSubmissions.map(sub2 => sub2.answer.text);
+    // console.log("ans", ans);
+    // const matchedBusinesses = await this.companyRepository.find({
+    //   where: {
+    //     growthStage: In(groupedAnswers['What stage of business growth does your investments focus on?']),
+    //     country: In(groupedAnswers['Countries of Investment Focus']),
+    //     businessSector: In(groupedAnswers['Sectors of Investment']),
+    //     registrationStructure: In(groupedAnswers['Please select the various investment structures that you consider while financing businesses'])
+    //   }
+    // })
+
+    const growthStageAnswers = groupedAnswers['What stage of business growth does your investments focus on?']
+    console.log("Growth stage:", growthStageAnswers)
+    const countryAnswers = groupedAnswers['Countries of Investment Focus']
+    console.log("Country:", countryAnswers)
+    const businessSectorAnswers = groupedAnswers['Sectors of Investment']
+    console.log("Business Sector:", businessSectorAnswers)
+    const registrationStructureAnswers = groupedAnswers['Please select the various investment structures that you consider while financing businesses']
+    console.log("Registration Structure:", registrationStructureAnswers)
+
+
+    // Use QueryBuilder to fetch matched businesses and log the query
+  const matchedBusinessesQuery = this.companyRepository.createQueryBuilder('company')
+  .where('company.growthStage IN (:...uniqueAnswers)', { uniqueAnswers: [...growthStageAnswers] })
+  .orWhere('company.country IN (:...countryAnswers)', { countryAnswers: [...countryAnswers] })
+  .orWhere('company.businessSector IN (:...businessSectorAnswers)', { businessSectorAnswers: [...businessSectorAnswers] })
+  .orWhere('company.registrationStructure IN (:...registrationStructureAnswers)', { registrationStructureAnswers: [...registrationStructureAnswers] });
+
+  // Log the generated query
+  const matchedBusinessesSqlQuery = matchedBusinessesQuery.getSql();
+  console.log('Generated SQL Query for Matched Businesses:', matchedBusinessesSqlQuery);
+
+  const matchedBusinesses = await matchedBusinessesQuery.getMany();
+
+    console.log("matchedBusinesses", matchedBusinesses);
     const matched = [];
-    (await matchedBusinesses).forEach((biz) => {
+    matchedBusinesses.forEach((biz) => {
       var matchedMap = {};
-      matchedMap['country'] = biz.country;
-      matchedMap['businessSector'] = biz.businessSector;
-      matchedMap['growthStage'] = biz.growthStage;
-      matchedMap['registrationStructure'] = biz.registrationStructure;
-      matched.push(matchedMap);
+      if (countryAnswers.includes(biz.country) && businessSectorAnswers.includes(biz.businessSector) && growthStageAnswers.includes(biz.growthStage) && registrationStructureAnswers.includes(biz.registrationStructure)){
+        matchedMap['id'] = biz.id;
+        matchedMap['country'] = biz.country;
+        matchedMap['businessSector'] = biz.businessSector;
+        matchedMap['growthStage'] = biz.growthStage;
+        matchedMap['registrationStructure'] = biz.registrationStructure;
+        matched.push(matchedMap);
+      }
     })
     return matched;
   }
