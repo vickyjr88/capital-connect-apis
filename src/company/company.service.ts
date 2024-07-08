@@ -155,7 +155,7 @@ export class CompanyService {
         const userId = curr.user_id;
         if (!acc[userId]) {
           acc[userId] = {
-            userId,
+            id: userId,
             username: curr.user_firstname + " " + curr.user_lastname,
             submissions: [],
           };
@@ -190,7 +190,9 @@ export class CompanyService {
     const responsesToMatch = [companyFound.country, companyFound.businessSector, companyFound.growthStage, companyFound.registrationStructure];
     const submissions = await this.getSubmissionsWithAnswersGroupedByUser(responsesToMatch);
       
-    return submissions.filter((submission) => submission.submissions.length === responsesToMatch.length).map(inv => inv.username);
+    return submissions.filter((submission) => submission.submissions.length === responsesToMatch.length).map(inv => { 
+      return { id: inv.id, name: inv.username } 
+    });
   }
 
 }
