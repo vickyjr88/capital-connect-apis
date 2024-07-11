@@ -20,6 +20,7 @@ import { LoggingMiddleware } from './logging.middleware';
 import { CustomLogger } from './shared/utils/custom-logger.util';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ScoringModule } from './scoring/scoring.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { join } from 'path';
     S3Module,
     SectorModule,
     SubSectorModule,
+    ScoringModule,
   ],
   providers: [
     AppService,

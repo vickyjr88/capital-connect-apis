@@ -1,0 +1,55 @@
+###
+# Create sector
+POST http://localhost:3000/scorings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "score": "Score 04",
+    "comment": "Sector 3 description",
+    "implication": "Valid",
+    "action": "Schedule a meeting",
+    "recommendation": "pass",
+    "type": "ELIGIBILITY"
+}
+
+###
+# Get scoring
+
+GET http://localhost:3000/scorings/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get scorings
+
+GET http://localhost:3000/scorings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get scorings paginated
+
+GET http://localhost:3000/scorings?page=3&limit=2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Update scoring
+
+PUT http://localhost:3000/scorings/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "score": "Score 06",
+    "comment": "Sector 2 updated",
+    "implication": "Valid",
+    "action": "Schedule a meeting",
+    "recommendation": "pass",
+    "type": "ELIGIBILITY"
+}
+
+###
+# Delete scoring
+
+DELETE http://localhost:3000/scorings/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
