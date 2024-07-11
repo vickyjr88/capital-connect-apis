@@ -5,18 +5,39 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
-    "score": "Score 04",
+    "score": "71%-100%",
     "comment": "Sector 3 description",
     "implication": "Valid",
     "action": "Schedule a meeting",
     "recommendation": "pass",
-    "type": "ELIGIBILITY"
+    "type": "PREPAREDNESS"
+}
+
+###
+# Create sector
+POST http://api.capitalconnect.africa/scorings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "score": "71%-100%",
+    "comment": "High Eligibility For Capital Raising",
+    "implication": "Based on its performance and potential, the business is deemed highly eligible for raising capital. Its track record and prospects have positioned it favorably to attract financing from various sources. Given the level of interest in the business and the promising returns it can generate, securing capital would enable it to pursue strategic initiatives and unlock its growth potential. Therefore, capital raising is a viable option to consider for the business, and it should explore the available alternatives to obtain the necessary funding.",
+    "action": "The corporation in question has displayed notable strength across several areas, thereby rendering it an attractive prospect for potential investors. However, while eligible for capital raising, the business needs to be prepared to have engagements with investors. We recommend engaging a Capital Connect advisor to advise the business. The advisor will also engage the business on the level of preparedness of the business in raising capital and areas that would need to be enhanced to increase the likelihood of accessing investors. The company may confidently engage with potential investors by highlighting its strengths and potential for returns.",
+    "recommendation": "It has been determined that the business in question is eligible for a capital raise. To ensure that all necessary preparations are in order, it is advised that adequate marketing materials be made available, including a teaser, financial forecast model, valuation, and a detailed pitch deck. If such materials are not already in place, our advisors at capital@raisin.co.ke can provide guidance and support in their creation. If the necessary marketing materials are already available, it is recommended that the match-making form be completed here to determine which investor is best suited to the needs of the business. This will allow for a more streamlined and effective approach to securing the appropriate funding. By following these steps, the business can be well-prepared and confident in their pursuit of capital raise, ultimately leading to a successful outcome.",
+    "type": "PREPAREDNESS"
 }
 
 ###
 # Get scoring
 
 GET http://localhost:3000/scorings/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get scoring
+
+GET http://localhost:3000/scorings/score/71?type=PREPAREDNESS
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
@@ -29,6 +50,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 # Get scorings paginated
 
 GET http://localhost:3000/scorings?page=3&limit=2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get scorings paginated prod
+
+GET http://api.capitalconnect.africa/scorings?page=1&limit=4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###

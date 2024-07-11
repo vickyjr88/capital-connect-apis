@@ -39,4 +39,9 @@ export class ScoringController {
   remove(@Param('id') id: string) {
     return this.scoringsService.remove(+id);
   }
+
+  @Get('score/:userScore')
+  getScoring(@Param('userScore') userScore: number, @Query('type') type: string) {
+    return this.scoringsService.getScoring(userScore, type);
+  }
 }
