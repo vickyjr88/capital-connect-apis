@@ -163,7 +163,12 @@ export class CompanyService {
     const matched = [];
     matchedBusinesses.forEach((biz) => {
       var matchedMap = {};
-      if (countryAnswers.includes(biz.country) && businessSectorAnswers.includes(biz.businessSector) && growthStageAnswers.includes(biz.growthStage) && registrationStructureAnswers.includes(biz.registrationStructure)){
+      if (
+        countryAnswers.includes(biz.country) 
+        && businessSectorAnswers.includes(biz.businessSector) 
+        && growthStageAnswers.includes(biz.growthStage) 
+        && registrationStructureAnswers.includes(biz.registrationStructure)
+      ){
         matchedMap['id'] = biz.id;
         matchedMap['country'] = biz.country;
         matchedMap['businessSector'] = biz.businessSector;

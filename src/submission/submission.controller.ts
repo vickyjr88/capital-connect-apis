@@ -65,7 +65,16 @@ export class SubmissionController {
   @Get('user/:userId')
   async findByUser(@Param('userId') userId: string): Promise<Submission[]> {
     try {
-      return this.submissionService.findByUser(+userId);
+      return await this.submissionService.findByUser(+userId);
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Get('user/:userId/section/:sectionId')
+  async findByUserPerSection(@Param('userId') userId: string, @Param('sectionId') sectionId: string): Promise<Submission[]> {
+    try {
+      return await this.submissionService.findByUserPerSection(+userId, +sectionId);
     } catch (error) {
       throwInternalServer(error)
     }
