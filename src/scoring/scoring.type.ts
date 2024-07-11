@@ -1,0 +1,4 @@
+export enum ScoringType {
+    ELIGIBILITY = "ELIGIBILITY", 
+    PREPAREDNESS = "PREPAREDNESS"
+}
