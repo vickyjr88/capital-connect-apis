@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, Query } from '@nestjs/common';
 import { ScoringService } from './scoring.service';
 import { CreateScoringDto } from './dto/create-scoring.dto';
 import { UpdateScoringDto } from './dto/update-scoring.dto';
@@ -14,13 +14,13 @@ export class ScoringController {
 
   @Post()
   @Roles(Role.Admin)
-  create(@Body() createScoringDto: CreateScoringDto) {
+  create(@Body() createScoringDto: CreateScoringDto) {    
     return this.scoringsService.create(createScoringDto);
   }
 
   @Get()
-  findAll() {
-    return this.scoringsService.findAll();
+  findAll(@Query('page') page: number, @Query('limit') limit: number) {
+    return this.scoringsService.findAll(page, limit);
   }
 
   @Get(':id')
