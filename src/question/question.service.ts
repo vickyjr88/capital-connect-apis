@@ -21,6 +21,7 @@ export class QuestionService {
     return this.questionsRepository.find({
       skip,
       take: limit,
+      relations: ['answers'],
     });
   }
 

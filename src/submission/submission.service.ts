@@ -4,6 +4,7 @@ import { In, Repository } from 'typeorm';
 import { Submission } from './entities/submission.entity';
 import { Question } from 'src/question/entities/question.entity';
 import { SubSection } from 'src/subsection/entities/subsection.entity';
+import { Section } from 'src/section/entities/section.entity';
 
 @Injectable()
 export class SubmissionService {
@@ -48,6 +49,22 @@ export class SubmissionService {
 
   async findByUser(userId: number): Promise<Submission[]> {
     return this.submissionRepository.find({ where: { user: { id: userId } }, relations: ['question', 'answer', 'question.subSection']});
+  }
+
+  async findByUserPerSection(userId: number, sectionId: number): Promise<Submission[]> {
+    const subSections = await this.subSectionsRepository.find({
+      where: { section: { id: sectionId } },
+      select: ['id'],
+    });
+
+    const subSectionIds = subSections.map(subSection => subSection.id);
+
+    const submissions = await this.findByUser(userId);
+    return submissions.filter(submission => {
+      if (subSectionIds.includes(submission.question.subSection.id)) {
+        return submission;
+      }
+    })
   }
 
   async findQuestionsBySubsectionId(subSectionId: number) : Promise<Question[]> {
