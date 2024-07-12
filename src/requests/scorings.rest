@@ -1,5 +1,5 @@
 ###
-# Create sector
+# Create scoring
 POST http://localhost:3000/scorings
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
@@ -41,6 +41,12 @@ GET http://localhost:3000/scorings/score/71?type=PREPAREDNESS
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
+# Get scoring
+
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/scorings/score/71?type=PREPAREDNESSj
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
 # Get scorings
 
 GET http://localhost:3000/scorings
@@ -61,12 +67,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ###
 # Update scoring
 
-PUT http://localhost:3000/scorings/4
+PUT http://localhost:3000/scorings/5
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
-    "score": "Score 06",
+    "score": "Score 10",
     "comment": "Sector 2 updated",
     "implication": "Valid",
     "action": "Schedule a meeting",
@@ -77,6 +83,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ###
 # Delete scoring
 
-DELETE http://localhost:3000/scorings/3
+DELETE http://localhost:3000/scorings/6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
