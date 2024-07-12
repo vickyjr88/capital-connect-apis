@@ -21,6 +21,7 @@ import { CustomLogger } from './shared/utils/custom-logger.util';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ScoringModule } from './scoring/scoring.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { ScoringModule } from './scoring/scoring.module';
     SectorModule,
     SubSectorModule,
     ScoringModule,
+    PaymentModule,
   ],
   providers: [
     AppService,
