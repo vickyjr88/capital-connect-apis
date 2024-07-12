@@ -1,0 +1,100 @@
+###
+# Create payment
+POST http://localhost:3000/payments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "currency": "Ksh",
+    "amount": 1000.00,
+    "description": "payment test",
+    "status": "payed",
+    "OrderTrackingId": 55
+}
+
+###
+# Create payment prod
+POST http://api.capitalconnect.africa/payments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "currency": "",
+    "amount": 0,
+    "description": "",
+    "status": "",
+    "OrderTrackingId": 0
+}
+
+###
+# Get payment
+
+GET http://localhost:3000/payments/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get payment
+
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/payments/score/67?type=PREPAREDNESS
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get payments
+
+GET http://localhost:3000/payments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get payments prod
+
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/payments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get payments paginated
+
+GET http://localhost:3000/payments?page=3&limit=2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get payments paginated prod
+
+GET http://api.capitalconnect.africa/payments?page=1&limit=4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Update payment
+
+PUT http://localhost:3000/payments/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "currency": "",
+    "amount": 0,
+    "description": "",
+    "status": "",
+    "OrderTrackingId": 0
+}
+
+###
+# Update payment prod
+
+PUT http://api.capitalconnect.africa/payments/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "currency": "",
+    "amount": 0,
+    "description": "",
+    "status": "",
+    "OrderTrackingId": 0
+}
+
+###
+# Delete payment
+
+DELETE http://localhost:3000/payments/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
