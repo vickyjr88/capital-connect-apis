@@ -1,0 +1,49 @@
+
+
+POST https://pay.pesapal.com/v3/api/Auth/RequestToken
+Content-Type: application/json
+
+{
+    "consumer_key": "l+25h9gMEidUxTgN/dgfdgsafhgads/Uq34",
+    "consumer_secret": "3w+hhB/acsbncasbncban="
+}
+
+###
+#
+
+POST https://pay.pesapal.com/v3/api/PostPesapalDirectOrderV4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "amount": "100",
+    "description": "Payment for goods",
+    "type": "MERCHANT",
+    "reference": "123456",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": ""
+    }
+
+###
+# PesaPal Callback URL
+
+POST http://localhost:3000/payments/callback
+Content-Type: application/json
+
+{
+    "pesapal_merchant_reference": "123456",
+    "pesapal_transaction_tracking_id": "QWERTY123456"
+}
+
+###
+# PesaPal Callback URL
+
+POST http://api.capitalconnect.africa/payments/callback
+Content-Type: application/json
+
+{
+    "pesapal_merchant_reference": "123456",
+    "pesapal_transaction_tracking_id": "QWERTY123456"
+}
+
