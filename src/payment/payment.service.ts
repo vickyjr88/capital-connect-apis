@@ -4,6 +4,8 @@ import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Payment } from './entities/payment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Booking } from 'src/booking/entities/booking.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class PaymentService {
@@ -12,9 +14,17 @@ export class PaymentService {
     private paymentsRepository: Repository<Payment>
   ) {}
 
-  async create(createPaymentDto: CreatePaymentDto) {
-    const payment = await this.paymentsRepository.save(createPaymentDto);
-    payment.createdAt = new Date();
+  async createPayment(createPaymentDto: CreatePaymentDto) {
+    const { orderTrackingId, bookingId, userId } = createPaymentDto;
+    const paymentObj = new Payment();
+    paymentObj.currency = process.env.CURRENCY || "KES";
+    paymentObj.amount = Number(process.env.ADVISORY_SESSIONS_COST) || 10000;
+    paymentObj.status = "initiated";
+    paymentObj.description = "Advisory sessesion payment";
+    paymentObj.orderTrackingId = orderTrackingId;
+    paymentObj.user = { id: userId } as User;
+    if (bookingId) paymentObj.booking = { id: bookingId } as Booking;
+    const payment = await this.paymentsRepository.save(paymentObj);
     return payment;
   }
 
@@ -30,20 +40,19 @@ export class PaymentService {
     const payment = await this.paymentsRepository.findOneBy({ id });
     if (!payment) {
       throw new NotFoundException(`Payment with id ${id} not found`);
-    }
+    } 
     return payment;
   }
 
   async update(id: number, updatePaymentDto: UpdatePaymentDto) {
-    const { currency, amount, description, status, OrderTrackingId } = updatePaymentDto;
+    const { currency, amount, description, status, orderTrackingId } = updatePaymentDto;
     const updates = {};
     if (currency) updates['currency'] = currency;
     if (amount) updates['amount'] = amount;
     if (description) updates['description'] = description;
     if (status) updates['status'] = status;
-    if (OrderTrackingId) updates['OrderTrackingId'] = OrderTrackingId;
+    if (orderTrackingId) updates['OrderTrackingId'] = orderTrackingId;
     if (Object.keys(updates).length > 0) await this.paymentsRepository.update(id, updatePaymentDto);
-    //updates.updatedAt = new Date();
     return this.paymentsRepository.findOneBy({ id });
   }
 

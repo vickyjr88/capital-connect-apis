@@ -17,11 +17,10 @@ export class PaymentController {
   @Roles(Role.Admin)
   create(@Body() createPaymentDto: CreatePaymentDto) {  
     try {
-      return this.paymentsService.create(createPaymentDto);
+      return this.paymentsService.createPayment(createPaymentDto);
     } catch (error) {
       throwInternalServer(error)
     }  
-    return this.paymentsService.create(createPaymentDto);
   }
 
   @Get()

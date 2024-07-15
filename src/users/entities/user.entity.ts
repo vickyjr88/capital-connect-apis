@@ -2,6 +2,8 @@ import { Role } from 'src/auth/role.enum';
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Submission } from 'src/submission/entities/submission.entity';
+import { Booking } from 'src/booking/entities/booking.entity';
+import { Payment } from 'src/payment/entities/payment.entity';
 
 @Entity("users")
 export class User {
@@ -46,6 +48,12 @@ export class User {
 
   @OneToMany(() => Submission, submission => submission.user)
   submissions: Submission[];
+
+  @OneToMany(() => Booking, booking => booking.user)
+  bookings: Booking[];
+
+  @OneToMany(() => Payment, payment => payment.user)
+  payments: Payment[];
 
   @BeforeInsert()
   async hashPassword() {
