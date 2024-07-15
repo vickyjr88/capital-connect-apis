@@ -1,12 +1,13 @@
-import { IsNumber, IsOptional, IsString, MinLength } from "class-validator";
-import { CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { IsDate, IsNumber, IsOptional, IsString, MinLength } from "class-validator";
+
 export class CreatePaymentDto {
     @IsString()
-    @MinLength(1)
-    currency: string;
+    @IsOptional()
+    currency?: string;
 
     @IsNumber()
-    amount: number;
+    @IsOptional()
+    amount?: number;
 
     @IsString()
     @IsOptional()
@@ -16,13 +17,20 @@ export class CreatePaymentDto {
     @IsOptional()
     status?: string;
 
+    @IsString()
+    orderTrackingId: string;
+
     @IsNumber()
-    OrderTrackingId: number;
+    bookingId: number;
 
-   /* @CreateDateColumn()
-    createdAt: Date;
+    @IsNumber()
+    userId: number;
 
-    @UpdateDateColumn({ type: 'timestamptz' })
-    updatedAt: Date; */
+    @IsDate()
+    @IsOptional()
+    createdAt?: Date;
 
+    @IsString()
+    @IsOptional()
+    updatedAt?: Date;
 }

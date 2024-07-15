@@ -1,0 +1,10 @@
+
+
+POST http://localhost:3000/bookings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "calendlyEventId": "1234",
+    "paymentProcessorId": "pesapal"
+}
