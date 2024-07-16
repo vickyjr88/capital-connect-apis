@@ -9,7 +9,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
     "amount": 1000.00,
     "description": "payment test",
     "status": "payed",
-    "OrderTrackingId": 55
+    "orderTrackingId": "new",
+    "bookingId": 5,
+    "userId": 4
 }
 
 ###
@@ -53,7 +55,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ###
 # Get payments paginated
 
-GET http://localhost:3000/payments?page=3&limit=2
+GET http://localhost:3000/payments?page=3&limit=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
@@ -65,7 +67,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ###
 # Update payment
 
-PUT http://localhost:3000/payments/5
+PUT http://localhost:3000/payments/14
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
@@ -95,6 +97,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ###
 # Delete payment
 
-DELETE http://localhost:3000/payments/6
+DELETE http://localhost:3000/payments/17
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 

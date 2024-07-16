@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,19 +21,31 @@ export class BookingService {
     return this.bookingRepository.save(booking);
   }
 
-  findAll() {
-    return `This action returns all booking`;
+  findAll(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    return this.bookingRepository.find({
+      skip,
+      take: limit,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} booking`;
+  async findOne(id: number) {
+    const booking = await this.bookingRepository.findOneBy({ id });
+    if (!booking) {
+      throw new NotFoundException(`Booking with id ${id} not found`);
+    } 
+    return booking;
   }
 
-  update(id: number, updateBookingDto: UpdateBookingDto) {
-    return `This action updates a #${id} booking`;
+  async update(id: number, updateBookingDto: UpdateBookingDto) {
+    const { calendlyEventId } = updateBookingDto;
+    const updates = {};
+    if (calendlyEventId) updates['calendlyEventId'] = calendlyEventId;
+    if (Object.keys(updates).length > 0) await this.bookingRepository.update(id, updateBookingDto);
+    return this.bookingRepository.findOneBy({ id });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} booking`;
+    this.bookingRepository.delete(id);
   }
 }
