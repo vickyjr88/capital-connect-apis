@@ -7,6 +7,7 @@ import { Role } from './role.enum';
 import * as sgMail from '@sendgrid/mail';
 import { randomBytes } from 'crypto';
 import { addHours } from 'date-fns';
+import { first } from 'rxjs';
 const brevo = require('@getbrevo/brevo');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -38,7 +39,13 @@ async login(username: string, password: string) {
         throw new BadRequestException('Your email is not verified. Check your email for verification link and click on it to verify your email. If you did not receive the email, click on the resend verification email link below.');
       }
       const userRoles = user.roles?.split(",").map(role => role.trim());
-      const payload = { username: user.username, sub: user.id, roles: userRoles || [Role.User]};
+      const payload = { 
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username, 
+        sub: user.id, 
+        roles: userRoles || [Role.User]
+      };
       return {
           access_token: this.jwtService.sign(payload),
       };

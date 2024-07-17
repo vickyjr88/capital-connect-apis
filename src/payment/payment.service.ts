@@ -14,6 +14,10 @@ export class PaymentService {
     private paymentsRepository: Repository<Payment>
   ) {}
 
+  processPaymentCallback(pesapalToken: string, updatePaymentStatusDto: UpdatePaymentDto) {
+    console.log('Processing payment callback with token:', pesapalToken);
+  }
+
   async createPayment(createPaymentDto: CreatePaymentDto) {
     const { orderTrackingId, bookingId, userId } = createPaymentDto;
     const paymentObj = new Payment();

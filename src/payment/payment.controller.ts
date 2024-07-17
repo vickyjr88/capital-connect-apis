@@ -2,18 +2,28 @@ import { Controller, Get, Post, Body, Param, Delete, UseGuards, Query, NotFoundE
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
+import { HeadersToken } from '../shared/headers.decorators';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
-import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
+import { Roles } from 'src/auth/roles.decorator';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
 
 @Controller('payments')
-@UseGuards(JwtAuthGuard, RolesGuard)
 export class PaymentController {
   constructor(private readonly paymentsService: PaymentService) {}
 
+  @Post('callback')
+  callback(
+    @HeadersToken() pesapalToken: string,
+    @Body() updatePaymentStatusDto: UpdatePaymentDto
+  ) {
+    console.log('callback', updatePaymentStatusDto);
+    return this.paymentsService.processPaymentCallback(pesapalToken, updatePaymentStatusDto);
+  }
+
   @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   create(@Body() createPaymentDto: CreatePaymentDto) {  
     try {
@@ -24,11 +34,13 @@ export class PaymentController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
   findAll(@Query('page') page: number, @Query('limit') limit: number) {
     return this.paymentsService.findAll(page, limit);
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
   findOne(@Param('id') id: string) {
     try {
       return this.paymentsService.findOne(+id);
@@ -38,6 +50,7 @@ export class PaymentController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   async update(@Param('id') id: string, @Body() updatePaymentDto: UpdatePaymentDto) {
     try {
@@ -53,6 +66,7 @@ export class PaymentController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {

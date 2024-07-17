@@ -13,12 +13,11 @@ export class BookingService {
     private readonly bookingRepository: Repository<Booking>,
   ) {}
 
-  async createBooking(calendlyEventId: string, user: User): Promise<Booking> {
-    const booking = this.bookingRepository.create({
-      calendlyEventId,
-      user,
-    });
-    return this.bookingRepository.save(booking);
+  async createBooking(calendlyEventId: string, userId: number): Promise<Booking> {
+    const bookingObj = new Booking();
+    bookingObj.calendlyEventId = calendlyEventId;
+    bookingObj.user = { id: userId } as User;
+    return await this.bookingRepository.save(bookingObj);
   }
 
   findAll(page: number = 1, limit: number = 10) {
