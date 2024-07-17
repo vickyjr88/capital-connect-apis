@@ -1,26 +1,62 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
+import { Payment } from './entities/payment.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Booking } from 'src/booking/entities/booking.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class PaymentService {
-  create(createPaymentDto: CreatePaymentDto) {
-    return 'This action adds a new payment';
+  constructor( 
+    @InjectRepository(Payment)
+    private paymentsRepository: Repository<Payment>
+  ) {}
+
+  async createPayment(createPaymentDto: CreatePaymentDto) {
+    const { orderTrackingId, bookingId, userId } = createPaymentDto;
+    const paymentObj = new Payment();
+    paymentObj.currency = process.env.CURRENCY || "KES";
+    paymentObj.amount = Number(process.env.ADVISORY_SESSIONS_COST) || 10000;
+    paymentObj.status = "initiated";
+    paymentObj.description = "Advisory sessesion payment";
+    paymentObj.orderTrackingId = orderTrackingId;
+    paymentObj.user = { id: userId } as User;
+    if (bookingId) paymentObj.booking = { id: bookingId } as Booking;
+    const payment = await this.paymentsRepository.save(paymentObj);
+    return payment;
   }
 
-  findAll() {
-    return `This action returns all payment`;
+  findAll(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    return this.paymentsRepository.find({
+      skip,
+      take: limit,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} payment`;
+  async findOne(id: number) {
+    const payment = await this.paymentsRepository.findOneBy({ id });
+    if (!payment) {
+      throw new NotFoundException(`Payment with id ${id} not found`);
+    } 
+    return payment;
   }
 
-  update(id: number, updatePaymentDto: UpdatePaymentDto) {
-    return `This action updates a #${id} payment`;
+  async update(id: number, updatePaymentDto: UpdatePaymentDto) {
+    const { currency, amount, description, status, orderTrackingId } = updatePaymentDto;
+    const updates = {};
+    if (currency) updates['currency'] = currency;
+    if (amount) updates['amount'] = amount;
+    if (description) updates['description'] = description;
+    if (status) updates['status'] = status;
+    if (orderTrackingId) updates['OrderTrackingId'] = orderTrackingId;
+    if (Object.keys(updates).length > 0) await this.paymentsRepository.update(id, updatePaymentDto);
+    return this.paymentsRepository.findOneBy({ id });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} payment`;
+    this.paymentsRepository.delete(id);
   }
 }

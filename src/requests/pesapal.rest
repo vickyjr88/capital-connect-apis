@@ -1,5 +1,5 @@
-
-
+###
+# PesaPal API Authentication
 POST https://pay.pesapal.com/v3/api/Auth/RequestToken
 Content-Type: application/json
 
@@ -26,7 +26,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
     }
 
 ###
-# PesaPal Callback URL
+# PesaPal Callback URL local
 
 POST http://localhost:3000/payments/callback
 Content-Type: application/json
@@ -47,3 +47,58 @@ Content-Type: application/json
     "pesapal_transaction_tracking_id": "QWERTY123456"
 }
 
+###
+# Register IPN
+
+POST https://pay.pesapal.com/v3/api/URLSetup/RegisterIPN
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "url": "http://api.capitalconnect.africa/payments/callback",
+    "ipn_notification_type": "POST"
+}
+
+###
+# Get IPN List
+
+GET https://pay.pesapal.com/v3/api/URLSetup/GetIpnList
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Submit order request
+
+POST https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "id": "3344ZZ",
+    "currency": "KES",
+    "amount": 10.00,
+    "description": "This is a test payment",
+    "callback_url": "https://app.capitalconnect.africa/payments/success",
+    "redirect_mode": "",
+    "notification_id": "65c77d95-af39-440d-88f5-dd0114174e1c",
+    "branch": "Capital Connect Africa App",
+    "billing_address": {
+        "email_address": "mushakwe@gmail.com",
+        "phone_number": "0771114712",
+        "country_code": "KE",
+        "first_name": "Victor",
+        "middle_name": "Karanja",
+        "last_name": "Nyambura",
+        "line_1": "Pesapal Limited",
+        "line_2": "",
+        "city": "",
+        "state": "",
+        "postal_code": "",
+        "zip_code": ""
+    }
+}  
+
+###
+# Get transaction status
+
+GET https://pay.pesapal.com/v3/api/Transactions/GetTransactionStatus?orderTrackingId=8b409fc7-c24a-4e21-ab3c-dd01e92be2b6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
