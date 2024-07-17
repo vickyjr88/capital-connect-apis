@@ -6,8 +6,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
-    "calendlyEventId": "82348",
-    "bookingProcessorId": "pesapal"
+    "calendlyEventId": "82348"
 }
 
 ###
