@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Payment } from './entities/payment.entity';
@@ -6,16 +6,31 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Booking } from 'src/booking/entities/booking.entity';
 import { User } from 'src/users/entities/user.entity';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class PaymentService {
   constructor( 
     @InjectRepository(Payment)
-    private paymentsRepository: Repository<Payment>
+    private paymentsRepository: Repository<Payment>,
+    private readonly httpService: HttpService
   ) {}
 
   processPaymentCallback(pesapalToken: string, updatePaymentStatusDto: UpdatePaymentDto) {
     console.log('Processing payment callback with token:', pesapalToken);
+  }
+
+  async checkPaymentStatus(pesapalToken: string, orderTrackingId: string) {
+    const response = await this.httpService.get(`${process.env.PESAPAL_BASE_URL}/Transactions/GetTransactionStatus?orderTrackingId=${orderTrackingId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${pesapalToken}`
+      }
+    }).toPromise();
+
+    if (response.status !== 200) throw new HttpException("Failed to fetch payment", 500);
+
+    return response.data;
   }
 
   async createPayment(createPaymentDto: CreatePaymentDto) {
