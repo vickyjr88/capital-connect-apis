@@ -1,6 +1,6 @@
 import { File } from 'src/files/entities/file.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { NumberOfEmployees, YearsOfOperation } from '../company.type';
 
 @Entity('companies')
@@ -16,6 +16,9 @@ export class Company {
 
   @Column()
   businessSector: string;
+
+  @Column({ nullable: true })
+  businessSubsector: string;
 
   @Column()
   productsAndServices: string;
