@@ -18,8 +18,17 @@ export class PaymentController {
     @HeadersToken() pesapalToken: string,
     @Body() updatePaymentStatusDto: UpdatePaymentDto
   ) {
-    console.log('callback', updatePaymentStatusDto);
     return this.paymentsService.processPaymentCallback(pesapalToken, updatePaymentStatusDto);
+  }
+
+  @Get('status')
+  async checkPaymentStatus(@HeadersToken() pesapalToken: string, @Query('orderTrackingId') orderTrackingId: string) {
+    try {
+      const response = await this.paymentsService.checkPaymentStatus(pesapalToken, orderTrackingId);
+      return { orderTrackingId: `https://pay.pesapal.com/iframe/PesapalIframe3/Index?OrderTrackingId=${orderTrackingId}`, ...response };
+    } catch (error) {
+      throwInternalServer(error)
+    }
   }
 
   @Post()

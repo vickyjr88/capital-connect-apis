@@ -18,6 +18,7 @@ export class PaymentModule {
       .apply(AuthMiddleware)
       .forRoutes(
         { path: 'payments/callback', method: RequestMethod.POST },
+        { path: 'payments/status', method: RequestMethod.GET },
         { path: 'payments/:id', method: RequestMethod.GET },
       );
   }
