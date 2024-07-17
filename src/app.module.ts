@@ -22,6 +22,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ScoringModule } from './scoring/scoring.module';
 import { PaymentModule } from './payment/payment.module';
+import { MobileModule } from './mobile/mobile.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { PaymentModule } from './payment/payment.module';
     SubSectorModule,
     ScoringModule,
     PaymentModule,
+    MobileModule,
   ],
   providers: [
     AppService,
