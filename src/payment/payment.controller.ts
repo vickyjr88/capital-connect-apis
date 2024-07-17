@@ -22,10 +22,11 @@ export class PaymentController {
   }
 
   @Get('status')
+  @UseGuards(JwtAuthGuard)
   async checkPaymentStatus(@HeadersToken() pesapalToken: string, @Query('orderTrackingId') orderTrackingId: string) {
     try {
       const response = await this.paymentsService.checkPaymentStatus(pesapalToken, orderTrackingId);
-      return { orderTrackingId: `https://pay.pesapal.com/iframe/PesapalIframe3/Index?OrderTrackingId=${orderTrackingId}`, ...response };
+      return { redirectUrl: `https://pay.pesapal.com/iframe/PesapalIframe3/Index?OrderTrackingId=${orderTrackingId}`, ...response };
     } catch (error) {
       throwInternalServer(error)
     }
