@@ -2,6 +2,7 @@ import { Role } from 'src/auth/role.enum';
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Submission } from 'src/submission/entities/submission.entity';
+import { Mobile } from 'src/mobile/entities/mobile.entity';
 
 @Entity("users")
 export class User {
@@ -46,6 +47,9 @@ export class User {
 
   @OneToMany(() => Submission, submission => submission.user)
   submissions: Submission[];
+
+  @OneToMany(() => Mobile, mobile => mobile.user)
+  mobiles: Mobile[];
 
   @BeforeInsert()
   async hashPassword() {
