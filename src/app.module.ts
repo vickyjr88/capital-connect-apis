@@ -23,6 +23,7 @@ import { join } from 'path';
 import { ScoringModule } from './scoring/scoring.module';
 import { PaymentModule } from './payment/payment.module';
 import { BookingModule } from './booking/booking.module';
+import { CountryModule } from './country/country.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { BookingModule } from './booking/booking.module';
     ScoringModule,
     PaymentModule,
     BookingModule,
+    CountryModule,
   ],
   providers: [
     AppService,

@@ -1,0 +1,7 @@
+###
+# Load countries
+GET http://localhost:3000/countries/bulklocal
+
+###
+# Load countries prod
+GET http://api.capitalconnect.africa/countries/bulklocal
