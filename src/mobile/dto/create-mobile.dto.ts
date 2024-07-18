@@ -1,23 +1,28 @@
-import { IsDate, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDate, IsNumber, IsOptional, IsString, MinLength } from "class-validator";
 
 export class CreateMobileDto {
 
-@IsNumber()
-@IsOptional()
-phoneNo?: number;
+    @IsNumber()
+    @MinLength(9)
+    phoneNo?: number;
 
-@IsString()
-@IsOptional()
-isVerified?: string;
+    @IsString()
+    @IsOptional()
+    isVerified?: string;
 
-@IsString()
-otp: string;
+    @IsString()
+    otp: string;
 
-@IsDate()
-@IsOptional()
-createdAt?: Date;
+   /* @IsNumber()
+    userId: number; */
 
-@IsString()
-@IsOptional()
-updatedAt?: Date;
+    @IsDate()
+    @IsOptional()
+    createdAt?: Date;
+
+    @IsString()
+    @IsOptional()
+    updatedAt?: Date;
+
+
 }

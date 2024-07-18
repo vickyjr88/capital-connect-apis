@@ -1,0 +1,43 @@
+###
+# Create Mobile
+POST http://localhost:3000/Mobiles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "phoneNo": 675444,
+    "isVerified": "no",
+    "otp": "Wfgt5e"
+}
+
+###
+# Get Mobile
+GET http://localhost:3000/Mobiles/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Mobiles
+GET http://localhost:3000/Mobiles
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Mobiles paginated
+GET http://localhost:3000/Mobiles?page=1&limit=50
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Update Mobile
+PUT http://localhost:3000/Mobiles/13
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "phoneNo": 00675444,
+    "isVerified": "no",
+    "otp": "Wfgt5yt"
+}
+
+###
+# Delete Mobile
+DELETE http://localhost:3000/Mobiles/8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
