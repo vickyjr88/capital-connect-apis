@@ -25,6 +25,7 @@ export class BookingService {
     return this.bookingRepository.find({
       skip,
       take: limit,
+      relations: ['payments']
     });
   }
 
