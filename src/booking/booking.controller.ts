@@ -34,8 +34,8 @@ export class BookingController {
         "currency": "KES",
         "amount": process.env.ADVISORY_SESSIONS_COST,
         "description": "Advisory session booking fee.",
-        "callback_url": "https://app.capitalconnect.africa/payments/callback",
-        "redirect_mode": "",
+        "callback_url": "https://calendly.com/investor-eligibility/investor-preparedness",
+        "redirect_mode": "PARENT_WINDOW",
         "notification_id": "65c77d95-af39-440d-88f5-dd0114174e1c",
         "branch": "Capital Connect Africa App",
         "billing_address": {
