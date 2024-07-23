@@ -8,6 +8,7 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { CallbackPaymentDto } from './dto/callback-payment.dto';
 
 @Controller('payments')
 export class PaymentController {
@@ -16,10 +17,10 @@ export class PaymentController {
   @Post('callback')
   callback(
     @HeadersToken() pesapalToken: string,
-    @Body() updatePaymentStatusDto: UpdatePaymentDto
+    @Body() callbackPaymentDto: CallbackPaymentDto
   ) {
     try {
-      return this.paymentsService.processPaymentCallback(pesapalToken, updatePaymentStatusDto);
+      return this.paymentsService.processPaymentCallback(pesapalToken, callbackPaymentDto);
     } catch (error) {
       throwInternalServer(error)
     }
