@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateInvestmentStructureDto } from './dto/create-investment-structure.dto';
 import { UpdateInvestmentStructureDto } from './dto/update-investment-structure.dto';
+import { InvestmentStructure } from './entities/investment-structure.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class InvestmentStructuresService {
-  create(createInvestmentStructureDto: CreateInvestmentStructureDto) {
-    return 'This action adds a new investmentStructure';
+  constructor( 
+    @InjectRepository(InvestmentStructure)
+    private investmentStructureRepository: Repository<InvestmentStructure>,
+  ) {}
+  async create(createInvestmentStructureDto: CreateInvestmentStructureDto) {
+    return await this.investmentStructureRepository.save(createInvestmentStructureDto);
   }
 
-  findAll() {
-    return `This action returns all investmentStructures`;
+  findAll(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    return this.investmentStructureRepository.find({
+      skip,
+      take: limit,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} investmentStructure`;
+  async findOne(id: number) {
+    const investment = await this.investmentStructureRepository.findOneBy({ id });
+    if (!investment) {
+      throw new NotFoundException(`Investment structure with id ${id} not found`);
+    }
+    return investment;
   }
 
-  update(id: number, updateInvestmentStructureDto: UpdateInvestmentStructureDto) {
-    return `This action updates a #${id} investmentStructure`;
+  async update(id: number, updateInvestmentStructureDto: UpdateInvestmentStructureDto) {
+    const { title, description } = updateInvestmentStructureDto;
+    const updates = {};
+    if (title) updates['title'] = title;
+    if (description) updates['description'] = description;
+    if (Object.keys(updates).length > 0) await this.investmentStructureRepository.update(id, updateInvestmentStructureDto);
+    return this.investmentStructureRepository.findOneBy({ id });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} investmentStructure`;
+    this.investmentStructureRepository.delete(id);
   }
 }
