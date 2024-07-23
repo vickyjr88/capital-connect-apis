@@ -1,0 +1,41 @@
+###
+# Create stage
+
+POST http://localhost:3000/stages 
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Top", 
+    "description": "The highest level"
+}
+
+### 
+# Get stage
+
+GET http://localhost:3000/stages/1 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### 
+# Get stages
+
+GET http://localhost:3000/stages 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### 
+# Update stage
+
+PUT http://localhost:3000/stages/1 
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "stage 1 updated", 
+    "description": "stage 1 description updated"
+}
+
+### 
+# Delete stage
+
+DELETE http://localhost:3000/stages/2 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateStageDto } from './dto/create-stage.dto';
 import { UpdateStageDto } from './dto/update-stage.dto';
+import { Stage } from './entities/stage.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class StageService {
-  create(createStageDto: CreateStageDto) {
-    return 'This action adds a new stage';
+  constructor( 
+    @InjectRepository(Stage)
+    private stagesRepository: Repository<Stage>,
+  ) {}
+
+  async create(createStageDto: CreateStageDto) {
+    return await this.stagesRepository.save(createStageDto);
   }
 
-  findAll() {
-    return `This action returns all stage`;
+  findAll(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    return this.stagesRepository.find({
+      skip,
+      take: limit,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} stage`;
+  async findOne(id: number) {
+    const stage = await this.stagesRepository.findOneBy({ id });
+    if (!stage) {
+      throw new NotFoundException(`Stage of business with id ${id} not found`);
+    }
+    return stage;
   }
 
-  update(id: number, updateStageDto: UpdateStageDto) {
-    return `This action updates a #${id} stage`;
+  async update(id: number, updateStageDto: UpdateStageDto) {
+    const { title, description } = updateStageDto;
+    const updates = {};
+    if (title) updates['title'] = title;
+    if (description) updates['description'] = description;
+    if (Object.keys(updates).length > 0) await this.stagesRepository.update(id, updateStageDto);
+    return this.stagesRepository.findOneBy({ id });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} stage`;
+    this.stagesRepository.delete(id);
   }
 }
