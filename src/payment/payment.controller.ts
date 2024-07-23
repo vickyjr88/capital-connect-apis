@@ -18,7 +18,11 @@ export class PaymentController {
     @HeadersToken() pesapalToken: string,
     @Body() updatePaymentStatusDto: UpdatePaymentDto
   ) {
-    return this.paymentsService.processPaymentCallback(pesapalToken, updatePaymentStatusDto);
+    try {
+      return this.paymentsService.processPaymentCallback(pesapalToken, updatePaymentStatusDto);
+    } catch (error) {
+      throwInternalServer(error)
+    }
   }
 
   @Get('status')

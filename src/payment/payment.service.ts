@@ -16,8 +16,14 @@ export class PaymentService {
     private readonly httpService: HttpService
   ) {}
 
-  processPaymentCallback(pesapalToken: string, updatePaymentStatusDto: UpdatePaymentDto) {
+  async processPaymentCallback(pesapalToken: string, updatePaymentStatusDto: UpdatePaymentDto) {
     console.log('Processing payment callback with token:', pesapalToken);
+    const { status, orderTrackingId } = updatePaymentStatusDto;
+    const payment = await this.paymentsRepository.findOneBy({ orderTrackingId });
+    if (!payment) throw new NotFoundException(`Payment with order tracking id ${orderTrackingId} not found`);
+    payment.status = status;
+    this.paymentsRepository.save(payment);
+    return { message: "Payment processed successfully" };
   }
 
   async checkPaymentStatus(pesapalToken: string, orderTrackingId: string) {
