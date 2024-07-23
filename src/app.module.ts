@@ -24,8 +24,8 @@ import { ScoringModule } from './scoring/scoring.module';
 import { PaymentModule } from './payment/payment.module';
 import { BookingModule } from './booking/booking.module';
 import { CountryModule } from './country/country.module';
-
-@Module({
+import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
+Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Makes the ConfigService available globally
@@ -54,6 +54,7 @@ import { CountryModule } from './country/country.module';
     PaymentModule,
     BookingModule,
     CountryModule,
+    InvestmentStructuresModule,
   ],
   providers: [
     AppService,
