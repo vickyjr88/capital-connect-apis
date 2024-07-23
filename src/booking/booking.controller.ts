@@ -35,12 +35,12 @@ export class BookingController {
         "amount": process.env.ADVISORY_SESSIONS_COST,
         "description": "Advisory session booking fee.",
         "callback_url": "https://calendly.com/investor-eligibility/investor-preparedness",
-        "redirect_mode": "PARENT_WINDOW",
+        "redirect_mode": "TOP_WINDOW",
         "notification_id": "65c77d95-af39-440d-88f5-dd0114174e1c",
         "branch": "Capital Connect Africa App",
         "billing_address": {
             "email_address": user.username,
-            "phone_number": "0771114712", // ToDo: Get user phone number
+            "phone_number": "", // ToDo: Get user phone number
             "country_code": "KE",
             "first_name": user.firstName,
             "middle_name": user.lastName,
