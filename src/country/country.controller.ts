@@ -22,17 +22,17 @@ export class CountryController {
 
   @Get('bulklocal')
   async bulkCreateLocal(): Promise<Country[]> {
-    const countries: CreateCountryDto[] = countriesData.map(country => ({
+    const countries: CreateCountryDto[] = countriesData.map((country) => ({
       name: country.name,
       code: country.code,
     }));
-  
+
     return await this.countriesService.bulkCreate(countries);
   }
 
   @Get(':id')
-    findOne(@Param('id') id: number): Promise<Country> {
-        return this.countriesService.findOne(id);
+  findOne(@Param('id') id: number): Promise<Country> {
+    return this.countriesService.findOne(id);
   }
 
   @Put(':id')
@@ -45,12 +45,16 @@ export class CountryController {
       if (error instanceof NotFoundException) {
         throw new BadRequestException(`Country with id ${id} not found`);
       }
-      throwInternalServer(error)
+      throwInternalServer(error);
     }
   }
 
   @Delete(':id')
-    remove(@Param('id') id: number): Promise<void> {
-        return this.countriesService.remove(id);
+  remove(@Param('id') id: number): Promise<void> {
+    try {
+      return this.countriesService.remove(id);
+    } catch (error) {
+      throwInternalServer(error);
+    }
   }
 }

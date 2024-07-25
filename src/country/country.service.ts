@@ -28,7 +28,7 @@ export class CountryService {
     const country = await this.countriesRepository.findOneBy({ id });
     if (!country) {
       throw new NotFoundException(`Country with id ${id} not found`);
-    } 
+    }
     return country;
   }
 
@@ -37,7 +37,8 @@ export class CountryService {
     const updates = {};
     if (name) updates['name'] = name;
     if (code) updates['code'] = code;
-    if (Object.keys(updates).length > 0) await this.countriesRepository.update(id, updateCountryDto);
+    if (Object.keys(updates).length > 0)
+      await this.countriesRepository.update(id, updateCountryDto);
     return this.countriesRepository.findOneBy({ id });
   }
 
