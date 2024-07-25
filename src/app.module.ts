@@ -24,15 +24,17 @@ import { ScoringModule } from './scoring/scoring.module';
 import { PaymentModule } from './payment/payment.module';
 import { BookingModule } from './booking/booking.module';
 import { CountryModule } from './country/country.module';
+import { StageModule } from './stage/stage.module';
 import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
-Module({
+
+@Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Makes the ConfigService available globally
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: () => (ormConfig),
+      useFactory: () => ormConfig,
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
@@ -54,6 +56,7 @@ Module({
     PaymentModule,
     BookingModule,
     CountryModule,
+    StageModule,
     InvestmentStructuresModule,
   ],
   providers: [
@@ -64,9 +67,7 @@ Module({
       useClass: CustomLogger,
     },
   ],
-  controllers: [
-    AppController
-  ]
+  controllers: [AppController],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
