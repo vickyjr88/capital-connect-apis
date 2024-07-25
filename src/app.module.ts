@@ -26,6 +26,7 @@ import { BookingModule } from './booking/booking.module';
 import { CountryModule } from './country/country.module';
 import { StageModule } from './stage/stage.module';
 import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
+import { MobileNumberModule } from './mobile/mobile-number.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { InvestmentStructuresModule } from './investment-structures/investment-s
     CountryModule,
     StageModule,
     InvestmentStructuresModule,
+    MobileNumberModule,
   ],
   providers: [
     AppService,

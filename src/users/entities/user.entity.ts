@@ -1,11 +1,18 @@
 import { Role } from 'src/auth/role.enum';
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  OneToMany,
+} from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Submission } from 'src/submission/entities/submission.entity';
 import { Booking } from 'src/booking/entities/booking.entity';
 import { Payment } from 'src/payment/entities/payment.entity';
+import { MobileNumber } from 'src/mobile/entities/mobile-number.entity';
 
-@Entity("users")
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -46,14 +53,17 @@ export class User {
   @Column({ type: 'timestamp', nullable: true })
   termsAcceptedAt: Date;
 
-  @OneToMany(() => Submission, submission => submission.user)
+  @OneToMany(() => Submission, (submission) => submission.user)
   submissions: Submission[];
 
-  @OneToMany(() => Booking, booking => booking.user)
+  @OneToMany(() => Booking, (booking) => booking.user)
   bookings: Booking[];
 
-  @OneToMany(() => Payment, payment => payment.user)
+  @OneToMany(() => Payment, (payment) => payment.user)
   payments: Payment[];
+
+  @OneToMany(() => MobileNumber, (mobile) => mobile.user)
+  mobileNumbers: MobileNumber[];
 
   @BeforeInsert()
   async hashPassword() {
