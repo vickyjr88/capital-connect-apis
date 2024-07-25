@@ -1,9 +1,10 @@
 ### Create Investor Profile
 POST http://localhost:3000/investor-profiles
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
-  "userId": 1,
+  "userId": 13,
   "organizationName": "Investor Profile 1",
   "countriesOfInvestmentFocus": ["Kenya", "Uganda"],
   "headOfficeLocation": "Nairobi",
@@ -29,8 +30,9 @@ GET http://localhost:3000/investor-profiles/1
 Content-Type: application/json
 
 ### Update Investor Profile by ID
-PUT http://localhost:3000/investor-profiles/1
+PUT http://localhost:3000/investor-profiles/9
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
   "countriesOfInvestmentFocus": ["Tanzania"],

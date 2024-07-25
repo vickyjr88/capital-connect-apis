@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { InjectRepository, } from '@nestjs/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
 import { Submission } from 'src/submission/entities/submission.entity';
@@ -15,7 +15,6 @@ import { Question } from 'src/question/entities/question.entity';
 
 @Injectable()
 export class CompanyService {
-
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
@@ -28,13 +27,13 @@ export class CompanyService {
   ) {}
 
   async create(id: number, createCompanyDto: CreateCompanyDto) {
-    const userFound = await this.userRepository.findOne({ where: { id } })
-    if(!userFound) {
-        throw new NotFoundException('User not found');
+    const userFound = await this.userRepository.findOne({ where: { id } });
+    if (!userFound) {
+      throw new NotFoundException('User not found');
     } else {
-        const newCompany = this.companyRepository.create(createCompanyDto);
-        newCompany.user = userFound;
-        return this.companyRepository.save(newCompany);
+      const newCompany = this.companyRepository.create(createCompanyDto);
+      newCompany.user = userFound;
+      return this.companyRepository.save(newCompany);
     }
   }
 
@@ -53,8 +52,8 @@ export class CompanyService {
 
   async findOneByOwnerId(id: number) {
     const companies = await this.companyRepository.find({
-      where: { user: {id}},
-      relations: ['companyLogo']
+      where: { user: { id } },
+      relations: ['companyLogo'],
     });
     if (companies.length > 0) {
       return companies[0];
@@ -97,7 +96,7 @@ export class CompanyService {
   }
 
   async getMatchedBusinesses(id: number) {
-    const userFound = await this.userRepository.findOne({ where: { id } })
+    const userFound = await this.userRepository.findOne({ where: { id } });
 
     if (!userFound) {
       throw new NotFoundException('User not found');
@@ -110,7 +109,7 @@ export class CompanyService {
       },
       where: {
         user: userFound,
-      }
+      },
     });
 
     // Group answers by questions
@@ -123,7 +122,7 @@ export class CompanyService {
       return acc;
     }, {});
 
-    console.log("groupedAnswers", groupedAnswers);
+    console.log('groupedAnswers', groupedAnswers);
 
     // const ans = investorSubmissions.map(sub2 => sub2.answer.text);
     // console.log("ans", ans);
@@ -136,39 +135,57 @@ export class CompanyService {
     //   }
     // })
 
-    const growthStageAnswers = groupedAnswers['What stage of business growth does your investments focus on?']
-    console.log("Growth stage:", growthStageAnswers)
-    const countryAnswers = groupedAnswers['Countries of Investment Focus']
-    console.log("Country:", countryAnswers)
-    const businessSectorAnswers = groupedAnswers['Sectors of Investment']
-    console.log("Business Sector:", businessSectorAnswers)
-    const registrationStructureAnswers = groupedAnswers['Please select the various investment structures that you consider while financing businesses']
-    console.log("Registration Structure:", registrationStructureAnswers)
-
+    const growthStageAnswers =
+      groupedAnswers[
+        'What stage of business growth does your investments focus on?'
+      ];
+    console.log('Growth stage:', growthStageAnswers);
+    const countryAnswers = groupedAnswers['Countries of Investment Focus'];
+    console.log('Country:', countryAnswers);
+    const businessSectorAnswers = groupedAnswers['Sectors of Investment'];
+    console.log('Business Sector:', businessSectorAnswers);
+    const registrationStructureAnswers =
+      groupedAnswers[
+        'Please select the various investment structures that you consider while financing businesses'
+      ];
+    console.log('Registration Structure:', registrationStructureAnswers);
 
     // Use QueryBuilder to fetch matched businesses and log the query
-  const matchedBusinessesQuery = this.companyRepository.createQueryBuilder('company')
-  .where('company.growthStage IN (:...uniqueAnswers)', { uniqueAnswers: [...growthStageAnswers] })
-  .orWhere('company.country IN (:...countryAnswers)', { countryAnswers: [...countryAnswers] })
-  .orWhere('company.businessSector IN (:...businessSectorAnswers)', { businessSectorAnswers: [...businessSectorAnswers] })
-  .orWhere('company.registrationStructure IN (:...registrationStructureAnswers)', { registrationStructureAnswers: [...registrationStructureAnswers] });
+    const matchedBusinessesQuery = this.companyRepository
+      .createQueryBuilder('company')
+      .where('company.growthStage IN (:...uniqueAnswers)', {
+        uniqueAnswers: [...growthStageAnswers],
+      })
+      .orWhere('company.country IN (:...countryAnswers)', {
+        countryAnswers: [...countryAnswers],
+      })
+      .orWhere('company.businessSector IN (:...businessSectorAnswers)', {
+        businessSectorAnswers: [...businessSectorAnswers],
+      })
+      .orWhere(
+        'company.registrationStructure IN (:...registrationStructureAnswers)',
+        { registrationStructureAnswers: [...registrationStructureAnswers] },
+      );
 
-  // Log the generated query
-  const matchedBusinessesSqlQuery = matchedBusinessesQuery.getSql();
-  console.log('Generated SQL Query for Matched Businesses:', matchedBusinessesSqlQuery);
+    // Log the generated query
+    const matchedBusinessesSqlQuery = matchedBusinessesQuery.getSql();
+    console.log(
+      'Generated SQL Query for Matched Businesses:',
+      matchedBusinessesSqlQuery,
+    );
 
-  const matchedBusinesses = await matchedBusinessesQuery.getMany();
+    const matchedBusinesses = await matchedBusinessesQuery.getMany();
 
-    console.log("matchedBusinesses", matchedBusinesses);
+    console.log('matchedBusinesses', matchedBusinesses);
     const matched = [];
     matchedBusinesses.forEach((biz) => {
-      var matchedMap = {};
+      const matchedMap = {};
       if (
-        countryAnswers.includes(biz.country) 
-        && businessSectorAnswers.includes(biz.businessSector) 
-        && growthStageAnswers.includes(biz.growthStage) 
-        && registrationStructureAnswers.includes(biz.registrationStructure)
-      ){
+        countryAnswers.includes(biz.country) &&
+        businessSectorAnswers.includes(biz.businessSector) &&
+        growthStageAnswers.includes(biz.growthStage) &&
+        registrationStructureAnswers.includes(biz.registrationStructure)
+      ) {
         matchedMap['id'] = biz.id;
         matchedMap['country'] = biz.country;
         matchedMap['businessSector'] = biz.businessSector;
@@ -176,13 +193,16 @@ export class CompanyService {
         matchedMap['registrationStructure'] = biz.registrationStructure;
         matched.push(matchedMap);
       }
-    })
+    });
     return matched;
   }
 
-  async getSubmissionsWithAnswersGroupedByUser(answerTexts: string[]): Promise<any[]> {
+  async getSubmissionsWithAnswersGroupedByUser(
+    answerTexts: string[],
+  ): Promise<any[]> {
     try {
-      const queryBuilder = this.submissionsRepository.createQueryBuilder('submission')
+      const queryBuilder = this.submissionsRepository
+        .createQueryBuilder('submission')
         .innerJoinAndSelect('submission.user', 'user')
         .innerJoinAndSelect('submission.question', 'question')
         .innerJoinAndSelect('submission.answer', 'answer')
@@ -197,9 +217,11 @@ export class CompanyService {
           'question.text as question_text',
           'answer.id as answer_id',
           'answer.text as answer_text',
-          'answer.weight as answer_weight'
+          'answer.weight as answer_weight',
         ])
-        .groupBy('user.id, user.firstName, user.lastName, submission.id, question.id, question.text, answer.id, answer.text, answer.weight');
+        .groupBy(
+          'user.id, user.firstName, user.lastName, submission.id, question.id, question.text, answer.id, answer.text, answer.weight',
+        );
 
       const results = await queryBuilder.getRawMany();
 
@@ -208,7 +230,7 @@ export class CompanyService {
         if (!acc[userId]) {
           acc[userId] = {
             id: userId,
-            username: curr.user_firstname + " " + curr.user_lastname,
+            username: curr.user_firstname + ' ' + curr.user_lastname,
             submissions: [],
           };
         }
@@ -236,15 +258,25 @@ export class CompanyService {
 
   async getMatchedInvestors(id: number) {
     const companyFound = await this.findOneByOwnerId(id);
-    if(!companyFound) {
+    if (!companyFound) {
       throw new NotFoundException();
     }
-    const responsesToMatch = [companyFound.country, companyFound.businessSector, companyFound.growthStage, companyFound.registrationStructure];
-    const submissions = await this.getSubmissionsWithAnswersGroupedByUser(responsesToMatch);
-      
-    return submissions.filter((submission) => submission.submissions.length === responsesToMatch.length).map(inv => { 
-      return { id: inv.id, name: inv.username } 
-    });
-  }
+    const responsesToMatch = [
+      companyFound.country,
+      companyFound.businessSector,
+      companyFound.growthStage,
+      companyFound.registrationStructure,
+    ];
+    const submissions =
+      await this.getSubmissionsWithAnswersGroupedByUser(responsesToMatch);
 
+    return submissions
+      .filter(
+        (submission) =>
+          submission.submissions.length === responsesToMatch.length,
+      )
+      .map((inv) => {
+        return { id: inv.id, name: inv.username };
+      });
+  }
 }

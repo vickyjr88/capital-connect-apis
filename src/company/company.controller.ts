@@ -89,12 +89,11 @@ export class CompanyController {
   remove(@Param('id') id: string) {
     try {
       this.companyService.remove(+id);
-      return 
+      return;
     } catch (error) {
-      throwInternalServer(error)
+      throwInternalServer(error);
     }
   }
-
 
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Investor)
@@ -102,7 +101,6 @@ export class CompanyController {
   async getInvestorMatches(@Param('id') id: string) {
     try {
       const match = await this.companyService.getMatchedBusinesses(+id);
-      console.log("match", match);
       return match;
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -128,7 +126,4 @@ export class CompanyController {
       throwInternalServer(error);
     }
   }
-
-
-
 }

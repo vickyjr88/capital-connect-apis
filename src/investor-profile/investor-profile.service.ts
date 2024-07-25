@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateInvestorProfileDto } from './dto/create-investor-profile.dto';
 import { UpdateInvestorProfileDto } from './dto/update-investor-profile.dto';
 import { InvestorProfile } from './entities/investor-profile.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class InvestorProfileService {
@@ -18,7 +19,8 @@ export class InvestorProfileService {
     const investorProfile = this.investorProfileRepository.create(
       createInvestorProfileDto,
     );
-    return this.investorProfileRepository.save(investorProfile);
+    const user = { id: createInvestorProfileDto.userId } as User;
+    return this.investorProfileRepository.save({ ...investorProfile, user });
   }
 
   findAll(): Promise<InvestorProfile[]> {
@@ -26,7 +28,10 @@ export class InvestorProfileService {
   }
 
   findOne(id: number): Promise<InvestorProfile> {
-    return this.investorProfileRepository.findOneBy({ id });
+    return this.investorProfileRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
   }
 
   async update(
@@ -34,7 +39,11 @@ export class InvestorProfileService {
     updateInvestorProfileDto: UpdateInvestorProfileDto,
   ): Promise<InvestorProfile> {
     await this.investorProfileRepository.update(id, updateInvestorProfileDto);
-    return this.findOne(id);
+    const investorProfile = await this.findOne(id);
+    if (!investorProfile) {
+      throw new NotFoundException('Investor profile not found');
+    }
+    return investorProfile;
   }
 
   remove(id: number): Promise<void> {

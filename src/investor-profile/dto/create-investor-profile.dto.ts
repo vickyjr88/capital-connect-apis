@@ -57,4 +57,7 @@ export class CreateInvestorProfileDto {
 
   @IsArray()
   registrationStructures: string[];
+
+  @IsNumber()
+  userId: number;
 }
