@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class StageService {
-  constructor( 
+  constructor(
     @InjectRepository(Stage)
     private stagesRepository: Repository<Stage>,
   ) {}
@@ -37,7 +37,8 @@ export class StageService {
     const updates = {};
     if (title) updates['title'] = title;
     if (description) updates['description'] = description;
-    if (Object.keys(updates).length > 0) await this.stagesRepository.update(id, updateStageDto);
+    if (Object.keys(updates).length > 0)
+      await this.stagesRepository.update(id, updateStageDto);
     return this.stagesRepository.findOneBy({ id });
   }
 
