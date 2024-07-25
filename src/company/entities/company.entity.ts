@@ -1,6 +1,12 @@
 import { File } from 'src/files/entities/file.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { NumberOfEmployees, YearsOfOperation } from '../company.type';
 
 @Entity('companies')
@@ -29,7 +35,7 @@ export class Company {
   @Column({
     type: 'enum',
     enum: YearsOfOperation,
-    default: YearsOfOperation._0
+    default: YearsOfOperation._0,
   })
   yearsOfOperation: YearsOfOperation;
 
@@ -39,14 +45,13 @@ export class Company {
   @Column({
     type: 'enum',
     enum: NumberOfEmployees,
-    default: NumberOfEmployees._1_TO_10
+    default: NumberOfEmployees._1_TO_10,
   })
   numberOfEmployees: NumberOfEmployees;
 
   @Column()
   fullTimeBusiness: boolean;
 
-  // @OneToOne(() => User, (user) => user.id)
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
@@ -54,5 +59,4 @@ export class Company {
   @OneToOne(() => File)
   @JoinColumn()
   companyLogo: File;
-
 }

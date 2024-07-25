@@ -5,12 +5,14 @@ import {
   PrimaryGeneratedColumn,
   BeforeInsert,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Submission } from 'src/submission/entities/submission.entity';
 import { Booking } from 'src/booking/entities/booking.entity';
 import { Payment } from 'src/payment/entities/payment.entity';
 import { MobileNumber } from 'src/mobile/entities/mobile-number.entity';
+import { InvestorProfile } from '../../investor-profile/entities/investor-profile.entity';
 
 @Entity('users')
 export class User {
@@ -64,6 +66,9 @@ export class User {
 
   @OneToMany(() => MobileNumber, (mobile) => mobile.user)
   mobileNumbers: MobileNumber[];
+
+  @OneToOne(() => InvestorProfile, (investorProfile) => investorProfile.user)
+  investorProfile: InvestorProfile;
 
   @BeforeInsert()
   async hashPassword() {

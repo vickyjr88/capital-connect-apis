@@ -27,6 +27,7 @@ import { CountryModule } from './country/country.module';
 import { StageModule } from './stage/stage.module';
 import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
 import { MobileNumberModule } from './mobile/mobile-number.module';
+import { InvestorProfileModule } from './investor-profile/investor-profile.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { MobileNumberModule } from './mobile/mobile-number.module';
     StageModule,
     InvestmentStructuresModule,
     MobileNumberModule,
+    InvestorProfileModule,
   ],
   providers: [
     AppService,

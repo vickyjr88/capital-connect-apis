@@ -1,0 +1,53 @@
+### Create Investor Profile
+POST http://localhost:3000/investor-profiles
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "organizationName": "Investor Profile 1",
+  "countriesOfInvestmentFocus": ["Kenya", "Uganda"],
+  "headOfficeLocation": "Nairobi",
+  "emailAddress": "investor@example.com",
+  "contactPerson": "John Doe",
+  "useOfFunds": ["Expansion", "Working capital"],
+  "maximumFunding": 10000000,
+  "minimumFunding": 100000,
+  "sectorsOfInvestment": ["Information technology", "Healthcare"],
+  "businessGrowthStages": ["Growth", "Established"],
+  "investorType": "Venture capital",
+  "investmentStructures": ["Equity", "Debt"],
+  "esgFocusAreas": ["Renewable energy", "Labor practices"],
+  "registrationStructures": ["Investment holding company"]
+}
+
+### Get All Investor Profiles
+GET http://localhost:3000/investor-profiles
+Content-Type: application/json
+
+### Get Investor Profile by ID
+GET http://localhost:3000/investor-profiles/1
+Content-Type: application/json
+
+### Update Investor Profile by ID
+PUT http://localhost:3000/investor-profiles/1
+Content-Type: application/json
+
+{
+  "countriesOfInvestmentFocus": ["Tanzania"],
+  "headOfficeLocation": "Dar es Salaam",
+  "emailAddress": "new-investor@example.com",
+  "contactPerson": "Jane Doe",
+  "useOfFunds": ["CAPEX funding"],
+  "maximumFunding": 5000000,
+  "minimumFunding": 50000,
+  "sectorsOfInvestment": ["Financial services"],
+  "businessGrowthStages": ["Start-up - post revenues"],
+  "investorType": "Private equity",
+  "investmentStructures": ["Government grants"],
+  "esgFocusAreas": ["Community engagement"],
+  "registrationStructures": ["Partnership", "Sole proprietorship"]
+}
+
+### Delete Investor Profile by ID
+DELETE http://localhost:3000/investor-profiles/1
+Content-Type: application/json
