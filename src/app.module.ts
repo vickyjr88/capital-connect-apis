@@ -24,6 +24,7 @@ import { ScoringModule } from './scoring/scoring.module';
 import { PaymentModule } from './payment/payment.module';
 import { BookingModule } from './booking/booking.module';
 import { CountryModule } from './country/country.module';
+import { FundingModule } from './funding/funding.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { CountryModule } from './country/country.module';
     PaymentModule,
     BookingModule,
     CountryModule,
+    FundingModule,
   ],
   providers: [
     AppService,
