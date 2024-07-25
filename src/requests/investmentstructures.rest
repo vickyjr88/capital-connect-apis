@@ -1,7 +1,7 @@
 ###
 # Create Investment structure
 
-POST http://localhost:3000/investmentStructures
+POST http://localhost:3000/investment-structures
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
@@ -13,29 +13,29 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ###
 # Get Investment structure
 
-GET http://localhost:3000/investmentStructures/1
+GET http://localhost:3000/investment-structures/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Get Investment Structures
 
-GET http://localhost:3000/investmentStructures
+GET http://localhost:3000/investment-structures
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Update Investment Structure
 
-PUT http://localhost:3000/investmentStructures/1
+PUT http://localhost:3000/investment-structures/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
-    "name": "Investment Structure 1 updated",
+    "title": "Investment Structure 1 updated",
     "description": "Investment Structure 1 description updated"
 }
 
 ###
 # Delete Investment Structure
 
-DELETE http://localhost:3000/investmentStructures/2
+DELETE http://localhost:3000/investment-structures/2
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
