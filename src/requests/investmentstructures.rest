@@ -1,0 +1,41 @@
+###
+# Create Investment structure
+
+POST http://localhost:3000/investment-structures
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Top",
+    "description": "The highest level"
+}
+
+###
+# Get Investment structure
+
+GET http://localhost:3000/investment-structures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Investment Structures
+
+GET http://localhost:3000/investment-structures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Update Investment Structure
+
+PUT http://localhost:3000/investment-structures/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Investment Structure 1 updated",
+    "description": "Investment Structure 1 description updated"
+}
+
+###
+# Delete Investment Structure
+
+DELETE http://localhost:3000/investment-structures/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

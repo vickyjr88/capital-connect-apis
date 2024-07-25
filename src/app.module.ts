@@ -25,6 +25,7 @@ import { PaymentModule } from './payment/payment.module';
 import { BookingModule } from './booking/booking.module';
 import { CountryModule } from './country/country.module';
 import { StageModule } from './stage/stage.module';
+import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { StageModule } from './stage/stage.module';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: () => (ormConfig),
+      useFactory: () => ormConfig,
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
@@ -56,6 +57,7 @@ import { StageModule } from './stage/stage.module';
     BookingModule,
     CountryModule,
     StageModule,
+    InvestmentStructuresModule,
   ],
   providers: [
     AppService,
@@ -65,9 +67,7 @@ import { StageModule } from './stage/stage.module';
       useClass: CustomLogger,
     },
   ],
-  controllers: [
-    AppController
-  ]
+  controllers: [AppController],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
