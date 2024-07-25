@@ -1,19 +1,32 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, NotFoundException, BadRequestException, HttpCode, HttpStatus, Query } from '@nestjs/common';
-import { MobileService } from './mobile.service';
-import { CreateMobileDto } from './dto/create-mobile.dto';
-import { UpdateMobileDto } from './dto/update-mobile.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  NotFoundException,
+  BadRequestException,
+  HttpCode,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
+import { CreateMobileNumberDto } from './dto/create-mobile-number.dto';
+import { UpdateMobileNumberDto } from './dto/update-mobile-number.dto';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { MobileNumberService } from './mobile-number.service';
 
-@Controller('mobile')
-export class MobileController {
-  constructor(private readonly mobileService: MobileService) {}
+@Controller('mobile-numbers')
+export class MobileNumberController {
+  constructor(private readonly mobileService: MobileNumberService) {}
 
   @Post()
-  create(@Body() createMobileDto: CreateMobileDto) {
+  async create(@Body() createMobileDto: CreateMobileNumberDto) {
     try {
-      return this.mobileService.create(createMobileDto);
+      return await this.mobileService.create(createMobileDto);
     } catch (error) {
-      throwInternalServer(error)
+      throwInternalServer(error);
     }
   }
 
@@ -27,12 +40,15 @@ export class MobileController {
     try {
       return this.mobileService.findOne(+id);
     } catch (error) {
-      throwInternalServer(error)
+      throwInternalServer(error);
     }
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateMobileDto: UpdateMobileDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateMobileDto: UpdateMobileNumberDto,
+  ) {
     try {
       await this.mobileService.findOne(+id);
       const mobile = await this.mobileService.update(+id, updateMobileDto);
@@ -41,7 +57,7 @@ export class MobileController {
       if (error instanceof NotFoundException) {
         throw new BadRequestException(`Mobile with id ${id} not found`);
       }
-      throwInternalServer(error)
+      throwInternalServer(error);
     }
   }
 
@@ -51,7 +67,7 @@ export class MobileController {
     try {
       await this.mobileService.remove(+id);
     } catch (error) {
-      throwInternalServer(error)
+      throwInternalServer(error);
     }
-}
+  }
 }

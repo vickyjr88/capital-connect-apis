@@ -1,17 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MobileController } from './mobile.controller';
-import { MobileService } from './mobile.service';
+import { MobileNumberController } from './mobile-number.controller';
+
+import { MobileService } from "./mobile-number.service";
 
 describe('MobileController', () => {
-  let controller: MobileController;
+  let controller: MobileNumberController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [MobileController],
+      controllers: [MobileNumberController],
       providers: [MobileService],
     }).compile();
 
-    controller = module.get<MobileController>(MobileController);
+    controller = module.get<MobileNumberController>(MobileNumberController);
   });
 
   it('should be defined', () => {
