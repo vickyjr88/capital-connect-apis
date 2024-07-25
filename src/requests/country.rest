@@ -5,3 +5,35 @@ GET http://localhost:3000/countries/bulklocal
 ###
 # Load countries prod
 GET http://api.capitalconnect.africa/countries/bulklocal
+
+###
+# Create country
+POST http://localhost:3000/countries
+Content-Type: application/json
+
+{
+    "name": "",
+    "code": ""
+}
+
+###
+# Get country
+GET http://localhost:3000/countries/1
+
+###
+# Get countries
+GET http://localhost:3000/countries
+
+###
+# Update country
+PUT http://localhost:3000/countries/14
+Content-Type: application/json
+
+{
+    "name": "",
+    "code": ""
+}
+
+###
+# Delete country
+DELETE http://localhost:3000/countries/17
