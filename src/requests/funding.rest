@@ -1,0 +1,16 @@
+###
+# Create funding
+POST http://localhost:3000/fundings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "minFunding": 1000,
+    "maxFunding":10000 
+}
+
+###
+# Get fundings
+
+GET http://localhost:3000/fundings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

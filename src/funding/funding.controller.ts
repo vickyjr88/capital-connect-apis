@@ -3,12 +3,11 @@ import { FundingService } from './funding.service';
 import { CreateFundingDto } from './dto/create-funding.dto';
 import { UpdateFundingDto } from './dto/update-funding.dto';
 
-@Controller('funding')
+@Controller('fundings')
 export class FundingController {
   constructor(private readonly fundingService: FundingService) {}
 
-  @Post()
-  create(@Body() createFundingDto: CreateFundingDto) {
+  create(@Body() createFundingDto: CreateFundingDto) {   
     return this.fundingService.create(createFundingDto);
   }
 
@@ -17,7 +16,7 @@ export class FundingController {
     return this.fundingService.findAll();
   }
 
-  @Get(':id')
+ /* @Get(':id')
   findOne(@Param('id') id: string) {
     return this.fundingService.findOne(+id);
   }
@@ -30,5 +29,5 @@ export class FundingController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.fundingService.remove(+id);
-  }
+  } */
 }
