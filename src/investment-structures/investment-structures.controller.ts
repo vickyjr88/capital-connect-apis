@@ -1,14 +1,20 @@
-import { Controller, Get, Post, Body, Param, Delete, Query, Put, NotFoundException, BadRequestException, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Query, Put, NotFoundException, BadRequestException, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { InvestmentStructuresService } from './investment-structures.service';
 import { CreateInvestmentStructureDto } from './dto/create-investment-structure.dto';
 import { UpdateInvestmentStructureDto } from './dto/update-investment-structure.dto';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/role.enum';
 
 @Controller('investment-structures')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class InvestmentStructuresController {
   constructor(private readonly investmentStructuresService: InvestmentStructuresService) {}
 
   @Post()
+  @Roles(Role.Admin)
   create(@Body() createInvestmentStructureDto: CreateInvestmentStructureDto) {
     try {
       return this.investmentStructuresService.create(createInvestmentStructureDto);
@@ -32,6 +38,7 @@ export class InvestmentStructuresController {
   }
 
   @Put(':id')
+  @Roles(Role.Admin)
   async update(@Param('id') id: string, @Body() updateInvestmentStructureDto: UpdateInvestmentStructureDto) {
     try {
       await this.investmentStructuresService.findOne(+id);
@@ -46,6 +53,7 @@ export class InvestmentStructuresController {
   }
 
   @Delete(':id')
+  @Roles(Role.Admin)
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {
     try {

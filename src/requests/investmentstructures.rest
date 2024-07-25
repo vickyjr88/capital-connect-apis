@@ -11,15 +11,35 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 }
 
 ###
+#Create Investment structure prod
+POST http://api.capitalconnect.africa/investment-structures
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+{
+    "title": "Top", 
+    "description": "The highest level"
+}
+
+###
 # Get Investment structure
 
 GET http://localhost:3000/investment-structures/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
+# Get Investment structure prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/investment-structures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
 # Get Investment Structures
 
 GET http://localhost:3000/investment-structures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get business Investment structures prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/investment-structures
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
@@ -35,7 +55,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 }
 
 ###
+# Update Investment structure prod
+PUT http://api.capitalconnect.africa/investment-structures/12
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+{
+    "title": "Investment-structure 1 updated", 
+    "description": "Investment-structure 1 description updated"
+}
+
+
+###
 # Delete Investment Structure
 
 DELETE http://localhost:3000/investment-structures/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Delete Investment structure prod
+DELETE http://api.capitalconnect.africa/investment-structures/17
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
