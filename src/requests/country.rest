@@ -1,16 +1,29 @@
 ###
 # Load countries
 GET http://localhost:3000/countries/bulklocal
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Load countries prod
 GET http://api.capitalconnect.africa/countries/bulklocal
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Create country
 POST http://localhost:3000/countries
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
+{
+    "name": "",
+    "code": ""
+}
+
+###
+# Create Country prod
+POST http://api.capitalconnect.africa/countries
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 {
     "name": "",
     "code": ""
@@ -19,10 +32,22 @@ Content-Type: application/json
 ###
 # Get country
 GET http://localhost:3000/countries/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get country prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/countries/129
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Get countries
 GET http://localhost:3000/countries
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get countries prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/countries
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Get countries prod
@@ -33,7 +58,18 @@ GET http://api.capitalconnect.africa/countries
 # Update country
 PUT http://localhost:3000/countries/14
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
+{
+    "name": "",
+    "code": ""
+}
+
+###
+# Update country prod
+PUT http://api.capitalconnect.africa/countries/129
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 {
     "name": "",
     "code": ""
@@ -42,3 +78,9 @@ Content-Type: application/json
 ###
 # Delete country
 DELETE http://localhost:3000/countries/17
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Delete country
+DELETE http://api.capitalconnect.africa/countries/17
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
