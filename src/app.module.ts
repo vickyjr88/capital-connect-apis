@@ -22,6 +22,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ScoringModule } from './scoring/scoring.module';
 import { PaymentModule } from './payment/payment.module';
+import { BookingModule } from './booking/booking.module';
+import { CountryModule } from './country/country.module';
+import { StageModule } from './stage/stage.module';
+import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
 import { MobileModule } from './mobile/mobile.module';
 
 @Module({
@@ -31,7 +35,7 @@ import { MobileModule } from './mobile/mobile.module';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: () => (ormConfig),
+      useFactory: () => ormConfig,
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
@@ -51,6 +55,10 @@ import { MobileModule } from './mobile/mobile.module';
     SubSectorModule,
     ScoringModule,
     PaymentModule,
+    BookingModule,
+    CountryModule,
+    StageModule,
+    InvestmentStructuresModule,
     MobileModule,
   ],
   providers: [
@@ -61,9 +69,7 @@ import { MobileModule } from './mobile/mobile.module';
       useClass: CustomLogger,
     },
   ],
-  controllers: [
-    AppController
-  ]
+  controllers: [AppController],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

@@ -1,0 +1,17 @@
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/sections/4/subsections
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/submissions/user/184
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/submissions/user/184/score
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/submissions/user/184/scores
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

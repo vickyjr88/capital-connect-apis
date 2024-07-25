@@ -2,6 +2,8 @@ import { Role } from 'src/auth/role.enum';
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Submission } from 'src/submission/entities/submission.entity';
+import { Booking } from 'src/booking/entities/booking.entity';
+import { Payment } from 'src/payment/entities/payment.entity';
 import { Mobile } from 'src/mobile/entities/mobile.entity';
 
 @Entity("users")
@@ -47,6 +49,12 @@ export class User {
 
   @OneToMany(() => Submission, submission => submission.user)
   submissions: Submission[];
+
+  @OneToMany(() => Booking, booking => booking.user)
+  bookings: Booking[];
+
+  @OneToMany(() => Payment, payment => payment.user)
+  payments: Payment[];
 
   @OneToMany(() => Mobile, mobile => mobile.user)
   mobiles: Mobile[];

@@ -41,9 +41,9 @@ GET http://localhost:3000/scorings/score/71?type=PREPAREDNESS
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
-# Get scoring
+# Get scoring prod [PREPAREDNESS, ELIGIBILITY]
 
-GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/scorings/score/71?type=PREPAREDNESSj
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/scorings/score/79?type=PREPAREDNESS
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
