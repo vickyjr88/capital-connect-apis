@@ -25,6 +25,11 @@ GET http://localhost:3000/countries/1
 GET http://localhost:3000/countries
 
 ###
+# Get countries prod
+GET http://api.capitalconnect.africa/countries
+
+
+###
 # Update country
 PUT http://localhost:3000/countries/14
 Content-Type: application/json
