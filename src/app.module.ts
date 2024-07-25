@@ -24,7 +24,9 @@ import { ScoringModule } from './scoring/scoring.module';
 import { PaymentModule } from './payment/payment.module';
 import { BookingModule } from './booking/booking.module';
 import { CountryModule } from './country/country.module';
+import { StageModule } from './stage/stage.module';
 import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
+
 Module({
   imports: [
     ConfigModule.forRoot({
@@ -54,6 +56,7 @@ Module({
     PaymentModule,
     BookingModule,
     CountryModule,
+    StageModule,
     InvestmentStructuresModule,
   ],
   providers: [
@@ -64,10 +67,8 @@ Module({
       useClass: CustomLogger,
     },
   ],
-  controllers: [
-    AppController
-  ]
-})
+  controllers: [AppController]
+});
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggingMiddleware).forRoutes('*');

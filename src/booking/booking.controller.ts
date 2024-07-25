@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { BookingService } from "./booking.service";
 import { PaymentService } from "src/payment/payment.service";
@@ -77,8 +77,9 @@ export class BookingController {
   }
 
   @Get()
-  findAll() {
-    return this.bookingService.findAll();
+  findAll(@Req() req, @Query('page') page: number = 1, @Query('count') limit: number = 10) {
+    const user = req.user;
+    return this.bookingService.findAll(user, page, limit);
   }
 
   @Get(':id')
