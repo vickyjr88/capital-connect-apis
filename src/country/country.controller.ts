@@ -1,12 +1,17 @@
-import { Controller, Get, Post, Body, Delete, Param, Put, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param, Put, NotFoundException, BadRequestException, UseGuards } from '@nestjs/common';
 import { CountryService } from './country.service';
 import { Country } from './entities/country.entity';
 import { CreateCountryDto } from './dto/create-country.dto';
 import * as countriesData from './countries.json' // Create a JSON file with country data
 import { UpdateCountryDto } from './dto/update-country.dto';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/role.enum';
 
 @Controller('countries')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class CountryController {
   constructor(private readonly countriesService: CountryService) {}
 
@@ -16,11 +21,13 @@ export class CountryController {
   }
 
   @Post('bulk')
+  @Roles(Role.Admin)
   async bulkCreate(@Body() countries: Country[]): Promise<Country[]> {
     return this.countriesService.bulkCreate(countries);
   }
 
   @Get('bulklocal')
+  @Roles(Role.Admin)
   async bulkCreateLocal(): Promise<Country[]> {
     const countries: CreateCountryDto[] = countriesData.map((country) => ({
       name: country.name,
@@ -36,6 +43,7 @@ export class CountryController {
   }
 
   @Put(':id')
+  @Roles(Role.Admin)
   async update(@Param('id') id: string, @Body() updateCountryDto: UpdateCountryDto) {
     try {
       await this.countriesService.findOne(+id);
@@ -50,6 +58,7 @@ export class CountryController {
   }
 
   @Delete(':id')
+  @Roles(Role.Admin)
   remove(@Param('id') id: number): Promise<void> {
     try {
       return this.countriesService.remove(id);
