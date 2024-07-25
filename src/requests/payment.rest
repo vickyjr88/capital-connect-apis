@@ -30,12 +30,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Get payment
-GET http://localhost:3000/payments/1
+GET http://localhost:3000/payments/b
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
-# Get payment
-GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/payments/score/67?type=PREPAREDNESS
+# Get payment prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/payments/129
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
@@ -74,7 +74,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Update payment prod
-PUT http://api.capitalconnect.africa/payments/5
+PUT http://api.capitalconnect.africa/payments/129
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
@@ -98,6 +98,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Check payment status prod
-GET http://api.capitalconnect.africa/payments/status?orderTrackingId=da31e1d4-87ac-4bf2-96f8-dcfc7150d847
+GET http://api.capitalconnect.africa/payments/status?orderTrackingId=55d9a645-6658-434b-8a74-dcf66fc61862
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 

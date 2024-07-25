@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { BookingService } from "./booking.service";
 import { PaymentService } from "src/payment/payment.service";
@@ -34,13 +34,13 @@ export class BookingController {
         "currency": "KES",
         "amount": process.env.ADVISORY_SESSIONS_COST,
         "description": "Advisory session booking fee.",
-        "callback_url": "https://app.capitalconnect.africa/payments/callback",
-        "redirect_mode": "",
+        "callback_url": "https://app.capitalconnect.africa/calendly-booking",
+        "redirect_mode": "TOP_WINDOW",
         "notification_id": "65c77d95-af39-440d-88f5-dd0114174e1c",
         "branch": "Capital Connect Africa App",
         "billing_address": {
             "email_address": user.username,
-            "phone_number": "0771114712", // ToDo: Get user phone number
+            "phone_number": "", // ToDo: Get user phone number
             "country_code": "KE",
             "first_name": user.firstName,
             "middle_name": user.lastName,
@@ -77,8 +77,9 @@ export class BookingController {
   }
 
   @Get()
-  findAll() {
-    return this.bookingService.findAll();
+  findAll(@Req() req, @Query('page') page: number = 1, @Query('count') limit: number = 10) {
+    const user = req.user;
+    return this.bookingService.findAll(user, page, limit);
   }
 
   @Get(':id')

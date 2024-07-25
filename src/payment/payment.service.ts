@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Booking } from 'src/booking/entities/booking.entity';
 import { User } from 'src/users/entities/user.entity';
 import { HttpService } from '@nestjs/axios';
+import { CallbackPaymentDto } from './dto/callback-payment.dto';
 
 @Injectable()
 export class PaymentService {
@@ -16,8 +17,16 @@ export class PaymentService {
     private readonly httpService: HttpService
   ) {}
 
-  processPaymentCallback(pesapalToken: string, updatePaymentStatusDto: UpdatePaymentDto) {
+  async processPaymentCallback(pesapalToken: string, callbackPaymentDto: CallbackPaymentDto) {
     console.log('Processing payment callback with token:', pesapalToken);
+    const { OrderTrackingId, OrderNotificationType, OrderMerchantReference } = callbackPaymentDto;
+    const pesapalPayment = await this.checkPaymentStatus(pesapalToken, OrderTrackingId);
+    const payment = await this.paymentsRepository.findOneBy({ id: +OrderMerchantReference });
+    if (!payment) throw new NotFoundException(`Payment with order tracking id ${OrderMerchantReference} not found`);
+    payment.status = pesapalPayment.payment_status_description;
+    console.log("Payment status:", payment.status);
+    this.paymentsRepository.save(payment);
+    return { message: "Payment processed successfully" };
   }
 
   async checkPaymentStatus(pesapalToken: string, orderTrackingId: string) {

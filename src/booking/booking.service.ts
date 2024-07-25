@@ -20,12 +20,16 @@ export class BookingService {
     return await this.bookingRepository.save(bookingObj);
   }
 
-  findAll(page: number = 1, limit: number = 10) {
+  findAll(user: User, page: number = 1, limit: number = 10) {
     const skip = (page - 1) * limit;
-    return this.bookingRepository.find({
+    const query = {
       skip,
       take: limit,
-    });
+      relations: ['payments']
+    };
+
+    if (!user.roles.includes('admin')) query['where'] = { user: { id: user.id } };
+    return this.bookingRepository.find(query);
   }
 
   async findOne(id: number) {
