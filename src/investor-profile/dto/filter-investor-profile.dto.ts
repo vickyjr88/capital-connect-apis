@@ -59,7 +59,7 @@ export class FilterInvestorProfilesDto {
   @IsOptional()
   esgFocusAreas?: string[];
 
-  @IsString()
+  @IsArray()
   @IsOptional()
-  registrationStructure?: string;
+  registrationStructures?: string[];
 }

@@ -54,6 +54,7 @@ export class InvestorProfileService {
   findOneByUserId(id: number): Promise<InvestorProfile> {
     return this.investorProfileRepository.findOne({
       where: { user: { id } },
+      relations: ['user', 'sectors', 'subSectors'],
     });
   }
 
@@ -192,11 +193,11 @@ export class InvestorProfileService {
       });
     }
 
-    if (filterDto.registrationStructure) {
+    if (filterDto.registrationStructures && filterDto.registrationStructures.length > 0) {
       query.andWhere(
-        'investorProfile.registrationStructure = :registrationStructure',
+        'investorProfile.registrationStructures && :registrationStructures',
         {
-          registrationStructure: filterDto.registrationStructure,
+          registrationStructures: filterDto.registrationStructures,
         },
       );
     }
@@ -302,11 +303,11 @@ export class InvestorProfileService {
       });
     }
 
-    if (filterDto.registrationStructure) {
+    if (filterDto.registrationStructures && filterDto.registrationStructures.length) {
       query.orWhere(
-        'investorProfile.registrationStructure = :registrationStructure',
+        'investorProfile.registrationStructures && :registrationStructures',
         {
-          registrationStructure: filterDto.registrationStructure,
+          registrationStructures: filterDto.registrationStructures,
         },
       );
     }

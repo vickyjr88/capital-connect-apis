@@ -68,21 +68,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 #Update company by id
 
 
-PATCH http://localhost:3000/company/6
+PATCH http://localhost:3000/company/3
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
     "name": "Bazuu Enterprise 255",
     "country": "Tanzania",
-    "businessSector": "Ecommerce",
+    "businessSector": "Sector 1 updated",
+    "businessSubsector": "Updated Sub Sector 1",
     "productsAndServices": "FMCG",
-    "registrationStructure": "B2C",
-    "yearsOfOperation": "45",
-    "growthStage": "2",
-    "numberOfEmployees": "495",
-    "fullTimeBusiness": true,
-    "businessLogo": "Tz logo"
+    "registrationStructure": "Partnership",
+    "yearsOfOperation": "0 - 1 years",
+    "growthStage": "Start-up - post revenues",
+    "numberOfEmployees": "11-50 employees",
+    "fullTimeBusiness": true
 }
 
 ####
@@ -99,11 +99,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
     "businessSector": "Ecommerce",
     "productsAndServices": "FMCG",
     "registrationStructure": "B2C",
-    "yearsOfOperation": "45",
+    "yearsOfOperation": " 0 - 1 years",
     "growthStage": "2",
     "numberOfEmployees": "495",
-    "fullTimeBusiness": true,
-    "businessLogo": "Tz logo"
+    "fullTimeBusiness": true
 }
 
 ####

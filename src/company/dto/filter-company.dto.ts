@@ -36,9 +36,9 @@ export class FilterCompanyDto {
   @IsEnum(YearsOfOperation)
   yearsOfOperation?: YearsOfOperation;
 
-  @IsOptional()
-  @IsString()
-  growthStage?: string;
+  @IsArray()
+  @IsString({ each: true })
+  growthStages?: string[];
 
   @IsOptional()
   @IsEnum(NumberOfEmployees)

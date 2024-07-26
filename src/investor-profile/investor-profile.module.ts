@@ -10,5 +10,6 @@ import { SubSector } from '../subsector/entities/subsector.entity';
   imports: [TypeOrmModule.forFeature([InvestorProfile, Sector, SubSector])],
   controllers: [InvestorProfileController],
   providers: [InvestorProfileService],
+  exports: [InvestorProfileService],
 })
 export class InvestorProfileModule {}

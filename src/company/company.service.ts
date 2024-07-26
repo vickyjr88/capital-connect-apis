@@ -273,7 +273,7 @@ export class CompanyService {
       productsAndServices,
       registrationStructures,
       yearsOfOperation,
-      growthStage,
+      growthStages,
       numberOfEmployees,
       fullTimeBusiness,
     } = filterDto;
@@ -320,9 +320,9 @@ export class CompanyService {
       });
     }
 
-    if (growthStage) {
-      queryBuilder.andWhere('companies.growthStage = :growthStage', {
-        growthStage,
+    if (growthStages && growthStages.length > 0) {
+      queryBuilder.andWhere('companies.growthStage IN (:...growthStages)', {
+        growthStages,
       });
     }
 
@@ -353,7 +353,7 @@ export class CompanyService {
       productsAndServices,
       registrationStructures,
       yearsOfOperation,
-      growthStage,
+      growthStages,
       numberOfEmployees,
       fullTimeBusiness,
     } = filterDto;
@@ -400,9 +400,9 @@ export class CompanyService {
       });
     }
 
-    if (growthStage) {
-      queryBuilder.orWhere('companies.growthStage = :growthStage', {
-        growthStage,
+    if (growthStages && growthStages.length > 0) {
+      queryBuilder.orWhere('companies.growthStage IN (:...growthStages)', {
+        growthStages,
       });
     }
 

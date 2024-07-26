@@ -187,7 +187,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 
 {
-  "countriesOfInvestmentFocus": ["Kenya"],
+  "countriesOfInvestmentFocus": ["Tanzania"],
   "headOfficeLocation": "Nairobi",
   "useOfFunds": ["Expansion"],
   "maximumFunding": 50000001,
@@ -197,6 +197,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   "investorType": "Venture capital",
   "investmentStructures": ["Equity"],
   "esgFocusAreas": ["Renewable energy"],
-  "registrationStructures": "Investment holding company"
+  "registrationStructures": ["Investment holding company"]
 }
 

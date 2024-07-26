@@ -2,32 +2,33 @@
 # Profile
 
 GET http://localhost:3000/users/profile
-Authorization: Bearer c94145223762a86e6c4951328ae596426741142a7b1f832fe089b93ef895541e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Get user by id
 
 GET http://localhost:3000/users/100
-Authorization: Bearer c94145223762a86e6c4951328ae596426741142a7b1f832fe089b93ef895541e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Get users
 
 GET http://localhost:3000/users
-Authorization: Bearer c94145223762a86e6c4951328ae596426741142a7b1f832fe089b93ef895541e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 # Update user
 
-PUT http://localhost:3000/users/1
+PUT http://localhost:3000/users/14/admin
 Content-Type: application/json
-Authorization: Bearer c94145223762a86e6c4951328ae596426741142a7b1f832fe089b93ef895541e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
     
     "firstName": "Chris",
     "lastName": "Thiaine",
-    "roles": "admin"
+  "isEmailVerified": true,
+  "roles": "investor"
 }
 
 ###
@@ -35,7 +36,7 @@ Authorization: Bearer c94145223762a86e6c4951328ae596426741142a7b1f832fe089b93ef8
 
 PUT http://localhost:3000/users/1/admin
 Content-Type: application/json
-Authorization: Bearer c94145223762a86e6c4951328ae596426741142a7b1f832fe089b93ef895541e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
     "password": "pass1234"
@@ -80,5 +81,5 @@ GET http://localhost:3000/users/verify-email?token=2add75ad5928458cf5209
 
 ### Accept terms and conditions for a user
 POST http://localhost:3000/users/1/accept-terms
-Authorization: Bearer c94145223762a86e6c4951328ae596426741142a7b1f832fe089b93ef895541e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 Content-Type: application/json
