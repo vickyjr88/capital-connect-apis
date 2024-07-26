@@ -26,7 +26,7 @@ export class Sector {
 
   @ManyToMany(
     () => InvestorProfile,
-    (investorProfile) => investorProfile.subSectors,
+    (investorProfile) => investorProfile.sectors,
   )
   investorProfiles: InvestorProfile[];
 }

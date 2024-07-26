@@ -18,19 +18,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   "investorType": "Venture capital",
   "investmentStructures": ["Equity", "Debt"],
   "esgFocusAreas": ["Renewable energy", "Labor practices"],
-  "registrationStructures": ["Investment holding company"]
+  "registrationStructures": ["Investment holding company"],
+  "sectors": [1, 3],
+  "subSectors": [1, 3]
 }
 
 ### Get All Investor Profiles
 GET http://localhost:3000/investor-profiles
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### Get Investor Profile by ID
 GET http://localhost:3000/investor-profiles/1
 Content-Type: application/json
 
 ### Update Investor Profile by ID
-PUT http://localhost:3000/investor-profiles/9
+PUT http://localhost:3000/investor-profiles/6
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
@@ -40,16 +43,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   "emailAddress": "new-investor@example.com",
   "contactPerson": "Jane Doe",
   "useOfFunds": ["CAPEX funding"],
-  "maximumFunding": 5000000,
   "minimumFunding": 50000,
+  "maximumFunding": 5000000,
+  "noMaximumFunding": true,
   "sectorsOfInvestment": ["Financial services"],
   "businessGrowthStages": ["Start-up - post revenues"],
   "investorType": "Private equity",
   "investmentStructures": ["Government grants"],
   "esgFocusAreas": ["Community engagement"],
-  "registrationStructures": ["Partnership", "Sole proprietorship"]
+  "registrationStructures": ["Partnership", "Sole proprietorship"],
+  "sectors": [1],
+  "subSectors": [1]
 }
 
 ### Delete Investor Profile by ID
-DELETE http://localhost:3000/investor-profiles/1
+DELETE http://localhost:3000/investor-profiles/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 Content-Type: application/json

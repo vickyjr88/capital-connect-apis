@@ -64,8 +64,8 @@ export class CreateInvestorProfileDto {
   userId: number;
 
   @IsArray()
-  sectors: Sector[];
+  sectors: number[];
 
   @IsArray()
-  subSectors: SubSector[];
+  subSectors: number[];
 }
