@@ -203,4 +203,114 @@ export class InvestorProfileService {
 
     return await query.getMany();
   }
+
+  async filterByOr(
+    filterDto: FilterInvestorProfilesDto,
+  ): Promise<InvestorProfile[]> {
+    const query = this.investorProfileRepository
+      .createQueryBuilder('investorProfile')
+      .leftJoinAndSelect('investorProfile.sectors', 'sectors')
+      .leftJoinAndSelect('investorProfile.subSectors', 'subSectors');
+
+    if (filterDto.countriesOfInvestmentFocus) {
+      query.orWhere(
+        'investorProfile.countriesOfInvestmentFocus && :countriesOfInvestmentFocus',
+        {
+          countriesOfInvestmentFocus: filterDto.countriesOfInvestmentFocus,
+        },
+      );
+    }
+
+    if (filterDto.headOfficeLocation) {
+      query.orWhere(
+        'investorProfile.headOfficeLocation = :headOfficeLocation',
+        {
+          headOfficeLocation: filterDto.headOfficeLocation,
+        },
+      );
+    }
+
+    if (filterDto.emailAddress) {
+      query.orWhere('investorProfile.emailAddress = :emailAddress', {
+        emailAddress: filterDto.emailAddress,
+      });
+    }
+
+    if (filterDto.contactPerson) {
+      query.orWhere('investorProfile.contactPerson = :contactPerson', {
+        contactPerson: filterDto.contactPerson,
+      });
+    }
+
+    if (filterDto.useOfFunds) {
+      query.orWhere('investorProfile.useOfFunds && :useOfFunds', {
+        useOfFunds: filterDto.useOfFunds,
+      });
+    }
+
+    if (filterDto.maximumFunding) {
+      query.orWhere('investorProfile.maximumFunding >= :maximumFunding', {
+        maximumFunding: filterDto.maximumFunding,
+      });
+    }
+
+    if (filterDto.minimumFunding) {
+      query.orWhere('investorProfile.minimumFunding <= :minimumFunding', {
+        minimumFunding: filterDto.minimumFunding,
+      });
+    }
+
+    if (filterDto.sectors) {
+      query.orWhere('sectors.id IN (:...sectors)', {
+        sectors: filterDto.sectors,
+      });
+    }
+
+    if (filterDto.subSectors) {
+      query.orWhere('subSectors.id IN (:...subSectors)', {
+        subSectors: filterDto.subSectors,
+      });
+    }
+
+    if (filterDto.businessGrowthStages) {
+      query.orWhere(
+        'investorProfile.businessGrowthStages && :businessGrowthStages',
+        {
+          businessGrowthStages: filterDto.businessGrowthStages,
+        },
+      );
+    }
+
+    if (filterDto.investorType) {
+      query.orWhere('investorProfile.investorType = :investorType', {
+        investorType: filterDto.investorType,
+      });
+    }
+
+    if (filterDto.investmentStructures) {
+      query.orWhere(
+        'investorProfile.investmentStructures && :investmentStructures',
+        {
+          investmentStructures: filterDto.investmentStructures,
+        },
+      );
+    }
+
+    if (filterDto.esgFocusAreas) {
+      query.orWhere('investorProfile.esgFocusAreas && :esgFocusAreas', {
+        esgFocusAreas: filterDto.esgFocusAreas,
+      });
+    }
+
+    if (filterDto.registrationStructure) {
+      query.orWhere(
+        'investorProfile.registrationStructure = :registrationStructure',
+        {
+          registrationStructure: filterDto.registrationStructure,
+        },
+      );
+    }
+
+    return await query.getMany();
+  }
 }

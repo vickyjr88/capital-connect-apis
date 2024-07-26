@@ -12,6 +12,7 @@ import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
 import { Submission } from 'src/submission/entities/submission.entity';
 import { Question } from 'src/question/entities/question.entity';
+import { FilterCompanyDto } from './dto/filter-company.dto';
 
 @Injectable()
 export class CompanyService {
@@ -121,34 +122,16 @@ export class CompanyService {
       acc[questionText].push(submission.answer.text);
       return acc;
     }, {});
-
-    console.log('groupedAnswers', groupedAnswers);
-
-    // const ans = investorSubmissions.map(sub2 => sub2.answer.text);
-    // console.log("ans", ans);
-    // const matchedBusinesses = await this.companyRepository.find({
-    //   where: {
-    //     growthStage: In(groupedAnswers['What stage of business growth does your investments focus on?']),
-    //     country: In(groupedAnswers['Countries of Investment Focus']),
-    //     businessSector: In(groupedAnswers['Sectors of Investment']),
-    //     registrationStructure: In(groupedAnswers['Please select the various investment structures that you consider while financing businesses'])
-    //   }
-    // })
-
     const growthStageAnswers =
       groupedAnswers[
         'What stage of business growth does your investments focus on?'
       ];
-    console.log('Growth stage:', growthStageAnswers);
     const countryAnswers = groupedAnswers['Countries of Investment Focus'];
-    console.log('Country:', countryAnswers);
     const businessSectorAnswers = groupedAnswers['Sectors of Investment'];
-    console.log('Business Sector:', businessSectorAnswers);
     const registrationStructureAnswers =
       groupedAnswers[
         'Please select the various investment structures that you consider while financing businesses'
       ];
-    console.log('Registration Structure:', registrationStructureAnswers);
 
     // Use QueryBuilder to fetch matched businesses and log the query
     const matchedBusinessesQuery = this.companyRepository
@@ -278,5 +261,164 @@ export class CompanyService {
       .map((inv) => {
         return { id: inv.id, name: inv.username };
       });
+  }
+
+  async filterCompanies(filterDto: FilterCompanyDto): Promise<Company[]> {
+    const queryBuilder = this.companyRepository.createQueryBuilder('companies');
+
+    const {
+      countries,
+      businessSectors,
+      businessSubsectors,
+      productsAndServices,
+      registrationStructures,
+      yearsOfOperation,
+      growthStage,
+      numberOfEmployees,
+      fullTimeBusiness,
+    } = filterDto;
+
+    if (countries && countries.length > 0) {
+      queryBuilder.andWhere('companies.country IN (:...countries)', {
+        countries,
+      });
+    }
+
+    if (businessSectors && businessSectors.length > 0) {
+      queryBuilder.andWhere(
+        'companies.businessSector IN (:...businessSectors)',
+        { businessSectors },
+      );
+    }
+
+    if (businessSubsectors && businessSubsectors.length > 0) {
+      queryBuilder.andWhere(
+        'companies.businessSubsector IN (:...businessSubsectors)',
+        { businessSubsectors },
+      );
+    }
+
+    if (productsAndServices) {
+      queryBuilder.andWhere(
+        'companies.productsAndServices LIKE :productsAndServices',
+        {
+          productsAndServices: `%${productsAndServices}%`,
+        },
+      );
+    }
+
+    if (registrationStructures && registrationStructures.length > 0) {
+      queryBuilder.andWhere(
+        'companies.registrationStructure IN (:...registrationStructures)',
+        { registrationStructures },
+      );
+    }
+
+    if (yearsOfOperation) {
+      queryBuilder.andWhere('companies.yearsOfOperation = :yearsOfOperation', {
+        yearsOfOperation,
+      });
+    }
+
+    if (growthStage) {
+      queryBuilder.andWhere('companies.growthStage = :growthStage', {
+        growthStage,
+      });
+    }
+
+    if (numberOfEmployees) {
+      queryBuilder.andWhere(
+        'companies.numberOfEmployees = :numberOfEmployees',
+        { numberOfEmployees },
+      );
+    }
+
+    if (fullTimeBusiness !== undefined) {
+      queryBuilder.andWhere('companies.fullTimeBusiness = :fullTimeBusiness', {
+        fullTimeBusiness,
+      });
+    }
+
+    const companies = await queryBuilder.getMany();
+    return companies;
+  }
+
+  async filterCompaniesByOr(filterDto: FilterCompanyDto): Promise<Company[]> {
+    const queryBuilder = this.companyRepository.createQueryBuilder('companies');
+
+    const {
+      countries,
+      businessSectors,
+      businessSubsectors,
+      productsAndServices,
+      registrationStructures,
+      yearsOfOperation,
+      growthStage,
+      numberOfEmployees,
+      fullTimeBusiness,
+    } = filterDto;
+
+    if (countries && countries.length > 0) {
+      queryBuilder.orWhere('companies.country IN (:...countries)', {
+        countries,
+      });
+    }
+
+    if (businessSectors && businessSectors.length > 0) {
+      queryBuilder.orWhere(
+        'companies.businessSector IN (:...businessSectors)',
+        { businessSectors },
+      );
+    }
+
+    if (businessSubsectors && businessSubsectors.length > 0) {
+      queryBuilder.orWhere(
+        'companies.businessSubsector IN (:...businessSubsectors)',
+        { businessSubsectors },
+      );
+    }
+
+    if (productsAndServices) {
+      queryBuilder.orWhere(
+        'companies.productsAndServices LIKE :productsAndServices',
+        {
+          productsAndServices: `%${productsAndServices}%`,
+        },
+      );
+    }
+
+    if (registrationStructures && registrationStructures.length > 0) {
+      queryBuilder.orWhere(
+        'companies.registrationStructure IN (:...registrationStructures)',
+        { registrationStructures },
+      );
+    }
+
+    if (yearsOfOperation) {
+      queryBuilder.orWhere('companies.yearsOfOperation = :yearsOfOperation', {
+        yearsOfOperation,
+      });
+    }
+
+    if (growthStage) {
+      queryBuilder.orWhere('companies.growthStage = :growthStage', {
+        growthStage,
+      });
+    }
+
+    if (numberOfEmployees) {
+      queryBuilder.orWhere('companies.numberOfEmployees = :numberOfEmployees', {
+        numberOfEmployees,
+      });
+    }
+
+    if (fullTimeBusiness !== undefined) {
+      queryBuilder.orWhere('companies.fullTimeBusiness = :fullTimeBusiness', {
+        fullTimeBusiness,
+      });
+    }
+
+    const companies = await queryBuilder.getMany();
+    return companies;
   }
 }

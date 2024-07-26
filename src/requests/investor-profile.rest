@@ -29,8 +29,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### Get Investor Profile by ID
-GET http://localhost:3000/investor-profiles/1
+GET http://localhost:3000/investor-profiles/6
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### Update Investor Profile by ID
 PUT http://localhost:3000/investor-profiles/6

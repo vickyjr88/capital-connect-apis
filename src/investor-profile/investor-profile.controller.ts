@@ -128,4 +128,9 @@ export class InvestorProfileController {
   filter(@Body() filterDto: FilterInvestorProfilesDto): Promise<InvestorProfile[]> {
     return this.investorProfileService.filter(filterDto);
   }
+
+  @Post('filter/by-or')
+  filterByOr(@Body() filterDto: FilterInvestorProfilesDto): Promise<InvestorProfile[]> {
+    return this.investorProfileService.filterByOr(filterDto);
+  }
 }

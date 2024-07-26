@@ -178,4 +178,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   "esgFocusAreas": ["Renewable energy"],
   "registrationStructures": "Investment holding company"
 }
+###
+
+### Filter by multiple criteria
+POST http://localhost:3000/investor-profiles/filter/by-or
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+{
+  "countriesOfInvestmentFocus": ["Kenya"],
+  "headOfficeLocation": "Nairobi",
+  "useOfFunds": ["Expansion"],
+  "maximumFunding": 50000001,
+  "minimumFunding": 1000,
+  "sectors": [2],
+  "businessGrowthStages": ["Growth"],
+  "investorType": "Venture capital",
+  "investmentStructures": ["Equity"],
+  "esgFocusAreas": ["Renewable energy"],
+  "registrationStructures": "Investment holding company"
+}
 
