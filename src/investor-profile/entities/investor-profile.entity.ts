@@ -4,8 +4,12 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Sector } from '../../sector/entities/sector.entity';
+import { JoinTable } from 'typeorm/browser';
+import { SubSector } from '../../subsector/entities/subsector.entity';
 
 @Entity('investor_profiles')
 export class InvestorProfile {
@@ -57,4 +61,12 @@ export class InvestorProfile {
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
+
+  @ManyToMany(() => Sector, (sector) => sector.investorProfiles)
+  @JoinTable()
+  sectors: Sector[];
+
+  @ManyToMany(() => SubSector, (subSector) => subSector.investorProfiles)
+  @JoinTable()
+  subSectors: SubSector[];
 }
