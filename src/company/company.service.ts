@@ -38,11 +38,11 @@ export class CompanyService {
   }
 
   findAll() {
-    return this.companyRepository.find();
+    return this.companyRepository.find({ relations: ['companyLogo', 'user'] });
   }
 
   async findOne(id: number) {
-    const company = await this.companyRepository.findOneBy({ id });
+    const company = await this.companyRepository.findOne({ where: { id }, relations: ['companyLogo', 'user'] });
     if (company) {
       return company;
     } else {
@@ -51,19 +51,19 @@ export class CompanyService {
   }
 
   async findOneByOwnerId(id: number) {
-    const companies = await this.companyRepository.find({
+    const company = await this.companyRepository.findOne({
       where: { user: { id } },
-      relations: ['companyLogo'],
+      relations: ['companyLogo', 'user'],
     });
-    if (companies.length > 0) {
-      return companies[0];
+    if (company) {
+      return company;
     } else {
       throw new NotFoundException('company not available');
     }
   }
 
   async findOneByUser(user: User) {
-    const company = await this.companyRepository.findOne({ where: { user } });
+    const company = await this.companyRepository.findOne({ where: { user }, relations: ['companyLogo', 'user'], });
     if (company) {
       return company;
     } else {
@@ -121,19 +121,6 @@ export class CompanyService {
       acc[questionText].push(submission.answer.text);
       return acc;
     }, {});
-
-    console.log('groupedAnswers', groupedAnswers);
-
-    // const ans = investorSubmissions.map(sub2 => sub2.answer.text);
-    // console.log("ans", ans);
-    // const matchedBusinesses = await this.companyRepository.find({
-    //   where: {
-    //     growthStage: In(groupedAnswers['What stage of business growth does your investments focus on?']),
-    //     country: In(groupedAnswers['Countries of Investment Focus']),
-    //     businessSector: In(groupedAnswers['Sectors of Investment']),
-    //     registrationStructure: In(groupedAnswers['Please select the various investment structures that you consider while financing businesses'])
-    //   }
-    // })
 
     const growthStageAnswers =
       groupedAnswers[
