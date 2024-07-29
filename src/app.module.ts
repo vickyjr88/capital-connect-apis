@@ -28,6 +28,8 @@ import { StageModule } from './stage/stage.module';
 import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
 import { MobileNumberModule } from './mobile/mobile-number.module';
 import { InvestorProfileModule } from './investor-profile/investor-profile.module';
+import { OtpController } from './otp/otp.controller';
+import { OtpService } from './otp/otp.service';
 
 @Module({
   imports: [
@@ -70,8 +72,9 @@ import { InvestorProfileModule } from './investor-profile/investor-profile.modul
       provide: 'CustomLogger',
       useClass: CustomLogger,
     },
+    OtpService,
   ],
-  controllers: [AppController],
+  controllers: [AppController, OtpController],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
