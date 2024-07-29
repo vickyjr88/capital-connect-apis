@@ -10,7 +10,9 @@ import { Question } from 'src/question/entities/question.entity';
 import { Answer } from 'src/answer/entities/answer.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Company, User, Submission, Question, Answer])],
+  imports: [
+    TypeOrmModule.forFeature([Company, User, Submission, Question, Answer]),
+  ],
   controllers: [CompanyController],
   providers: [CompanyService, UsersService],
   exports: [CompanyService],

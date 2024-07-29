@@ -5,11 +5,13 @@ import {
   OneToOne,
   JoinColumn,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Sector } from '../../sector/entities/sector.entity';
 import { SubSector } from '../../subsector/entities/subsector.entity';
 import { JoinTable } from 'typeorm';
+import { ContactPerson } from '../../contact-person/entities/contact-person.entity';
 
 @Entity('investor_profiles')
 export class InvestorProfile {
@@ -22,11 +24,8 @@ export class InvestorProfile {
   @Column({ nullable: true })
   organizationName: string;
 
-  @Column()
-  emailAddress: string;
-
-  @Column()
-  contactPerson: string;
+  @Column({ nullable: true })
+  url: string;
 
   @Column('text', { array: true })
   countriesOfInvestmentFocus: string[];
@@ -72,4 +71,10 @@ export class InvestorProfile {
   @ManyToMany(() => SubSector, (subSector) => subSector.investorProfiles)
   @JoinTable()
   subSectors: SubSector[];
+
+  @OneToMany(
+    () => ContactPerson,
+    (contactPerson) => contactPerson.investorProfile,
+  )
+  contactPersons: ContactPerson[];
 }

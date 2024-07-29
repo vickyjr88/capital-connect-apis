@@ -1,0 +1,39 @@
+### Create a new ContactPerson
+POST http://localhost:3000/contact-persons
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "designation": "Senior Manager",
+  "emailAddress": "john.doe@example.com",
+  "phoneNumber": "+254771114712",
+  "investorProfileId": 1
+}
+
+###
+
+### Get all ContactPersons
+GET http://localhost:3000/contact-persons
+
+###
+
+### Get a specific ContactPerson
+GET http://localhost:3000/contact-persons/5
+
+###
+
+### Update a ContactPerson
+PATCH http://localhost:3000/contact-persons/1
+Content-Type: application/json
+
+{
+  "designation": "Senior Manager"
+}
+
+###
+
+### Delete a ContactPerson
+DELETE http://localhost:3000/contact-persons/2
+
+###

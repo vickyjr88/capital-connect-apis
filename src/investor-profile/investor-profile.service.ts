@@ -43,21 +43,21 @@ export class InvestorProfileService {
 
   findAll(): Promise<InvestorProfile[]> {
     return this.investorProfileRepository.find({
-      relations: ['user', 'sectors', 'subSectors'],
+      relations: ['user', 'sectors', 'subSectors', 'contactPersons'],
     });
   }
 
   findOne(id: number): Promise<InvestorProfile> {
     return this.investorProfileRepository.findOne({
       where: { id },
-      relations: ['user', 'sectors', 'subSectors'],
+      relations: ['user', 'sectors', 'subSectors', 'contactPersons'],
     });
   }
 
   findOneByUserId(id: number): Promise<InvestorProfile> {
     return this.investorProfileRepository.findOne({
       where: { user: { id } },
-      relations: ['user', 'sectors', 'subSectors'],
+      relations: ['user', 'sectors', 'subSectors', 'contactPersons'],
     });
   }
 
@@ -98,7 +98,8 @@ export class InvestorProfileService {
     const query = this.investorProfileRepository
       .createQueryBuilder('investorProfile')
       .leftJoinAndSelect('investorProfile.sectors', 'sectors')
-      .leftJoinAndSelect('investorProfile.subSectors', 'subSectors');
+      .leftJoinAndSelect('investorProfile.subSectors', 'subSectors')
+      .leftJoinAndSelect('investorProfile.contactPersons', 'contactPersons');
 
     if (filterDto.countriesOfInvestmentFocus) {
       query.andWhere(
@@ -211,7 +212,8 @@ export class InvestorProfileService {
     const query = this.investorProfileRepository
       .createQueryBuilder('investorProfile')
       .leftJoinAndSelect('investorProfile.sectors', 'sectors')
-      .leftJoinAndSelect('investorProfile.subSectors', 'subSectors');
+      .leftJoinAndSelect('investorProfile.subSectors', 'subSectors')
+      .leftJoinAndSelect('investorProfile.contactPersons', 'contactPersons');
 
     if (filterDto.countriesOfInvestmentFocus) {
       query.orWhere(

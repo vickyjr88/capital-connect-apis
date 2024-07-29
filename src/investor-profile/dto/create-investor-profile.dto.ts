@@ -19,12 +19,8 @@ export class CreateInvestorProfileDto {
   @IsOptional()
   organizationName: string;
 
-  @IsEmail()
-  emailAddress: string;
-
   @IsString()
-  @IsNotEmpty()
-  contactPerson: string;
+  url: string;
 
   @IsArray()
   @ArrayNotEmpty()
