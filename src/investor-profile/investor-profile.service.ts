@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateInvestorProfileDto } from './dto/create-investor-profile.dto';
 import { UpdateInvestorProfileDto } from './dto/update-investor-profile.dto';
 import { InvestorProfile } from './entities/investor-profile.entity';
@@ -28,20 +28,23 @@ export class InvestorProfileService {
     investorProfile.user = { id: createInvestorProfileDto.userId } as User;
 
     if (createInvestorProfileDto.sectors) {
-      const fetchedSectors = await this.sectorRepository.findByIds(sectors);
-      investorProfile.sectors = fetchedSectors;
+      investorProfile.sectors = await this.sectorRepository.findBy({
+        id: In(sectors),
+      });
     }
 
     if (createInvestorProfileDto.subSectors) {
-      const fetchedSubSectors =
-        await this.subSectorRepository.findByIds(subSectors);
-      investorProfile.subSectors = fetchedSubSectors;
+      investorProfile.subSectors = await this.subSectorRepository.findBy({
+        id: In(subSectors),
+      });
     }
     return this.investorProfileRepository.save(investorProfile);
   }
 
   findAll(): Promise<InvestorProfile[]> {
-    return this.investorProfileRepository.find();
+    return this.investorProfileRepository.find({
+      relations: ['user', 'sectors', 'subSectors'],
+    });
   }
 
   findOne(id: number): Promise<InvestorProfile> {
@@ -70,25 +73,19 @@ export class InvestorProfileService {
     Object.assign(investorProfile, updateInvestorProfileDto);
 
     if (updateInvestorProfileDto.sectors) {
-      const sectors = await this.sectorRepository.findByIds(
-        updateInvestorProfileDto.sectors,
-      );
-      investorProfile.sectors = sectors;
+      investorProfile.sectors = await this.sectorRepository.findBy({
+        id: In(updateInvestorProfileDto.sectors),
+      });
     }
 
     if (updateInvestorProfileDto.subSectors) {
-      const subSectors = await this.subSectorRepository.findByIds(
-        updateInvestorProfileDto.subSectors,
-      );
-      investorProfile.subSectors = subSectors;
+      investorProfile.subSectors = await this.subSectorRepository.findBy({
+        id: In(updateInvestorProfileDto.subSectors),
+      });
     }
 
     await this.investorProfileRepository.save(investorProfile);
     return await this.findOne(id);
-    if (!investorProfile) {
-      throw new NotFoundException('Investor profile not found');
-    }
-    return investorProfile;
   }
 
   remove(id: number): Promise<void> {
@@ -193,7 +190,10 @@ export class InvestorProfileService {
       });
     }
 
-    if (filterDto.registrationStructures && filterDto.registrationStructures.length > 0) {
+    if (
+      filterDto.registrationStructures &&
+      filterDto.registrationStructures.length > 0
+    ) {
       query.andWhere(
         'investorProfile.registrationStructures && :registrationStructures',
         {
@@ -303,7 +303,10 @@ export class InvestorProfileService {
       });
     }
 
-    if (filterDto.registrationStructures && filterDto.registrationStructures.length) {
+    if (
+      filterDto.registrationStructures &&
+      filterDto.registrationStructures.length
+    ) {
       query.orWhere(
         'investorProfile.registrationStructures && :registrationStructures',
         {
