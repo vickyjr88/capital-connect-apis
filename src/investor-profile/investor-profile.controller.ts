@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -61,8 +62,8 @@ export class InvestorProfileController {
 
   @Roles(Role.Admin, Role.Investor, Role.Advisor)
   @Get()
-  findAll() {
-    return this.investorProfileService.findAll();
+  findAll(@Query('page') page: number, @Query('limit') limit: number) {
+    return this.investorProfileService.findAll(page, limit);
   }
 
   @Roles(Role.Admin, Role.Investor, Role.Advisor)
