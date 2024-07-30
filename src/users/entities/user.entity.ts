@@ -67,7 +67,7 @@ export class User {
   @OneToMany(() => MobileNumber, (mobile) => mobile.user)
   mobileNumbers: MobileNumber[];
 
-  @OneToOne(() => InvestorProfile, (investorProfile) => investorProfile.user)
+  @OneToOne(() => InvestorProfile, (investorProfile) => investorProfile.investor)
   investorProfile: InvestorProfile;
 
   @BeforeInsert()

@@ -1,8 +1,14 @@
 import { Sector } from 'src/sector/entities/sector.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  ManyToMany,
+} from 'typeorm';
+import { InvestorProfile } from '../../investor-profile/entities/investor-profile.entity';
 
-
-@Entity("subsectors")
+@Entity('subsectors')
 export class SubSector {
   @PrimaryGeneratedColumn()
   id: number;
@@ -14,7 +20,13 @@ export class SubSector {
   description: string;
 
   @ManyToOne(() => Sector, (sector) => sector.subSectors, {
-    onDelete: "CASCADE",
+    onDelete: 'CASCADE',
   })
   sector: Sector;
+
+  @ManyToMany(
+    () => InvestorProfile,
+    (investorProfile) => investorProfile.subSectors,
+  )
+  investorProfiles: InvestorProfile[];
 }
