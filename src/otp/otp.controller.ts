@@ -13,7 +13,7 @@ export class OtpController { constructor(
     private readonly mobileNumberRepository: Repository<MobileNumber>,
   ) {}
 
-  @Post('send-otp')
+  @Post()
   async sendOtp(@Body('phoneNo') phoneNo: string): Promise<any> {
     const otp = generateOtp();
 
@@ -28,7 +28,7 @@ export class OtpController { constructor(
     return { success: true, message: 'OTP sent successfully' };
   }
 
-  @Post('verify-otp')
+  @Post('verify')
   async verifyOtp(@Body('mobileNumber') phoneNo: string, @Body('otp') otp: string): Promise<any> {
     const record = await this.mobileNumberRepository.findOne({where: {phoneNo}});
 

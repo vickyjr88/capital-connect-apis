@@ -3,8 +3,8 @@ import axios from 'axios';
 
 @Injectable()
 export class OtpService {
-  private readonly apiKey = 'YOUR_BREVO_API_KEY';
-  private readonly apiUrl = 'http://api.capitalconnect.africa/v3/transactionalSMS/sms';
+  private readonly apiKey = process.env.BREVO_API_KEY;
+  private readonly apiUrl = 'http://api.brevo.com/v3/transactionalSMS/sms';
 
   async sendSms(mobileNumber: string, message: string): Promise<any> {
     try {
