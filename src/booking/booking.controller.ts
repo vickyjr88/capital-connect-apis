@@ -62,12 +62,12 @@ export class BookingController {
 
       // Redirect url: https://pay.pesapal.com/iframe/PesapalIframe3/Index?OrderTrackingId=[order_tracking_id]
       const res = response.data;
+      console.log("Response", res);
       if (res.status !== '200') throw new HttpException("Failed to initiate payment", 500);
       bookingResponse.orderTrackingId = res.order_tracking_id;
       bookingResponse.redirectUrl = res.redirect_url;
       const payment = await this.paymentService.createPayment({ bookingId: booking.id, orderTrackingId: res.order_tracking_id, userId: user.id });
       bookingResponse.paymentId = payment.id;
-      console.log("Response", res);
     } catch (error) {
       console.error("Error", error);
       throw new HttpException("Failed to initiate payment", 500);
