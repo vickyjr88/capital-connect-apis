@@ -24,8 +24,20 @@ export class InvestorProfile {
   @Column({ nullable: true })
   organizationName: string;
 
+  @Column()
+  fundDescription: string;
+
+  @Column()
+  emailAddress: string;
+
   @Column({ nullable: true })
   url: string;
+
+  @Column()
+  availableFunding: number;
+
+  @Column('text', { array: true })
+  differentFundingVehicles: string[];
 
   @Column('text', { array: true })
   countriesOfInvestmentFocus: string[];
@@ -62,7 +74,7 @@ export class InvestorProfile {
 
   @OneToOne(() => User)
   @JoinColumn()
-  user: User;
+  investor: User;
 
   @ManyToMany(() => Sector, (sector) => sector.investorProfiles)
   @JoinTable()

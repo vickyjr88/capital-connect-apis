@@ -20,7 +20,20 @@ export class CreateInvestorProfileDto {
   organizationName: string;
 
   @IsString()
+  fundDescription: string;
+
+  @IsString()
   url: string;
+
+  @IsEmail()
+  emailAddress: string;
+
+  @IsNumber()
+  availableFunding: number;
+
+  @IsArray()
+  @ArrayNotEmpty()
+  differentFundingVehicles: string[];
 
   @IsArray()
   @ArrayNotEmpty()

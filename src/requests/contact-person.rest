@@ -6,8 +6,9 @@ Content-Type: application/json
   "firstName": "Jane",
   "lastName": "Doe",
   "designation": "Senior Manager",
-  "emailAddress": "john.doe@example.com",
+  "emailAddress": "jane.doe@example.com",
   "phoneNumber": "+254771114712",
+  "primaryContact": true,
   "investorProfileId": 1
 }
 

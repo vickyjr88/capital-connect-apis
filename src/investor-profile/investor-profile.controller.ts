@@ -7,10 +7,10 @@ import {
   NotFoundException,
   Param,
   Post,
-  Put, Query,
+  Put,
   Request,
-  UseGuards
-} from "@nestjs/common";
+  UseGuards,
+} from '@nestjs/common';
 import { InvestorProfileService } from './investor-profile.service';
 import { CreateInvestorProfileDto } from './dto/create-investor-profile.dto';
 import { UpdateInvestorProfileDto } from './dto/update-investor-profile.dto';
@@ -19,8 +19,8 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
-import { FilterInvestorProfilesDto } from "./dto/filter-investor-profile.dto";
-import { InvestorProfile } from "./entities/investor-profile.entity";
+import { FilterInvestorProfilesDto } from './dto/filter-investor-profile.dto';
+import { InvestorProfile } from './entities/investor-profile.entity';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('investor-profiles')
@@ -37,7 +37,9 @@ export class InvestorProfileController {
   ) {
     try {
       const user = req.user;
-      const investorProfile = await this.investorProfileService.findOneByUserId(user.id);
+      const investorProfile = await this.investorProfileService.findOneByUserId(
+        user.id,
+      );
       if (investorProfile) {
         throw new BadRequestException(
           'Investor profile already exists for this user.',
@@ -71,7 +73,7 @@ export class InvestorProfileController {
       const user = req.user;
       if (
         user.roles.includes('investor') &&
-        investorProfile.user.id !== user.id
+        investorProfile.investor.id !== user.id
       ) {
         throw new BadRequestException(
           'User not allowed to view investor profile.',
@@ -98,7 +100,7 @@ export class InvestorProfileController {
       const user = req.user;
       if (
         user.roles.includes('investor') &&
-        investorProfile.user.id !== user.id
+        investorProfile.investor.id !== user.id
       ) {
         throw new BadRequestException(
           'User not allowed to update investor profile.',
@@ -125,12 +127,16 @@ export class InvestorProfileController {
   }
 
   @Post('filter')
-  filter(@Body() filterDto: FilterInvestorProfilesDto): Promise<InvestorProfile[]> {
+  filter(
+    @Body() filterDto: FilterInvestorProfilesDto,
+  ): Promise<InvestorProfile[]> {
     return this.investorProfileService.filter(filterDto);
   }
 
   @Post('filter/by-or')
-  filterByOr(@Body() filterDto: FilterInvestorProfilesDto): Promise<InvestorProfile[]> {
+  filterByOr(
+    @Body() filterDto: FilterInvestorProfilesDto,
+  ): Promise<InvestorProfile[]> {
     return this.investorProfileService.filterByOr(filterDto);
   }
 }

@@ -8,7 +8,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   "organizationName": "Investor Profile 1",
   "countriesOfInvestmentFocus": ["Kenya", "Uganda"],
   "headOfficeLocation": "Nairobi",
+  "fundDescription": "Investor Profile 1",
   "url": "https://testinvetor.com",
+  "emailAddress": "investor@company.com",
+  "availableFunding": 10000000,
+  "differentFundingVehicles": ["Equity", "Debt"],
   "useOfFunds": ["Expansion", "Working capital"],
   "maximumFunding": 10000000,
   "minimumFunding": 100000,
@@ -28,19 +32,23 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### Get Investor Profile by ID
-GET http://localhost:3000/investor-profiles/6
+GET http://localhost:3000/investor-profiles/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### Update Investor Profile by ID
-PUT http://localhost:3000/investor-profiles/6
+PUT http://localhost:3000/investor-profiles/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
   "countriesOfInvestmentFocus": ["Tanzania"],
   "headOfficeLocation": "Dar es Salaam",
+  "fundDescription": "Investor Profile 1",
   "url": "https://testinvetors.com",
+  "emailAddress": "investor@company.com",
+  "availableFunding": 10000000,
+  "differentFundingVehicles": ["Equity", "Debt"],
   "useOfFunds": ["CAPEX funding"],
   "minimumFunding": 50000,
   "maximumFunding": 5000000,

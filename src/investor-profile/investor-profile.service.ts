@@ -25,7 +25,7 @@ export class InvestorProfileService {
   ): Promise<InvestorProfile> {
     const { sectors, subSectors, ...rest } = createInvestorProfileDto;
     const investorProfile = this.investorProfileRepository.create({ ...rest });
-    investorProfile.user = { id: createInvestorProfileDto.userId } as User;
+    investorProfile.investor = { id: createInvestorProfileDto.userId } as User;
 
     if (createInvestorProfileDto.sectors) {
       investorProfile.sectors = await this.sectorRepository.findBy({
@@ -43,21 +43,21 @@ export class InvestorProfileService {
 
   findAll(): Promise<InvestorProfile[]> {
     return this.investorProfileRepository.find({
-      relations: ['user', 'sectors', 'subSectors', 'contactPersons'],
+      relations: ['investor', 'sectors', 'subSectors', 'contactPersons'],
     });
   }
 
   findOne(id: number): Promise<InvestorProfile> {
     return this.investorProfileRepository.findOne({
       where: { id },
-      relations: ['user', 'sectors', 'subSectors', 'contactPersons'],
+      relations: ['investor', 'sectors', 'subSectors', 'contactPersons'],
     });
   }
 
   findOneByUserId(id: number): Promise<InvestorProfile> {
     return this.investorProfileRepository.findOne({
-      where: { user: { id } },
-      relations: ['user', 'sectors', 'subSectors', 'contactPersons'],
+      where: { investor: { id } },
+      relations: ['investor', 'sectors', 'subSectors', 'contactPersons'],
     });
   }
 
