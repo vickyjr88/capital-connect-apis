@@ -1,0 +1,79 @@
+###
+# Create Registration structure area
+POST http://localhost:3000/registration-structures
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Top",
+    "description": "The highest level"
+}
+
+###
+# Create Registration structure area prod
+POST http://api.capitalconnect.africa/registration-structures
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "",
+    "description": "The highest level"
+}
+
+###
+# Get Registration structure area
+GET http://localhost:3000/registration-structures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Registration structure area prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/registration-structures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Registration structure areas
+GET http://localhost:3000/registration-structures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Registration structure areas prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/registration-structures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Registration structure areas paginated
+GET http://localhost:3000/registration-structures?page=1&limit=3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+###
+# Update Registration structure area
+PUT http://localhost:3000/registration-structures/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Registration structure areas 1 updated",
+    "description": "Registration structure 1 description updated"
+}
+
+###
+# Update Registration structure area prod
+PUT http://api.capitalconnect.africa/registration-structures/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Registration structure areas 1 updated",
+    "description": "Registration structure 1 description updated"
+}
+
+###
+# Delete Registration structure area
+DELETE http://localhost:3000/registration-structures/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Delete Registration structure area prod
+DELETE http://api.capitalconnect.africa/registration-structures/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

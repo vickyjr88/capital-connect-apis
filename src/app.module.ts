@@ -31,6 +31,7 @@ import { InvestorProfileModule } from './investor-profile/investor-profile.modul
 import { FundingVehiclesModule } from './funding-vehicles/funding-vehicles.module';
 import { UseOfFundsModule } from './use-of-funds/use-of-funds.module';
 import { EsgFocusAreasModule } from './esg-focus/esg-focus-areas.module';
+import { RegistrationStructuresModule } from './registration-structures/registration-structures.module';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { EsgFocusAreasModule } from './esg-focus/esg-focus-areas.module';
     FundingVehiclesModule,
     UseOfFundsModule,
     EsgFocusAreasModule,
+    RegistrationStructuresModule,
   ],
   providers: [
     AppService,
