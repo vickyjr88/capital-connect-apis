@@ -30,7 +30,6 @@ import { MobileNumberModule } from './mobile/mobile-number.module';
 import { InvestorProfileModule } from './investor-profile/investor-profile.module';
 import { MatchmakingModule } from './matchmaking/matchmaking.module';
 import { ContactPersonModule } from './contact-person/contact-person.module';
-import { OtpModule } from './otp/otp.module';
 
 @Module({
   imports: [
@@ -67,7 +66,6 @@ import { OtpModule } from './otp/otp.module';
     InvestorProfileModule,
     MatchmakingModule,
     ContactPersonModule,
-    OtpModule,
   ],
   providers: [
     AppService,
