@@ -55,9 +55,6 @@ export class InvestorProfile {
   noMaximumFunding: boolean;
 
   @Column('text', { array: true })
-  sectorsOfInvestment: string[];
-
-  @Column('text', { array: true })
   businessGrowthStages: string[];
 
   @Column()
