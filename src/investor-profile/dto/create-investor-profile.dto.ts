@@ -17,12 +17,21 @@ export class CreateInvestorProfileDto {
   @IsOptional()
   organizationName: string;
 
+  @IsString()
+  fundDescription: string;
+
+  @IsString()
+  url: string;
+
   @IsEmail()
   emailAddress: string;
 
-  @IsString()
-  @IsNotEmpty()
-  contactPerson: string;
+  @IsNumber()
+  availableFunding: number;
+
+  @IsArray()
+  @ArrayNotEmpty()
+  differentFundingVehicles: string[];
 
   @IsArray()
   @ArrayNotEmpty()
@@ -36,10 +45,6 @@ export class CreateInvestorProfileDto {
 
   @IsNumber()
   minimumFunding: number;
-
-  @IsArray()
-  @ArrayNotEmpty()
-  sectorsOfInvestment: string[];
 
   @IsArray()
   @ArrayNotEmpty()
@@ -60,4 +65,10 @@ export class CreateInvestorProfileDto {
 
   @IsNumber()
   userId: number;
+
+  @IsArray()
+  sectors: number[];
+
+  @IsArray()
+  subSectors: number[];
 }
