@@ -13,6 +13,7 @@ import { Answer } from '../answer/entities/answer.entity';
 import { CompanyModule } from '../company/company.module';
 import { InvestorProfileModule } from '../investor-profile/investor-profile.module';
 import { ContactPerson } from '../contact-person/entities/contact-person.entity';
+import { Matchmaking } from './entities/matchmaking.entity';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ContactPerson } from '../contact-person/entities/contact-person.entity'
       Sector,
       SubSector,
       ContactPerson,
+      Matchmaking,
     ]),
     CompanyModule,
     InvestorProfileModule,
