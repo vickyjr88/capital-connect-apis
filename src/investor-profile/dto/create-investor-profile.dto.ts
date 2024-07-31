@@ -7,8 +7,6 @@ import {
   ArrayNotEmpty,
   IsOptional,
 } from 'class-validator';
-import { Sector } from '../../sector/entities/sector.entity';
-import { SubSector } from '../../subsector/entities/subsector.entity';
 
 export class CreateInvestorProfileDto {
   @IsString()
@@ -47,10 +45,6 @@ export class CreateInvestorProfileDto {
 
   @IsNumber()
   minimumFunding: number;
-
-  @IsArray()
-  @ArrayNotEmpty()
-  sectorsOfInvestment: string[];
 
   @IsArray()
   @ArrayNotEmpty()
