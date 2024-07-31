@@ -9,8 +9,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
     "calendlyEventId": "82348"
 }
 
-###
-#Create booking prod
+### Create booking prod
 
 POST http://api.capitalconnect.africa/bookings
 Content-Type: application/json
