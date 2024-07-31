@@ -4,8 +4,14 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  ManyToMany,
+  OneToMany,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Sector } from '../../sector/entities/sector.entity';
+import { SubSector } from '../../subsector/entities/subsector.entity';
+import { JoinTable } from 'typeorm';
+import { ContactPerson } from '../../contact-person/entities/contact-person.entity';
 
 @Entity('investor_profiles')
 export class InvestorProfile {
@@ -19,10 +25,19 @@ export class InvestorProfile {
   organizationName: string;
 
   @Column()
-  emailAddress: string;
+  fundDescription: string;
 
   @Column()
-  contactPerson: string;
+  emailAddress: string;
+
+  @Column({ nullable: true })
+  url: string;
+
+  @Column()
+  availableFunding: number;
+
+  @Column('text', { array: true })
+  differentFundingVehicles: string[];
 
   @Column('text', { array: true })
   countriesOfInvestmentFocus: string[];
@@ -30,14 +45,14 @@ export class InvestorProfile {
   @Column('text', { array: true })
   useOfFunds: string[];
 
-  @Column('bigint')
-  maximumFunding: number;
-
-  @Column('bigint')
+  @Column('bigint', { default: 0 })
   minimumFunding: number;
 
-  @Column('text', { array: true })
-  sectorsOfInvestment: string[];
+  @Column('bigint', { default: 0 })
+  maximumFunding: number;
+
+  @Column('boolean', { default: false })
+  noMaximumFunding: boolean;
 
   @Column('text', { array: true })
   businessGrowthStages: string[];
@@ -56,5 +71,19 @@ export class InvestorProfile {
 
   @OneToOne(() => User)
   @JoinColumn()
-  user: User;
+  investor: User;
+
+  @ManyToMany(() => Sector, (sector) => sector.investorProfiles)
+  @JoinTable()
+  sectors: Sector[];
+
+  @ManyToMany(() => SubSector, (subSector) => subSector.investorProfiles)
+  @JoinTable()
+  subSectors: SubSector[];
+
+  @OneToMany(
+    () => ContactPerson,
+    (contactPerson) => contactPerson.investorProfile,
+  )
+  contactPersons: ContactPerson[];
 }

@@ -1,0 +1,155 @@
+### Get all company without filters
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{}
+
+###
+
+### Filter by multiple countries
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+{
+  "countries": ["Kenya", "Uganda"]
+}
+
+###
+
+### Filter by multiple business sectors
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "businessSectors": ["Technology", "Healthcare", "Venture Capital"]
+}
+
+### Filter by multiple business sub sectors
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "businessSubsectors": ["Technology", "Healthcare", "Venture Capital", "null"]
+}
+
+###
+
+### Filter by multiple criteria
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "countries": ["Kenya", "Uganda"],
+  "businessSectors": ["Technology", "Healthcare"],
+  "businessSubsectors": ["Software", "Biotech"],
+  "registrationStructures": ["LLC", "Corporation"],
+  "growthStage": "Growth"
+}
+
+###
+
+### Filter by products and services
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "productsAndServices": "Software Fintech"
+}
+
+###
+
+### Filter by registration structures
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "registrationStructures": ["LLC", "Corporation"]
+}
+
+###
+
+### Filter by years of operation
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "yearsOfOperation": "3 - 5 years"
+}
+
+###
+
+### Filter by growth stage
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "growthStage": "Growth"
+}
+
+###
+
+### Filter by number of employees
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "numberOfEmployees": "11-50 employees"
+}
+
+###
+
+### Filter by full-time business status
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "fullTimeBusiness": false
+}
+
+###
+
+### Filter by multiple criteria
+POST http://localhost:3000/company/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "countries": ["Kenya", "Uganda"],
+  "businessSectors": ["Technology", "Healthcare"],
+  "businessSubsectors": ["Software", "Biotech"],
+  "registrationStructures": ["LLC", "Corporation"],
+  "productsAndServices": "Software",
+  "yearsOfOperation": "0 years",
+  "growthStage": "Growth",
+  "numberOfEmployees": "1-10 employees",
+  "fullTimeBusiness": true
+}
+###
+
+### Filter by multiple criteria (by or)
+POST http://localhost:3000/company/filter/by-or
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "countries": ["Tanzania", "Uganda"],
+  "businessSectors": ["Technology", "Healthcare"],
+  "businessSubsectors": ["Software", "Biotech"],
+  "registrationStructures": ["LLC", "Corporation"],
+  "productsAndServices": "Fintech",
+  "growthStage": "Growth",
+  "numberOfEmployees": "11-50 employees",
+  "fullTimeBusiness": false
+}

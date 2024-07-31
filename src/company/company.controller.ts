@@ -20,6 +20,8 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { FilterCompanyDto } from './dto/filter-company.dto';
+import { Company } from './entities/company.entity';
 
 @UseGuards(JwtAuthGuard)
 @Controller('company')
@@ -125,5 +127,23 @@ export class CompanyController {
       }
       throwInternalServer(error);
     }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Advisor, Role.Admin, Role.Investor)
+  @Post('filter')
+  async filterCompanies(
+    @Body() filterDto: FilterCompanyDto,
+  ): Promise<Company[]> {
+    return this.companyService.filterCompanies(filterDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Advisor, Role.Admin, Role.Investor)
+  @Post('filter/by-or')
+  async filterCompaniesByOr(
+    @Body() filterDto: FilterCompanyDto,
+  ): Promise<Company[]> {
+    return this.companyService.filterCompaniesByOr(filterDto);
   }
 }
