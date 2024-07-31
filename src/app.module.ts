@@ -28,6 +28,8 @@ import { StageModule } from './stage/stage.module';
 import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
 import { MobileNumberModule } from './mobile/mobile-number.module';
 import { InvestorProfileModule } from './investor-profile/investor-profile.module';
+import { MatchmakingModule } from './matchmaking/matchmaking.module';
+import { ContactPersonModule } from './contact-person/contact-person.module';
 import { OtpModule } from './otp/otp.module';
 
 @Module({
@@ -63,6 +65,8 @@ import { OtpModule } from './otp/otp.module';
     InvestmentStructuresModule,
     MobileNumberModule,
     InvestorProfileModule,
+    MatchmakingModule,
+    ContactPersonModule,
     OtpModule,
   ],
   providers: [

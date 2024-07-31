@@ -12,6 +12,7 @@ import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
 import { Submission } from 'src/submission/entities/submission.entity';
 import { Question } from 'src/question/entities/question.entity';
+import { FilterCompanyDto } from './dto/filter-company.dto';
 
 @Injectable()
 export class CompanyService {
@@ -38,11 +39,11 @@ export class CompanyService {
   }
 
   findAll() {
-    return this.companyRepository.find();
+    return this.companyRepository.find({ relations: ['companyLogo', 'user'] });
   }
 
   async findOne(id: number) {
-    const company = await this.companyRepository.findOneBy({ id });
+    const company = await this.companyRepository.findOne({ where: { id }, relations: ['companyLogo', 'user'] });
     if (company) {
       return company;
     } else {
@@ -51,19 +52,19 @@ export class CompanyService {
   }
 
   async findOneByOwnerId(id: number) {
-    const companies = await this.companyRepository.find({
+    const company = await this.companyRepository.findOne({
       where: { user: { id } },
-      relations: ['companyLogo'],
+      relations: ['companyLogo', 'user'],
     });
-    if (companies.length > 0) {
-      return companies[0];
+    if (company) {
+      return company;
     } else {
       throw new NotFoundException('company not available');
     }
   }
 
   async findOneByUser(user: User) {
-    const company = await this.companyRepository.findOne({ where: { user } });
+    const company = await this.companyRepository.findOne({ where: { user }, relations: ['companyLogo', 'user'], });
     if (company) {
       return company;
     } else {
@@ -122,33 +123,16 @@ export class CompanyService {
       return acc;
     }, {});
 
-    console.log('groupedAnswers', groupedAnswers);
-
-    // const ans = investorSubmissions.map(sub2 => sub2.answer.text);
-    // console.log("ans", ans);
-    // const matchedBusinesses = await this.companyRepository.find({
-    //   where: {
-    //     growthStage: In(groupedAnswers['What stage of business growth does your investments focus on?']),
-    //     country: In(groupedAnswers['Countries of Investment Focus']),
-    //     businessSector: In(groupedAnswers['Sectors of Investment']),
-    //     registrationStructure: In(groupedAnswers['Please select the various investment structures that you consider while financing businesses'])
-    //   }
-    // })
-
     const growthStageAnswers =
       groupedAnswers[
         'What stage of business growth does your investments focus on?'
       ];
-    console.log('Growth stage:', growthStageAnswers);
     const countryAnswers = groupedAnswers['Countries of Investment Focus'];
-    console.log('Country:', countryAnswers);
     const businessSectorAnswers = groupedAnswers['Sectors of Investment'];
-    console.log('Business Sector:', businessSectorAnswers);
     const registrationStructureAnswers =
       groupedAnswers[
         'Please select the various investment structures that you consider while financing businesses'
       ];
-    console.log('Registration Structure:', registrationStructureAnswers);
 
     // Use QueryBuilder to fetch matched businesses and log the query
     const matchedBusinessesQuery = this.companyRepository
@@ -278,5 +262,164 @@ export class CompanyService {
       .map((inv) => {
         return { id: inv.id, name: inv.username };
       });
+  }
+
+  async filterCompanies(filterDto: FilterCompanyDto): Promise<Company[]> {
+    const queryBuilder = this.companyRepository.createQueryBuilder('companies');
+
+    const {
+      countries,
+      businessSectors,
+      businessSubsectors,
+      productsAndServices,
+      registrationStructures,
+      yearsOfOperation,
+      growthStages,
+      numberOfEmployees,
+      fullTimeBusiness,
+    } = filterDto;
+
+    if (countries && countries.length > 0) {
+      queryBuilder.andWhere('companies.country IN (:...countries)', {
+        countries,
+      });
+    }
+
+    if (businessSectors && businessSectors.length > 0) {
+      queryBuilder.andWhere(
+        'companies.businessSector IN (:...businessSectors)',
+        { businessSectors },
+      );
+    }
+
+    if (businessSubsectors && businessSubsectors.length > 0) {
+      queryBuilder.andWhere(
+        'companies.businessSubsector IN (:...businessSubsectors)',
+        { businessSubsectors },
+      );
+    }
+
+    if (productsAndServices) {
+      queryBuilder.andWhere(
+        'companies.productsAndServices LIKE :productsAndServices',
+        {
+          productsAndServices: `%${productsAndServices}%`,
+        },
+      );
+    }
+
+    if (registrationStructures && registrationStructures.length > 0) {
+      queryBuilder.andWhere(
+        'companies.registrationStructure IN (:...registrationStructures)',
+        { registrationStructures },
+      );
+    }
+
+    if (yearsOfOperation) {
+      queryBuilder.andWhere('companies.yearsOfOperation = :yearsOfOperation', {
+        yearsOfOperation,
+      });
+    }
+
+    if (growthStages && growthStages.length > 0) {
+      queryBuilder.andWhere('companies.growthStage IN (:...growthStages)', {
+        growthStages,
+      });
+    }
+
+    if (numberOfEmployees) {
+      queryBuilder.andWhere(
+        'companies.numberOfEmployees = :numberOfEmployees',
+        { numberOfEmployees },
+      );
+    }
+
+    if (fullTimeBusiness !== undefined) {
+      queryBuilder.andWhere('companies.fullTimeBusiness = :fullTimeBusiness', {
+        fullTimeBusiness,
+      });
+    }
+
+    const companies = await queryBuilder.getMany();
+    return companies;
+  }
+
+  async filterCompaniesByOr(filterDto: FilterCompanyDto): Promise<Company[]> {
+    const queryBuilder = this.companyRepository.createQueryBuilder('companies');
+
+    const {
+      countries,
+      businessSectors,
+      businessSubsectors,
+      productsAndServices,
+      registrationStructures,
+      yearsOfOperation,
+      growthStages,
+      numberOfEmployees,
+      fullTimeBusiness,
+    } = filterDto;
+
+    if (countries && countries.length > 0) {
+      queryBuilder.orWhere('companies.country IN (:...countries)', {
+        countries,
+      });
+    }
+
+    if (businessSectors && businessSectors.length > 0) {
+      queryBuilder.orWhere(
+        'companies.businessSector IN (:...businessSectors)',
+        { businessSectors },
+      );
+    }
+
+    if (businessSubsectors && businessSubsectors.length > 0) {
+      queryBuilder.orWhere(
+        'companies.businessSubsector IN (:...businessSubsectors)',
+        { businessSubsectors },
+      );
+    }
+
+    if (productsAndServices) {
+      queryBuilder.orWhere(
+        'companies.productsAndServices LIKE :productsAndServices',
+        {
+          productsAndServices: `%${productsAndServices}%`,
+        },
+      );
+    }
+
+    if (registrationStructures && registrationStructures.length > 0) {
+      queryBuilder.orWhere(
+        'companies.registrationStructure IN (:...registrationStructures)',
+        { registrationStructures },
+      );
+    }
+
+    if (yearsOfOperation) {
+      queryBuilder.orWhere('companies.yearsOfOperation = :yearsOfOperation', {
+        yearsOfOperation,
+      });
+    }
+
+    if (growthStages && growthStages.length > 0) {
+      queryBuilder.orWhere('companies.growthStage IN (:...growthStages)', {
+        growthStages,
+      });
+    }
+
+    if (numberOfEmployees) {
+      queryBuilder.orWhere('companies.numberOfEmployees = :numberOfEmployees', {
+        numberOfEmployees,
+      });
+    }
+
+    if (fullTimeBusiness !== undefined) {
+      queryBuilder.orWhere('companies.fullTimeBusiness = :fullTimeBusiness', {
+        fullTimeBusiness,
+      });
+    }
+
+    const companies = await queryBuilder.getMany();
+    return companies;
   }
 }
