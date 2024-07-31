@@ -28,6 +28,7 @@ import { StageModule } from './stage/stage.module';
 import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
 import { MobileNumberModule } from './mobile/mobile-number.module';
 import { InvestorProfileModule } from './investor-profile/investor-profile.module';
+import { FundingVehiclesModule } from './funding-vehicles/funding-vehicles.module';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { InvestorProfileModule } from './investor-profile/investor-profile.modul
     InvestmentStructuresModule,
     MobileNumberModule,
     InvestorProfileModule,
+    FundingVehiclesModule,
   ],
   providers: [
     AppService,
