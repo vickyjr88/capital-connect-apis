@@ -30,6 +30,7 @@ import { MobileNumberModule } from './mobile/mobile-number.module';
 import { InvestorProfileModule } from './investor-profile/investor-profile.module';
 import { FundingVehiclesModule } from './funding-vehicles/funding-vehicles.module';
 import { UseOfFundsModule } from './use-of-funds/use-of-funds.module';
+import { EsgFocusAreasModule } from './esg-focus/esg-focus-areas.module';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { UseOfFundsModule } from './use-of-funds/use-of-funds.module';
     InvestorProfileModule,
     FundingVehiclesModule,
     UseOfFundsModule,
+    EsgFocusAreasModule,
   ],
   providers: [
     AppService,
