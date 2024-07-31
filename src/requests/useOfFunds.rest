@@ -1,0 +1,79 @@
+###
+# Create Use of funds
+POST http://localhost:3000/use-funds
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Top",
+    "description": "The highest level"
+}
+
+###
+# Create Use of funds prod
+POST http://api.capitalconnect.africa/use-funds
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "",
+    "description": "The highest level"
+}
+
+###
+# Get Use of funds
+GET http://localhost:3000/use-funds/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Use of funds prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/use-funds/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Use of funds
+GET http://localhost:3000/use-funds
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Use of funds prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/use-funds
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Use of funds paginated
+GET http://localhost:3000/use-funds?page=2&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+###
+# Update Use of funds
+PUT http://localhost:3000/use-funds/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Use of funds 1 updated",
+    "description": "Use of funds 1 description updated"
+}
+
+###
+# Update Use of funds prod
+PUT http://api.capitalconnect.africa/use-funds/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Use of funds 1 updated",
+    "description": "Use of funds 1 description updated"
+}
+
+###
+# Delete Use of funds
+DELETE http://localhost:3000/use-funds/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Delete Use of funds prod
+DELETE http://api.capitalconnect.africa/use-funds/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
