@@ -15,7 +15,9 @@ export class Matchmaking {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => InvestorProfile, { eager: true })
+  @ManyToOne(() => InvestorProfile, { eager: true,
+    onDelete: 'CASCADE',
+  },)
   @JoinColumn({ name: 'investorProfileId' })
   investorProfile: InvestorProfile;
 

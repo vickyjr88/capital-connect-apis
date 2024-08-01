@@ -30,7 +30,6 @@ import { MobileNumberModule } from './mobile/mobile-number.module';
 import { InvestorProfileModule } from './investor-profile/investor-profile.module';
 import { MatchmakingModule } from './matchmaking/matchmaking.module';
 import { ContactPersonModule } from './contact-person/contact-person.module';
-import { FundingVehiclesModule } from './funding-vehicles/funding-vehicles.module';
 import { UseOfFundsModule } from './use-of-funds/use-of-funds.module';
 import { EsgFocusAreasModule } from './esg-focus/esg-focus-areas.module';
 import { RegistrationStructuresModule } from './registration-structures/registration-structures.module';
@@ -70,7 +69,6 @@ import { RegistrationStructuresModule } from './registration-structures/registra
     InvestorProfileModule,
     MatchmakingModule,
     ContactPersonModule,
-    FundingVehiclesModule,
     UseOfFundsModule,
     EsgFocusAreasModule,
     RegistrationStructuresModule,
