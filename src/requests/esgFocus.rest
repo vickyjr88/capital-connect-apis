@@ -1,0 +1,79 @@
+###
+# Create ESG focus area
+POST http://localhost:3000/esg-focus
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Top",
+    "description": "The highest level"
+}
+
+###
+# Create ESG focus area prod
+POST http://api.capitalconnect.africa/esg-focus
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "",
+    "description": "The highest level"
+}
+
+###
+# Get ESG focus area
+GET http://localhost:3000/esg-focus/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get ESG focus area prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/esg-focus/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get ESG focus areas
+GET http://localhost:3000/esg-focus
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get ESG focus areas prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/esg-focus
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get ESG focus areas paginated
+GET http://localhost:3000/esg-focus?page=2&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+###
+# Update ESG focus area
+PUT http://localhost:3000/esg-focus/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "ESG focus areas 1 updated",
+    "description": "ESG focus areas 1 description updated"
+}
+
+###
+# Update ESG focus area prod
+PUT http://api.capitalconnect.africa/esg-focus/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "ESG focus areas 1 updated",
+    "description": "ESG focus areas 1 description updated"
+}
+
+###
+# Delete ESG focus area
+DELETE http://localhost:3000/esg-focus/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Delete ESG focus area prod
+DELETE http://api.capitalconnect.africa/esg-focus/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

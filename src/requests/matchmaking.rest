@@ -7,3 +7,33 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 GET http://localhost:3000/matchmaking/investor-profiles
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Mark a company as interesting (investorProfileId/companyId)
+POST http://localhost:3000/matchmaking/interesting/1/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Connect with a company (investorProfileId/companyId)
+POST http://localhost:3000/matchmaking/connect/1/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Get interesting companies for an investor profile
+GET http://localhost:3000/matchmaking/interested/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Get connected companies for an investor profile
+GET http://localhost:3000/matchmaking/connected/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Get interested investors by a company
+GET http://localhost:3000/matchmaking/investors/interested/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Get connected investors to a company
+GET http://localhost:3000/matchmaking/investors/connected/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
