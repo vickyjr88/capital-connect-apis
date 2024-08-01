@@ -4,7 +4,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
-  "userId": 13,
+  "userId": 2,
   "organizationName": "Investor Profile 1",
   "countriesOfInvestmentFocus": ["Kenya", "Uganda"],
   "headOfficeLocation": "Nairobi",
@@ -12,7 +12,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   "url": "https://testinvetor.com",
   "emailAddress": "investor@company.com",
   "availableFunding": 10000000,
-  "differentFundingVehicles": ["Equity", "Debt"],
+  "differentFundingVehicles": "Equity",  // Updated from array to a string.
   "useOfFunds": ["Expansion", "Working capital"],
   "maximumFunding": 10000000,
   "minimumFunding": 100000,
