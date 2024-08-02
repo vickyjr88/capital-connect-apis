@@ -6,6 +6,8 @@ import {
   IsNumber,
   ArrayNotEmpty,
   IsOptional,
+  ArrayMinSize,
+  ArrayMaxSize,
 } from 'class-validator';
 
 export class CreateInvestorProfileDto {
@@ -50,9 +52,11 @@ export class CreateInvestorProfileDto {
   @ArrayNotEmpty()
   businessGrowthStages: string[];
 
-  @IsString()
-  @IsNotEmpty()
-  investorType: string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @ArrayMinSize(1)
+  @ArrayMaxSize(1)
+  investorType: string[];
 
   @IsArray()
   investmentStructures: string[];

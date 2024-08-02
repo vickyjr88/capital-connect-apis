@@ -57,8 +57,8 @@ export class InvestorProfile {
   @Column('text', { array: true })
   businessGrowthStages: string[];
 
-  @Column()
-  investorType: string;
+  @Column('text', { array: true })
+  investorType: string[];
 
   @Column('text', { array: true })
   investmentStructures: string[];
