@@ -26,7 +26,9 @@ export class ContactPerson {
 
   @ManyToOne(
     () => InvestorProfile,
-    (investorProfile) => investorProfile.contactPersons,
+    (investorProfile) => investorProfile.contactPersons, {
+      onDelete: 'CASCADE',
+    },
   )
   investorProfile: InvestorProfile;
 }

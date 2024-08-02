@@ -1,6 +1,7 @@
 ### Create a new ContactPerson
 POST http://localhost:3000/contact-persons
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
   "firstName": "Jane",
@@ -16,17 +17,25 @@ Content-Type: application/json
 
 ### Get all ContactPersons
 GET http://localhost:3000/contact-persons
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get investor profiles paginated
+GET http://localhost:3000/investor-profiles?page=5&limit=50
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 
 ### Get a specific ContactPerson
 GET http://localhost:3000/contact-persons/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ###
 
 ### Update a ContactPerson
 PATCH http://localhost:3000/contact-persons/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
   "designation": "Senior Manager"
@@ -36,5 +45,4 @@ Content-Type: application/json
 
 ### Delete a ContactPerson
 DELETE http://localhost:3000/contact-persons/2
-
-###
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

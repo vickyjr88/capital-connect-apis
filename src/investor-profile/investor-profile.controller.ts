@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -61,8 +62,8 @@ export class InvestorProfileController {
 
   @Roles(Role.Admin, Role.Investor, Role.Advisor)
   @Get()
-  findAll() {
-    return this.investorProfileService.findAll();
+  findAll(@Query('page') page: number, @Query('limit') limit: number) {
+    return this.investorProfileService.findAll(page, limit);
   }
 
   @Roles(Role.Admin, Role.Investor, Role.Advisor)
@@ -70,6 +71,11 @@ export class InvestorProfileController {
   async findOne(@Request() req, @Param('id') id: string) {
     try {
       const investorProfile = await this.investorProfileService.findOne(+id);
+
+      if (!investorProfile) {
+        throw new NotFoundException('Investor profile not found');
+      }
+
       const user = req.user;
       if (
         user.roles.includes('investor') &&
@@ -83,6 +89,40 @@ export class InvestorProfileController {
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw new BadRequestException(error.message);
+      }
+
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throwInternalServer(error);
+    }
+  }
+
+  @Roles(Role.Admin, Role.Investor, Role.Advisor)
+  @Get('by-user/:userId')
+  async findOneByUserId(@Request() req, @Param('userId') userId: string) {
+    try {
+    const investorProfile = await this.investorProfileService.findOneByUserId(+userId);
+
+    if (!investorProfile) {
+      throw new NotFoundException('Investor profile not found');
+    }
+      const user = req.user;
+      if (
+        user.roles.includes('investor') &&
+        investorProfile.investor.id !== user.id
+      ) {
+        throw new BadRequestException(
+          'User not allowed to view investor profile.',
+        );
+      }
+      return investorProfile;
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw new BadRequestException(error.message);
+      }
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
       }
       throwInternalServer(error);
     }
