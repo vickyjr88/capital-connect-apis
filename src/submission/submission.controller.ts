@@ -21,12 +21,24 @@ export class SubmissionController {
       if (createSubmissionDto.userId !== req.user.id) {
         throw new UnauthorizedException("You are not authorized to respond on behalf of this user.");
       }
-      const submission = new Submission();
-      submission.user = { id: createSubmissionDto.userId } as any; // Simplified for example purposes
-      submission.question = { id: createSubmissionDto.questionId } as any;
-      submission.answer = { id: createSubmissionDto.answerId } as any;
-      submission.text = createSubmissionDto.text;
-      return this.submissionService.create(submission);
+      const check = await this.submissionService.findSubmission(
+        createSubmissionDto.userId,
+        createSubmissionDto.questionId,
+        createSubmissionDto.answerId
+      );
+      if (check) {
+        check.text = createSubmissionDto.text;
+        return this.submissionService.update(check.id, check);
+      } else {
+        // Create a new submission
+        const submission = new Submission();
+        submission.user = { id: createSubmissionDto.userId } as any; // Simplified for example purposes
+        submission.question = { id: createSubmissionDto.questionId } as any;
+        submission.answer = { id: createSubmissionDto.answerId } as any;
+        submission.text = createSubmissionDto.text;
+        return this.submissionService.create(submission);
+        
+      } 
     } catch (error) {
       if (error instanceof UnauthorizedException) {
         throw error;
@@ -39,18 +51,30 @@ export class SubmissionController {
   @Roles(Role.User)
   async createMultiple(@Request() req, @Body() createMultipleSubmissionsDto: CreateMultipleSubmissionsDto): Promise<Submission[]> {
     try {
-    const submissions = createMultipleSubmissionsDto.submissions.map(dto => {
+    const submissions = createMultipleSubmissionsDto.submissions.map( async (dto)=> {
       if (dto.userId !== req.user.id) {
         throw new UnauthorizedException("You are not authorized to respond on behalf of this user.");
       }
-      const submission = new Submission();
-      submission.user = { id: dto.userId } as any; 
-      submission.question = { id: dto.questionId } as any;
-      submission.answer = { id: dto.answerId } as any;
-      submission.text = dto.text;
-      return submission;
+      const check = await this.submissionService.findSubmission(
+        dto.userId,
+        dto.questionId,
+        dto.answerId
+      );
+      if (check) {
+        check.text = dto.text;
+        return this.submissionService.update(check.id, check);
+      } else {
+        const submission = new Submission();
+        submission.user = { id: dto.userId } as any; // Simplified for example purposes
+        submission.question = { id: dto.questionId } as any;
+        submission.answer = { id: dto.answerId } as any;
+        submission.text = dto.text;
+        return this.submissionService.createMultiple(submissions);
+      } 
     });
-    return this.submissionService.createMultiple(submissions);
+    const multiples = await Promise.all(submissions);
+    return multiples;
+
   } catch (error) {
     if (error instanceof UnauthorizedException) {
       throw error;

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Submission } from './entities/submission.entity';
+import { UpdateSubmissionDto } from './dto/update-submission.dto';
 
 @Injectable()
 export class SubmissionService {
@@ -12,6 +13,27 @@ export class SubmissionService {
 
   async create(submission: Submission): Promise<Submission> {
     return this.submissionRepository.save(submission);
+  }
+
+  async findSubmission(userId: number, questionId: number, answerId: number,){
+    return await this.submissionRepository.findOne({
+    where: {
+      user: { id: userId },
+      question: { id: questionId },
+      answer: { id: answerId },
+    },
+    relations: ['user', 'question', 'answer'],
+  });
+  }
+
+  async update(id: number, updateSubmissionDto: UpdateSubmissionDto){
+    const { userId, questionId, answerId} = updateSubmissionDto;
+    const updates = {};
+    if (userId) updates["userId"] = userId;
+    if (questionId) updates["questionId"] = questionId;
+    if (answerId) updates["answerId"] = answerId;
+    if (Object.keys(updates).length > 0) await this.submissionRepository.update(id, updateSubmissionDto);
+    return this.submissionRepository.findOneBy({ id });
   }
 
   async createMultiple(submissions: Submission[]): Promise<Submission[]> {
