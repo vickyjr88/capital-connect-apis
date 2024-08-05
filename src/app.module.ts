@@ -33,6 +33,7 @@ import { ContactPersonModule } from './contact-person/contact-person.module';
 import { UseOfFundsModule } from './use-of-funds/use-of-funds.module';
 import { EsgFocusAreasModule } from './esg-focus/esg-focus-areas.module';
 import { RegistrationStructuresModule } from './registration-structures/registration-structures.module';
+import { InvestorTypesModule } from './investor-types/investor-types.module';
 
 @Module({
   imports: [
@@ -72,6 +73,7 @@ import { RegistrationStructuresModule } from './registration-structures/registra
     UseOfFundsModule,
     EsgFocusAreasModule,
     RegistrationStructuresModule,
+    InvestorTypesModule,
   ],
   providers: [
     AppService,
