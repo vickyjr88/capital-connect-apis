@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Submission } from './entities/submission.entity';
@@ -27,13 +27,20 @@ export class SubmissionService {
   }
 
   async update(id: number, updateSubmissionDto: UpdateSubmissionDto){
-    const { userId, questionId, answerId} = updateSubmissionDto;
+    const { answerId, text } = updateSubmissionDto;
     const updates = {};
-    if (userId) updates["userId"] = userId;
-    if (questionId) updates["questionId"] = questionId;
     if (answerId) updates["answerId"] = answerId;
+    if (text) updates["text"] = text;
     if (Object.keys(updates).length > 0) await this.submissionRepository.update(id, updateSubmissionDto);
     return this.submissionRepository.findOneBy({ id });
+  }
+
+  async findOne(id: number): Promise<Submission> {
+    const submission = await this.submissionRepository.findOne({ where: { id } });
+    if (!submission) {
+      throw new NotFoundException(`Submission with id ${id} not found`);
+    }
+    return submission;
   }
 
   async createMultiple(submissions: Submission[]): Promise<Submission[]> {

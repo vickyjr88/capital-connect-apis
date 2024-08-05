@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseGuards, Request, UnauthorizedException, Put, NotFoundException, BadRequestException } from '@nestjs/common';
 import { SubmissionService } from './submission.service';
 import { CreateSubmissionDto, CreateMultipleSubmissionsDto } from './dto/create-submission.dto';
 import { Submission } from './entities/submission.entity';
@@ -7,6 +7,7 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { UpdateSubmissionDto } from './dto/update-submission.dto';
 
 @Controller('submissions')
 @Controller('answers')
@@ -50,16 +51,18 @@ export class SubmissionController {
   @Post('bulk')
   @Roles(Role.User)
   async createMultiple(@Request() req, @Body() createMultipleSubmissionsDto: CreateMultipleSubmissionsDto): Promise<Submission[]> {
-    try {
-    const submissions = createMultipleSubmissionsDto.submissions.map( async (dto)=> {
+  try {
+    const submissionPromises = createMultipleSubmissionsDto.submissions.map(async (dto) => {
       if (dto.userId !== req.user.id) {
         throw new UnauthorizedException("You are not authorized to respond on behalf of this user.");
       }
+
       const check = await this.submissionService.findSubmission(
         dto.userId,
         dto.questionId,
         dto.answerId
       );
+
       if (check) {
         check.text = dto.text;
         return this.submissionService.update(check.id, check);
@@ -69,25 +72,47 @@ export class SubmissionController {
         submission.question = { id: dto.questionId } as any;
         submission.answer = { id: dto.answerId } as any;
         submission.text = dto.text;
-        return this.submissionService.createMultiple(submissions);
-      } 
-    });
-    const multiples = await Promise.all(submissions);
-    return multiples;
 
+        return this.submissionService.create(submission);
+      }
+    });
+
+    const submissions = await Promise.all(submissionPromises);
+    return submissions;
   } catch (error) {
     if (error instanceof UnauthorizedException) {
       throw error;
     }
     throwInternalServer(error)
   }
-  }
+}
+
+
 
   @Get('user/:userId')
   async findByUser(@Param('userId') userId: string): Promise<Submission[]> {
     try {
       return this.submissionService.findByUser(+userId);
     } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Put(':id')
+  @Roles(Role.User)
+  async update(@Param('id') id: string, @Body() updateSubmissionDto: UpdateSubmissionDto) {
+    try {
+      const submission = await this.submissionService.findOne(+id);
+    if (!submission) {
+      throw new NotFoundException(`Submission with id ${id} not found`);
+    }
+    const updatedSubmission = await this.submissionService.update(+id, updateSubmissionDto);
+    return updatedSubmission;
+
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new BadRequestException(`Submission with id ${id} not found`);
+      }
       throwInternalServer(error)
     }
   }

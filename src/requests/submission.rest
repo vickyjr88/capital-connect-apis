@@ -1,38 +1,50 @@
 ### Create a single submission
 POST http://localhost:3000/submissions
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 {
-  "userId": 28,
-  "questionId": 7,
-  "answerId": 2
+  "userId": 3,
+  "questionId": 12,
+  "answerId": 14,
+  "text": "true"
 }
 
 ### Create multiple submissions
 POST http://localhost:3000/submissions/bulk
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 {
   "submissions": [
     {
-      "userId": 28,
-      "questionId": 8,
-      "answerId": 4
+      "userId": 3,
+      "questionId": 11,
+      "answerId": 11,
+      "text": "new 1"
     },
     {
-      "userId": 28,
-      "questionId": 9,
-      "answerId": 3
+      "userId": 3,
+      "questionId": 12,
+      "answerId": 15,
+      "text": "new 2"
     }
   ]
 }
 
+### Update Submission by Id
+PUT http://localhost:3000/submissions/25
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "text": "true"
+}
+
 ### Fetch submissions by user
-GET http://localhost:3000/submissions/user/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+GET http://localhost:3000/submissions/user/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### Calculate score for user
 GET http://localhost:3000/submissions/user/1/score
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdWxAeWFob28uY29tIiwic3ViIjoyOCwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTc3NDQ2NTcsImV4cCI6MTcxNzgzMTA1N30.3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
