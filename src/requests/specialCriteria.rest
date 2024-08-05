@@ -1,0 +1,31 @@
+### Create Special criteria
+POST http://localhost:3000/special-criteria
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+{
+    "title": "",
+    "description": "",
+    "questionId": 6
+}
+
+### Get Special criteria by Id
+GET http://localhost:3000/special-criteria/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Get all Special criteria
+GET http://localhost:3000/special-criteria
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Update Special criteria
+PUT http://localhost:3000/special-criteria
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+{
+    "title": "",
+    "description": "",
+    "questionId": 6
+}
+
+### Delete Special criteria by Id
+DELETE http://localhost:3000/special-criteria/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
