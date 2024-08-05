@@ -52,11 +52,9 @@ export class CreateInvestorProfileDto {
   @ArrayNotEmpty()
   businessGrowthStages: string[];
 
-  @IsArray()
-  @ArrayNotEmpty()
-  @ArrayMinSize(1)
-  @ArrayMaxSize(1)
-  investorType: string[];
+  @IsString()
+  @IsOptional()
+  investorType: string;
 
   @IsArray()
   investmentStructures: string[];
