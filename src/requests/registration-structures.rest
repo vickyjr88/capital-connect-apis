@@ -1,0 +1,79 @@
+###
+# Create Registration structure
+POST http://localhost:3000/registration-structures
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Top",
+    "description": "The highest level"
+}
+
+###
+# Create Registration structure prod
+POST http://api.capitalconnect.africa/registration-structures
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "",
+    "description": "The highest level"
+}
+
+###
+# Get Registration structure
+GET http://localhost:3000/registration-structures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Registration structure prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/registration-structures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Registration structures
+GET http://localhost:3000/registration-structures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Registration structures prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/registration-structures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Registration structures paginated
+GET http://localhost:3000/registration-structures?page=1&limit=3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+###
+# Update Registration structure
+PUT http://localhost:3000/registration-structures/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Registration structure 1 updated",
+    "description": "Registration structure 1 description updated"
+}
+
+###
+# Update Registration structure prod
+PUT http://api.capitalconnect.africa/registration-structures/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Registration structure 1 updated",
+    "description": "Registration structure 1 description updated"
+}
+
+###
+# Delete Registration structure
+DELETE http://localhost:3000/registration-structures/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Delete Registration structure prod
+DELETE http://api.capitalconnect.africa/registration-structures/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

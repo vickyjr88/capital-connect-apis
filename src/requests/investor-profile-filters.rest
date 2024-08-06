@@ -1,0 +1,202 @@
+### Get all investor profiles without filters
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+
+### Filter by countriesOfInvestmentFocus
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "countriesOfInvestmentFocus": ["Kenya", "Uganda", "Tanzania"]
+}
+
+###
+
+### Filter by headOfficeLocation
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "headOfficeLocation": "Nairobi"
+}
+
+###
+
+### Filter by emailAddress
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "emailAddress": "investor@example.com"
+}
+
+###
+
+### Filter by contactPerson
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "contactPerson": "John Doe"
+}
+
+###
+
+### Filter by useOfFunds
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "useOfFunds": ["Expansion", "Working capital", "CAPEX funding"]
+}
+
+###
+
+### Filter by maximumFunding
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "maximumFunding": 4999999
+}
+
+###
+
+### Filter by minimumFunding
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "minimumFunding": 50001
+}
+
+###
+
+### Filter by sectors
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "sectors": [3]
+}
+
+###
+
+### Filter by subSectors
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "subSectors": [1]
+}
+
+###
+
+### Filter by businessGrowthStages
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "businessGrowthStages": ["seed/start-up/idea", "Growth", "Start-up - post revenues"]
+}
+
+###
+
+### Filter by investorType
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "investorType": "Private equity"
+}
+
+###
+
+### Filter by investmentStructures
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "investmentStructures": ["Equity", "Debt", "Government grants"]
+}
+
+###
+
+### Filter by esgFocusAreas
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "esgFocusAreas": ["Renewable energy", "Pollution", "Community engagement"]
+}
+
+###
+
+### Filter by registrationStructure
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "registrationStructures": "Investment holding company"
+}
+
+###
+
+### Filter by multiple criteria
+POST http://localhost:3000/investor-profiles/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+{
+  "countriesOfInvestmentFocus": ["Kenya"],
+  "headOfficeLocation": "Nairobi",
+  "useOfFunds": ["Expansion"],
+  "maximumFunding": 5000000,
+  "minimumFunding": 100000,
+  "sectors": [1, 2],
+  "businessGrowthStages": ["Growth"],
+  "investorType": "Venture capital",
+  "investmentStructures": ["Equity"],
+  "esgFocusAreas": ["Renewable energy"],
+  "registrationStructures": "Investment holding company"
+}
+###
+
+### Filter by multiple criteria
+POST http://localhost:3000/investor-profiles/filter/by-or
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+{
+  "countriesOfInvestmentFocus": ["Tanzania"],
+  "headOfficeLocation": "Nairobi",
+  "useOfFunds": ["Expansion"],
+  "maximumFunding": 50000001,
+  "minimumFunding": 1000,
+  "sectors": [2],
+  "businessGrowthStages": ["Growth"],
+  "investorType": "Venture capital",
+  "investmentStructures": ["Equity"],
+  "esgFocusAreas": ["Renewable energy"],
+  "registrationStructures": ["Investment holding company"]
+}
+

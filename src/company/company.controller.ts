@@ -20,6 +20,8 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { FilterCompanyDto } from './dto/filter-company.dto';
+import { Company } from './entities/company.entity';
 
 @UseGuards(JwtAuthGuard)
 @Controller('company')
@@ -89,12 +91,11 @@ export class CompanyController {
   remove(@Param('id') id: string) {
     try {
       this.companyService.remove(+id);
-      return 
+      return;
     } catch (error) {
-      throwInternalServer(error)
+      throwInternalServer(error);
     }
   }
-
 
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Investor)
@@ -102,7 +103,6 @@ export class CompanyController {
   async getInvestorMatches(@Param('id') id: string) {
     try {
       const match = await this.companyService.getMatchedBusinesses(+id);
-      console.log("match", match);
       return match;
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -129,6 +129,21 @@ export class CompanyController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Advisor, Role.Admin, Role.Investor)
+  @Post('filter')
+  async filterCompanies(
+    @Body() filterDto: FilterCompanyDto,
+  ): Promise<Company[]> {
+    return this.companyService.filterCompanies(filterDto);
+  }
 
-
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Advisor, Role.Admin, Role.Investor)
+  @Post('filter/by-or')
+  async filterCompaniesByOr(
+    @Body() filterDto: FilterCompanyDto,
+  ): Promise<Company[]> {
+    return this.companyService.filterCompaniesByOr(filterDto);
+  }
 }

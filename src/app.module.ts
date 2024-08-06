@@ -24,7 +24,16 @@ import { ScoringModule } from './scoring/scoring.module';
 import { PaymentModule } from './payment/payment.module';
 import { BookingModule } from './booking/booking.module';
 import { CountryModule } from './country/country.module';
-import { FundingModule } from './funding/funding.module';
+import { StageModule } from './stage/stage.module';
+import { InvestmentStructuresModule } from './investment-structures/investment-structures.module';
+import { MobileNumberModule } from './mobile/mobile-number.module';
+import { InvestorProfileModule } from './investor-profile/investor-profile.module';
+import { MatchmakingModule } from './matchmaking/matchmaking.module';
+import { ContactPersonModule } from './contact-person/contact-person.module';
+import { UseOfFundsModule } from './use-of-funds/use-of-funds.module';
+import { EsgFocusAreasModule } from './esg-focus/esg-focus-areas.module';
+import { RegistrationStructuresModule } from './registration-structures/registration-structures.module';
+import { InvestorTypesModule } from './investor-types/investor-types.module';
 
 @Module({
   imports: [
@@ -33,7 +42,7 @@ import { FundingModule } from './funding/funding.module';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: () => (ormConfig),
+      useFactory: () => ormConfig,
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
@@ -55,7 +64,16 @@ import { FundingModule } from './funding/funding.module';
     PaymentModule,
     BookingModule,
     CountryModule,
-    FundingModule,
+    StageModule,
+    InvestmentStructuresModule,
+    MobileNumberModule,
+    InvestorProfileModule,
+    MatchmakingModule,
+    ContactPersonModule,
+    UseOfFundsModule,
+    EsgFocusAreasModule,
+    RegistrationStructuresModule,
+    InvestorTypesModule,
   ],
   providers: [
     AppService,
@@ -65,9 +83,7 @@ import { FundingModule } from './funding/funding.module';
       useClass: CustomLogger,
     },
   ],
-  controllers: [
-    AppController
-  ]
+  controllers: [AppController],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

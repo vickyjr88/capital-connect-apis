@@ -1,0 +1,77 @@
+### Create Investor Profile
+POST http://localhost:3000/investor-profiles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "userId": 13,
+  "organizationName": "Investor Profile 1",
+  "countriesOfInvestmentFocus": ["Kenya", "Uganda"],
+  "headOfficeLocation": "Nairobi",
+  "fundDescription": "Investor Profile 1",
+  "url": "https://testinvetor.com",
+  "emailAddress": "investor@company.com",
+  "availableFunding": 10000000,
+  "differentFundingVehicles": "Equity",
+  "useOfFunds": ["Expansion", "Working capital"],
+  "maximumFunding": 10000000,
+  "minimumFunding": 100000,
+  "businessGrowthStages": ["Growth", "Established"],
+  "investorType": "Venture capital",
+  "investmentStructures": ["Equity", "Debt"],
+  "esgFocusAreas": ["Renewable energy", "Labor practices"],
+  "registrationStructures": ["Investment holding company"],
+  "sectors": [1, 3],
+  "subSectors": [1, 3]
+}
+
+### Get All Investor Profiles
+GET http://localhost:3000/investor-profiles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get investor profiles paginated
+GET http://localhost:3000/investor-profiles?page=1&limit=50
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Get Investor Profile by ID
+GET http://localhost:3000/investor-profiles/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Get Investor Profile by investor ID
+GET http://localhost:3000/investor-profiles/by-user/12
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Update Investor Profile by ID
+PUT http://localhost:3000/investor-profiles/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+  "countriesOfInvestmentFocus": ["Tanzania"],
+  "headOfficeLocation": "Dar es Salaam",
+  "fundDescription": "Investor Profile 1",
+  "url": "https://testinvetors.com",
+  "emailAddress": "investor@company.com",
+  "availableFunding": 10000000,
+  "differentFundingVehicles": "Equity",
+  "useOfFunds": ["CAPEX funding"],
+  "minimumFunding": 50000,
+  "maximumFunding": 5000000,
+  "noMaximumFunding": true,
+  "businessGrowthStages": ["Start-up - post revenues"],
+  "investorType": "Private equity",
+  "investmentStructures": ["Government grants"],
+  "esgFocusAreas": ["Community engagement"],
+  "registrationStructures": ["Partnership", "Sole proprietorship"],
+  "sectors": [1],
+  "subSectors": [1]
+}
+
+### Delete Investor Profile by ID
+DELETE http://localhost:3000/investor-profiles/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+Content-Type: application/json

@@ -1,0 +1,76 @@
+###
+# Create stage
+
+POST http://localhost:3000/stages 
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Top", 
+    "description": "The highest level"
+}
+
+###
+#Create stage prod
+POST http://api.capitalconnect.africa/stages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+{
+    "title": "Top", 
+    "description": "The highest level"
+}
+
+### 
+# Get stage
+
+GET http://localhost:3000/stages/1 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get stage prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/stages/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### 
+# Get stages
+
+GET http://localhost:3000/stages 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get business stages prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/stages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### 
+# Update stage
+
+PUT http://localhost:3000/stages/1 
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "stage 1 updated", 
+    "description": "stage 1 description updated"
+}
+
+###
+# Update stage prod
+PUT http://api.capitalconnect.africa/stages/129
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+{
+    "title": "stage 1 updated", 
+    "description": "stage 1 description updated"
+}
+
+### 
+# Delete stage
+
+DELETE http://localhost:3000/stages/2 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Delete stage prod
+DELETE http://api.capitalconnect.africa/stages/17
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
