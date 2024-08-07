@@ -36,8 +36,8 @@ export class InvestorProfile {
   @Column()
   availableFunding: number;
 
-  @Column('text', { array: true })
-  differentFundingVehicles: string[];
+  @Column({ nullable: true })
+  differentFundingVehicles: string;
 
   @Column('text', { array: true })
   countriesOfInvestmentFocus: string[];

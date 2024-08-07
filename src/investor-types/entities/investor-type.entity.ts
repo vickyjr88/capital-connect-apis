@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("funding-vehicles")
-export class FundingVehicle {
-    @PrimaryGeneratedColumn()
+@Entity("investor-types")
+export class InvestorType {
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()

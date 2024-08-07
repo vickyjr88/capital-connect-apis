@@ -29,9 +29,9 @@ export class CreateInvestorProfileDto {
   @IsNumber()
   availableFunding: number;
 
-  @IsArray()
-  @ArrayNotEmpty()
-  differentFundingVehicles: string[];
+  @IsString()
+  @IsOptional()
+  differentFundingVehicles: string;
 
   @IsArray()
   @ArrayNotEmpty()

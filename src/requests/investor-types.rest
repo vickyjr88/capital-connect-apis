@@ -1,0 +1,79 @@
+###
+# Create Investor type
+POST http://localhost:3000/investor-types
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Investor Type 1",
+    "description": "The highest level"
+}
+
+###
+# Create Investor type prod
+POST http://api.capitalconnect.africa/investor-types
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "",
+    "description": "The highest level"
+}
+
+###
+# Get Investor type
+GET http://localhost:3000/investor-types/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Investor type prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/investor-types/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Investor types
+GET http://localhost:3000/investor-types
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Investor types prod
+GET https://capitalconnect-0060e0fb0eb4.herokuapp.com/investor-types
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Get Investor types paginated
+GET http://localhost:3000/investor-types?page=2&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+###
+# Update Investor type
+PUT http://localhost:3000/investor-types/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Investor type 1 updated",
+    "description": "Investor type 1 description updated"
+}
+
+###
+# Update Investor type prod
+PUT http://api.capitalconnect.africa/investor-types/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+{
+    "title": "Investor type 1 updated",
+    "description": "Investor type 1 description updated"
+}
+
+###
+# Delete Investor type
+DELETE http://localhost:3000/investor-types/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+###
+# Delete Investor type prod
+DELETE http://api.capitalconnect.africa/investor-types/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

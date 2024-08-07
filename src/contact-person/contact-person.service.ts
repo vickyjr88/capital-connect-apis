@@ -25,8 +25,11 @@ export class ContactPersonService {
     return this.contactPersonRepository.save(contactPerson);
   }
 
-  async findAll(): Promise<ContactPerson[]> {
+  async findAll(page: number = 1, limit: number = 10): Promise<ContactPerson[]> {
+    const skip = (page - 1) * limit;
     return this.contactPersonRepository.find({
+      skip,
+      take: limit,
       relations: ['investorProfile'],
     });
   }
