@@ -7,13 +7,16 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import throwInternalServer from 'src/shared/utils/exceptions.util';
+import { SectionService } from 'src/section/section.service';
 import { UpdateSubmissionDto } from './dto/update-submission.dto';
 
 @Controller('submissions')
-@Controller('answers')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class SubmissionController {
-  constructor(private readonly submissionService: SubmissionService) {}
+  constructor(
+    private readonly submissionService: SubmissionService,
+    private readonly sectionService: SectionService
+  ) {}
 
   @Post()
   @Roles(Role.User)
@@ -87,17 +90,6 @@ export class SubmissionController {
   }
 }
 
-
-
-  @Get('user/:userId')
-  async findByUser(@Param('userId') userId: string): Promise<Submission[]> {
-    try {
-      return this.submissionService.findByUser(+userId);
-    } catch (error) {
-      throwInternalServer(error)
-    }
-  }
-
   @Put(':id')
   @Roles(Role.User)
   async update(@Param('id') id: string, @Body() updateSubmissionDto: UpdateSubmissionDto) {
@@ -117,11 +109,55 @@ export class SubmissionController {
     }
   }
 
+  @Get('user/:userId')
+  async findByUser(@Param('userId') userId: string): Promise<Submission[]> {
+    try {
+      return await this.submissionService.findByUser(+userId);
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Get('user/:userId/section/:sectionId')
+  async findByUserPerSection(@Param('userId') userId: string, @Param('sectionId') sectionId: string): Promise<Submission[]> {
+    try {
+      return await this.submissionService.findByUserPerSection(+userId, +sectionId);
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
   @Get('user/:userId/score')
   async calculateScore(@Param('userId') userId: string): Promise<{ score: number }> {
     try {
       const score = await this.submissionService.calculateScore(+userId);
       return { score };
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Get('user/:userId/score/:sectionId')
+  async calculateScorePerSection(@Param('userId') userId: string, @Param('sectionId') sectionId: string): Promise<{ score: number }> {
+    try {
+      const score = await this.submissionService.calculateScorePerSection(+userId, +sectionId);
+      return score;
+    } catch (error) {
+      throwInternalServer(error)
+    }
+  }
+
+  @Get('user/:userId/scores')
+  async calculateScores(@Param('userId') userId: string): Promise<any[]> {
+    try {
+      const sections = await this.sectionService.findAll();
+      const scores = [];
+      for (const section of sections) {
+        const score = await this.submissionService.calculateScorePerSection(+userId, section.id);
+
+        scores.push({...section, ...score});
+      }
+      return scores;
     } catch (error) {
       throwInternalServer(error)
     }

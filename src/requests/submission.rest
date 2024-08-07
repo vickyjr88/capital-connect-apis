@@ -32,7 +32,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 }
 
 ### Update Submission by Id
-PUT http://localhost:3000/submissions/25
+PUT http://localhost:3000/submissions/2
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
@@ -41,10 +41,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 }
 
 ### Fetch submissions by user
-GET http://localhost:3000/submissions/user/3
+GET http://localhost:3000/submissions/user/6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Fetch submissions by user prod
+GET http://api.capitalconnect.africa/submissions/user/4
+Authorization: Bearer ..3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
+
+### Fetch submissions by user per section
+GET http://localhost:3000/submissions/user/3/section/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+### Fetch submissions by user per section prod
+GET http://api.capitalconnect.africa/submissions/user/6/section/1
+Authorization: Bearer ..3fJsm0xhzodY2CTo-bPTmgPkxyVEeab4NACx2JtX1xo
 
 ### Calculate score for user
-GET http://localhost:3000/submissions/user/1/score
+GET http://localhost:3000/submissions/user/3/score
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
+### Calculate score for user per section 6 = userId 1 = sectionId
+GET http://localhost:3000/submissions/user/3/score/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+
+### Calculate score for user for all sections
+GET http://localhost:3000/submissions/user/3/scores
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
