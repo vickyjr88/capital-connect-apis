@@ -1,5 +1,6 @@
 import { Question } from "src/question/entities/question.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { QuestionService } from "src/question/question.service";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("special_criteria")
 export class SpecialCriterion {
@@ -12,7 +13,7 @@ export class SpecialCriterion {
     @Column({ type: 'text', nullable: true })
     description: string;
 
-    @ManyToOne(() => Question, { eager: true })
-    @JoinColumn({ name: 'questionId' })
-    question: Question;
+    @ManyToMany(() => Question, (questions) => questions.specialcriteria)
+    @JoinTable()
+    questions: Question[];
 }

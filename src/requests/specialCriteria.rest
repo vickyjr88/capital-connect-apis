@@ -4,12 +4,11 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 {
     "title": "",
-    "description": "",
-    "questionId": 6
+    "description": ""
 }
 
 ### Get Special criteria by Id
-GET http://localhost:3000/special-criteria/2
+GET http://localhost:3000/special-criteria/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### Get all Special criteria
@@ -22,8 +21,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 {
     "title": "",
-    "description": "",
-    "questionId": 6
+    "description": ""
 }
 
 ### Delete Special criteria by Id
