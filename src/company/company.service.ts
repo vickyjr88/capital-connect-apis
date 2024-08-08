@@ -13,6 +13,7 @@ import { User } from 'src/users/entities/user.entity';
 import { Submission } from 'src/submission/entities/submission.entity';
 import { Question } from 'src/question/entities/question.entity';
 import { FilterCompanyDto } from './dto/filter-company.dto';
+import { NumberOfEmployees, YearsOfOperation } from './company.type';
 
 @Injectable()
 export class CompanyService {
@@ -26,6 +27,14 @@ export class CompanyService {
     @InjectRepository(Question)
     private userService: UsersService,
   ) {}
+
+  getNumberOfEmployees(): Array<{ value: string }> {
+    return Object.values(NumberOfEmployees).map((value) => ({ value }));
+  }
+  
+  getYearsOfOperation(): Array<{ value: string }> {
+    return Object.values(YearsOfOperation).map((value) => ({ value }));
+  }  
 
   async create(id: number, createCompanyDto: CreateCompanyDto) {
     const userFound = await this.userRepository.findOne({ where: { id } });
@@ -422,4 +431,5 @@ export class CompanyService {
     const companies = await queryBuilder.getMany();
     return companies;
   }
+  
 }

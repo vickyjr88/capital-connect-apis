@@ -8,12 +8,13 @@ import { User } from 'src/users/entities/user.entity';
 import { Submission } from 'src/submission/entities/submission.entity';
 import { Question } from 'src/question/entities/question.entity';
 import { Answer } from 'src/answer/entities/answer.entity';
+import { CompanyEnumController } from './enum';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Company, User, Submission, Question, Answer]),
   ],
-  controllers: [CompanyController],
+  controllers: [CompanyController, CompanyEnumController],
   providers: [CompanyService, UsersService],
   exports: [CompanyService],
 })
