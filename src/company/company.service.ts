@@ -29,11 +29,11 @@ export class CompanyService {
   ) {}
 
   getNumberOfEmployees(): Array<string> {
-    return Object.values(NumberOfEmployees).map((value) => value);
+    return Object.values(NumberOfEmployees);
   }
 
   getYearsOfOperation(): Array<string> {
-    return Object.values(YearsOfOperation).map((value) => value);
+    return Object.values(YearsOfOperation);
   }
 
   async create(id: number, createCompanyDto: CreateCompanyDto) {
