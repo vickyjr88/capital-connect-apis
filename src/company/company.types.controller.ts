@@ -10,7 +10,7 @@ export class CompanyTypesController {
     return this.companyService.getNumberOfEmployees();
   }
 
-  @Get('list/years-or-operation')
+  @Get('list/years-of-operation')
   getYearsOfOperation() {
     return this.companyService.getYearsOfOperation();
   }

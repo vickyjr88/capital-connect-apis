@@ -43,7 +43,7 @@ GET http://localhost:3000/company/list/no-of-employees
 
 ####
 # Fetch Years of operation.
-GET http://localhost:3000/company/list/years-or-operation
+GET http://localhost:3000/company/list/years-of-operation
 
 ####
 # Fetch companies
