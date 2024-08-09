@@ -1,18 +1,17 @@
 import { Controller, Get } from '@nestjs/common';
 import { CompanyService } from './company.service';
 
-@Controller('companys')
-export class CompanyEnumController {
+@Controller('company')
+export class CompanyTypesController {
   constructor(private readonly companyService: CompanyService) {}
 
-  @Get('employees')
+  @Get('list/no-of-employees')
   getNumberOfEmployees() {
     return this.companyService.getNumberOfEmployees();
   }
 
-  @Get('years')
+  @Get('list/years-or-operation')
   getYearsOfOperation() {
     return this.companyService.getYearsOfOperation();
   }
 }
-

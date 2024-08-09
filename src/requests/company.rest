@@ -39,11 +39,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ####
 # Fetch Number of employees.
-GET http://localhost:3000/companys/employees
+GET http://localhost:3000/company/list/no-of-employees
 
 ####
 # Fetch Years of operation.
-GET http://localhost:3000/companys/years
+GET http://localhost:3000/company/list/years-or-operation
 
 ####
 # Fetch companies

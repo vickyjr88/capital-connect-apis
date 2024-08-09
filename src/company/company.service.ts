@@ -28,13 +28,13 @@ export class CompanyService {
     private userService: UsersService,
   ) {}
 
-  getNumberOfEmployees(): Array<{ value: string }> {
-    return Object.values(NumberOfEmployees).map((value) => ({ value }));
+  getNumberOfEmployees(): Array<string> {
+    return Object.values(NumberOfEmployees).map((value) => value);
   }
-  
-  getYearsOfOperation(): Array<{ value: string }> {
-    return Object.values(YearsOfOperation).map((value) => ({ value }));
-  }  
+
+  getYearsOfOperation(): Array<string> {
+    return Object.values(YearsOfOperation).map((value) => value);
+  }
 
   async create(id: number, createCompanyDto: CreateCompanyDto) {
     const userFound = await this.userRepository.findOne({ where: { id } });
@@ -52,7 +52,10 @@ export class CompanyService {
   }
 
   async findOne(id: number) {
-    const company = await this.companyRepository.findOne({ where: { id }, relations: ['companyLogo', 'user'] });
+    const company = await this.companyRepository.findOne({
+      where: { id },
+      relations: ['companyLogo', 'user'],
+    });
     if (company) {
       return company;
     } else {
@@ -73,7 +76,10 @@ export class CompanyService {
   }
 
   async findOneByUser(user: User) {
-    const company = await this.companyRepository.findOne({ where: { user }, relations: ['companyLogo', 'user'], });
+    const company = await this.companyRepository.findOne({
+      where: { user },
+      relations: ['companyLogo', 'user'],
+    });
     if (company) {
       return company;
     } else {
@@ -431,5 +437,4 @@ export class CompanyService {
     const companies = await queryBuilder.getMany();
     return companies;
   }
-  
 }
